@@ -1,7 +1,10 @@
 /**
  * Module dependencies.
  */
+<<<<<<< HEAD
 
+=======
+>>>>>>> gulp  task runner  added
 require('dotenv').config();
 var express = require('express'),
     fs = require('fs'),
