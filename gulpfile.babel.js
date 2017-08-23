@@ -1,12 +1,12 @@
-const gulp = require('gulp');
-const nodemon = require('gulp-nodemon');
-const mocha = require('gulp-mocha');
-const concat = require('gulp-concat');
-const uglify = require('gulp-uglify');
-const rename = require('gulp-rename');
-const sass = require('gulp-ruby-sass');
-const imagemin = require('gulp-imagemin');
-const cache = require('gulp-cache');
+import gulp from 'gulp';
+import nodemon from 'gulp-nodemon';
+import mocha from 'gulp-mocha';
+import concat from 'gulp-concat';
+import uglify from 'gulp-uglify';
+import rename from 'gulp-rename';
+import sass from 'gulp-ruby-sass';
+import imagemin from 'gulp-imagemin';
+import cache from 'gulp-cache';
 
 gulp.task('scripts', () => gulp.src(['public/js/**', 'app/**/*.js'])
   .pipe(concat('main.js'))
@@ -26,8 +26,7 @@ gulp.task('server', () => {
     watch: ['server.js', 'app.js', 'routes/', 'public/*', 'public/*/**'],
     ext: 'js'
   }).on('restart', () => {
-    gulp.src('server.js')
-      .pipe(notify('Running the start tasks'));
+    gulp.src('server.js');
   });
 });
 gulp.task('test', () => {
