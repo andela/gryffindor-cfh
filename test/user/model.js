@@ -4,7 +4,12 @@
 var should = require('should'),
     app = require('../../server'),
     mongoose = require('mongoose'),
+<<<<<<< HEAD:test/user/model.js
     User = mongoose.model('User');
+=======
+    User = mongoose.model('User'),
+    Article = mongoose.model('Aticle', { name: ''});
+>>>>>>> chore/grunt repleace with gulp:test/article/model.js
 
 //Globals
 var user;

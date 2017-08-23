@@ -21,9 +21,14 @@
     "coveralls": "node_modules/.bin/gulp coveralls"
 =======
     "start": "gulp",
+<<<<<<< HEAD
     "test": "node node_modules/grunt-cli/bin/grunt test",
     "postinstall": "node node_modules/grunt-cli/bin/grunt install"
 >>>>>>> chore/#150438322/gulp-nodemon-added
+=======
+    "test": "gulp test"
+    
+>>>>>>> chore/grunt repleace with gulp
   },
   "dependencies": {
     "async": "~0.2.9",
@@ -96,8 +101,12 @@
     "gulp-concat": "^2.6.1",
     "gulp-imagemin": "^3.3.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> gulp  task runner  added
 =======
+=======
+    "gulp-mocha": "^4.3.1",
+>>>>>>> chore/grunt repleace with gulp
     "gulp-nodemon": "^2.2.1",
 >>>>>>> chore/#150438322/gulp-nodemon-added
     "gulp-rename": "^1.2.2",
