@@ -14,8 +14,8 @@
   },
   "scripts": {
     "start": "gulp",
-    "test": "node node_modules/grunt-cli/bin/grunt test",
-    "postinstall": "node node_modules/grunt-cli/bin/grunt install"
+    "test": "gulp test"
+    
   },
   "dependencies": {
     "async": "~0.2.9",
@@ -57,6 +57,7 @@
     "gulp-cache": "^0.4.6",
     "gulp-concat": "^2.6.1",
     "gulp-imagemin": "^3.3.0",
+    "gulp-mocha": "^4.3.1",
     "gulp-nodemon": "^2.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.1.1",

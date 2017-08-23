@@ -1,6 +1,6 @@
 const gulp = require('gulp');
 const nodemon = require('gulp-nodemon');
-
+const mocha = require('gulp-mocha');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
 const rename = require('gulp-rename');
@@ -36,6 +36,10 @@ gulp.task('scripts', function() {
       .pipe(notify('Running the start tasks'));
   });
 });
+gulp.task('test', () =>
+    gulp.src(['test/**/*.js'], {read: false}) 
+        .pipe(mocha({reporter: 'spec'}))
+);
   gulp.task('watch', function() {
   gulp.watch('public/js/*.js', ['scripts']);
   gulp.watch('public/scss/*.scss', ['sass']);
