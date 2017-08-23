@@ -1,12 +1,12 @@
-var gulp = require('gulp');
-var nodemon = require('gulp-nodemon');
+const gulp = require('gulp');
+const nodemon = require('gulp-nodemon');
 
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
-var sass = require('gulp-ruby-sass');
-var imagemin = require('gulp-imagemin');
-var cache = require('gulp-cache');
+const concat = require('gulp-concat');
+const uglify = require('gulp-uglify');
+const rename = require('gulp-rename');
+const sass = require('gulp-ruby-sass');
+const imagemin = require('gulp-imagemin');
+const cache = require('gulp-cache');
 
 gulp.task('scripts', function() {
     return gulp.src(['public/js/**', 'app/**/*.js'])
