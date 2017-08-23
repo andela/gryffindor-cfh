@@ -6,6 +6,7 @@ coverage/*
 c4h_keys.txt
 .env
 npm-debug.log
+<<<<<<< HEAD
 package-lock.json
 gulp-cache
 build/
@@ -13,3 +14,5 @@ build/
 coverage
 gulp-cache
 
+=======
+>>>>>>> chore/#150438322/convert-from-grunt-to-gulp
