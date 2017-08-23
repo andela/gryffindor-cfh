@@ -13,11 +13,17 @@
     "npm": ">=1.2.x"
   },
   "scripts": {
+<<<<<<< HEAD
     "start": "node_modules/.bin/gulp",
     "test": "node_modules/.bin/gulp test",
     "postinstall": "chmod +x ./update-commit-hooks.sh && ./update-commit-hooks.sh",
     "commit-hook": "rsync pre-commit .git/hooks && chmod 755 .git/hooks/pre-commit",
     "coveralls": "node_modules/.bin/gulp coveralls"
+=======
+    "start": "gulp",
+    "test": "node node_modules/grunt-cli/bin/grunt test",
+    "postinstall": "node node_modules/grunt-cli/bin/grunt install"
+>>>>>>> chore/#150438322/gulp-nodemon-added
   },
   "dependencies": {
     "async": "~0.2.9",
@@ -89,7 +95,11 @@
     "gulp-cache": "^0.4.6",
     "gulp-concat": "^2.6.1",
     "gulp-imagemin": "^3.3.0",
+<<<<<<< HEAD
 >>>>>>> gulp  task runner  added
+=======
+    "gulp-nodemon": "^2.2.1",
+>>>>>>> chore/#150438322/gulp-nodemon-added
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.1.1",
     "gulp-uglify": "^3.0.0",
