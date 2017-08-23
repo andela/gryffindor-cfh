@@ -31,15 +31,15 @@ gulp.task('scripts', function() {
         script: 'server.js',
         watch: ["server.js", "app.js", "routes/", 'public/*', 'public/*/**'],
         ext: 'js'
-    }).on('restart', () => {
+    }).on('restart', function(){
     gulp.src('server.js')
       .pipe(notify('Running the start tasks'));
   });
 });
-gulp.task('test', () =>
+gulp.task('test', function(){
     gulp.src(['test/**/*.js'], {read: false}) 
         .pipe(mocha({reporter: 'spec'}))
-);
+});
   gulp.task('watch', function() {
   gulp.watch('public/js/*.js', ['scripts']);
   gulp.watch('public/scss/*.scss', ['sass']);
