@@ -7,59 +7,44 @@ import rename from 'gulp-rename';
 import sass from 'gulp-ruby-sass';
 import imagemin from 'gulp-imagemin';
 import cache from 'gulp-cache';
-import coveralls from 'gulp-coveralls';
-import exit from 'exit';
-import istanbul from 'gulp-istanbul';
-import bower from 'gulp-bower';
 
+gulp.task('scripts', function() {
+    return gulp.src(['public/js/**', 'app/**/*.js'])
+      .pipe(concat('main.js'))
+      .pipe(rename({suffix: '.min'}))
+        .pipe(uglify())
+      .pipe(gulp.dest('build/js'));
+});
+    gulp.task('sass', function() {
+    return sass('public/css/common.scss', {style: 'compressed'})
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest('build/css'));
+});
+      gulp.task('images', function() {
+  return gulp.src('public/img/**/*')
+    .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
+    .pipe(gulp.dest('build/img'));
+});
 
-// TODO: use browserify to concatinate js files 
-
-gulp.task('scripts', () => gulp.src(['public/js/**'])
-  .pipe(concat('main.js'))
-  .pipe(rename({ suffix: '.min' }))
-  .pipe(uglify())
-  .pipe(gulp.dest('build/js')));
-
-gulp.task('sass', () => sass('public/scss/*.scss', { style: 'compressed' })
-  // .pipe(concat('main.css'))
-  // .pipe(rename({ suffix: '.min' }))
-  .pipe(gulp.dest('public/css')));
-
-gulp.task('images', () => gulp.src('public/img-assets/**/*')
-  .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
-  .pipe(gulp.dest('public/img')));
 
 gulp.task('server', () => {
   nodemon({
     script: 'server.js',
-    watch: ['server.js', 'app/**/*', 'config/**/*'],
+    watch: ['server.js', 'app.js', 'routes/', 'public/*', 'public/*/**'],
     ext: 'js'
+  }).on('restart', () => {
+    gulp.src('server.js');
   });
 });
-
-gulp.task('watch', () => {
-  // gulp.watch('public/js/**/*.js', ['scripts']);
-  gulp.watch('public/scss/**/*.scss', ['sass']);
-  gulp.watch('public/img-assets/**/*', ['images']);
-});
-
-gulp.task('coveralls', ['test'], () => gulp.src('./coverage/lcov.info')
-  .pipe(coveralls())
-  .pipe(exit()));
-
-
-gulp.task('pre-test', () => gulp.src(['server.js', 'app/**/*.js', 'config/**/*.js'])
-  // Covering files
-  .pipe(istanbul())
-  // Force `require` to return covered files
-  .pipe(istanbul.hookRequire()));
-
-gulp.task('test', ['pre-test'], () =>
-  gulp.src(['test/**/*.js'])
-    .pipe(mocha({ reporter: 'spec' }))
-    // Creating the reports after tests ran
-    .pipe(istanbul.writeReports())
+gulp.task('test', () =>
+    gulp.src(['test/**/*.js'], {read: false}) 
+        .pipe(mocha({reporter: 'spec'}))
 );
-gulp.task('bower', () => bower());
-gulp.task('default', ['sass', 'images', 'watch', 'server', 'bower']);
+  gulp.task('watch', function() {
+  gulp.watch('public/js/*.js', ['scripts']);
+  gulp.watch('public/scss/*.scss', ['sass']);
+  gulp.watch('public/images/**/*', ['images']);
+ });
+
+ 
+gulp.task('default', ['scripts','sass', 'images', 'watch', 'server']);
