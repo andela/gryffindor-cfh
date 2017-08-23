@@ -13,9 +13,8 @@
     "npm": "1.2.x"
   },
   "scripts": {
-    "start": "node node_modules/grunt-cli/bin/grunt",
-    "test": "node node_modules/grunt-cli/bin/grunt test",
-    "postinstall": "node node_modules/grunt-cli/bin/grunt install"
+    "start": "gulp",
+    "test": "gulp test"
   },
   "dependencies": {
     "async": "~0.2.9",
@@ -24,6 +23,7 @@
     "connect-flash": "~0.1.1",
     "connect-mongo": "~0.3.3",
     "console-stamp": "~0.1.1",
+    "es6-constant": "^1.0.2",
     "express": "~3.4.0",
     "forever": "latest",
     "grunt": "~0.4.1",
@@ -45,6 +45,8 @@
     "view-helpers": "~0.1.3"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "eslint": "^4.5.0",
     "eslint-config-airbnb-base": "^11.3.2",
     "eslint-plugin-import": "^2.7.0",
@@ -55,6 +57,16 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-mocha-test": "~0.7.0",
     "grunt-nodemon": "~0.1.1",
+    "gulp": "^3.9.1",
+    "gulp-cache": "^0.4.6",
+    "gulp-concat": "^2.6.1",
+    "gulp-es6-constant": "^0.1.0",
+    "gulp-imagemin": "^3.3.0",
+    "gulp-mocha": "^4.3.1",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-ruby-sass": "^2.1.1",
+    "gulp-uglify": "^3.0.0",
     "should": "~1.3.0",
     "supertest": "~0.8.0"
   }
