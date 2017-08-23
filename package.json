@@ -13,7 +13,7 @@
     "npm": "1.2.x"
   },
   "scripts": {
-    "start": "node node_modules/grunt-cli/bin/grunt",
+    "start": "gulp",
     "test": "node node_modules/grunt-cli/bin/grunt test",
     "postinstall": "node node_modules/grunt-cli/bin/grunt install"
   },
@@ -57,6 +57,7 @@
     "gulp-cache": "^0.4.6",
     "gulp-concat": "^2.6.1",
     "gulp-imagemin": "^3.3.0",
+    "gulp-nodemon": "^2.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.1.1",
     "gulp-uglify": "^3.0.0",

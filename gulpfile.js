@@ -1,14 +1,13 @@
-// Include gulp
 var gulp = require('gulp');
+var nodemon = require('gulp-nodemon');
 
-// Include plugins
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
 var sass = require('gulp-ruby-sass');
 var imagemin = require('gulp-imagemin');
 var cache = require('gulp-cache');
- // Concatenate JS Files
+
 gulp.task('scripts', function() {
     return gulp.src(['public/js/**', 'app/**/*.js'])
       .pipe(concat('main.js'))
@@ -26,14 +25,22 @@ gulp.task('scripts', function() {
     .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
     .pipe(gulp.dest('build/img'));
 });
+
+  gulp.task('server', function() {
+    nodemon({
+        script: 'server.js',
+        watch: ["server.js", "app.js", "routes/", 'public/*', 'public/*/**'],
+        ext: 'js'
+    }).on('restart', () => {
+    gulp.src('server.js')
+      .pipe(notify('Running the start tasks'));
+  });
+});
   gulp.task('watch', function() {
-   // Watch .js files
   gulp.watch('public/js/*.js', ['scripts']);
-   // Watch .scss files
   gulp.watch('public/scss/*.scss', ['sass']);
-   // Watch image files
   gulp.watch('public/images/**/*', ['images']);
  });
 
- // Default Task
-gulp.task('default', ['scripts','sass', 'images', 'watch']);
+ 
+gulp.task('default', ['scripts','sass', 'images', 'watch', 'server']);
