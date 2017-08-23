@@ -5,4 +5,5 @@ public/lib
 c4h_keys.txt
 .env
 .package-lock.json
+.vscode
 
