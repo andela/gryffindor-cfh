@@ -4,6 +4,7 @@ public/lib
 .DS_store
 c4h_keys.txt
 .env
-.package-lock.json
+package-lock.json
 .vscode
 
+package-lock.json
