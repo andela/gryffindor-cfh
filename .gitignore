@@ -4,9 +4,6 @@ public/lib
 .DS_store
 c4h_keys.txt
 .env
-<<<<<<< HEAD
 npm-debug.log
-=======
 .package-lock.json
-
->>>>>>> a9825a6575176e0ff6d8d02999eb60fe3208892e
+build/
