@@ -1,4 +1,5 @@
-![hound status](https://img.shields.io/badge/Protected%20by-Hound-green.svg)
+
+[![Coverage Status](https://coveralls.io/repos/github/andela/gryffindor-cfh/badge.svg?branch=master)](https://coveralls.io/github/andela/gryffindor-cfh?branch=master)
 
 Cards for Humanity - [http://cfh.io](http://cfh.io)
 ===========

@@ -1,0 +1,1346 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for gryffindor-cfh/config/socket/game.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">gryffindor-cfh/config/socket/</a> game.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">41.15% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>93/226</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">14.93% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>10/67</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">44.74% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>17/38</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">41.15% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>93/226</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-yes">51×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-yes">33×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">32×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var async = require('async');
+var _ = require('underscore');
+var questions = require(__dirname + '/../../app/controllers/questions.js');
+var answers = require(__dirname + '/../../app/controllers/answers.js');
+var guestNames = [
+  "Disco Potato",
+  "Silver Blister",
+  "Insulated Mustard",
+  "Funeral Flapjack",
+  "Toenail",
+  "Urgent Drip",
+  "Raging Bagel",
+  "Aggressive Pie",
+  "Loving Spoon",
+  "Swollen Node",
+  "The Spleen",
+  "Dingle Dangle"
+];
+&nbsp;
+function Game(gameID, io) {
+  this.io = io;
+  this.gameID = gameID;
+  this.players = []; // Contains array of player models
+  this.table = []; // Contains array of {card: card, player: player.id}
+  this.winningCard = -1; // Index in this.table
+  this.gameWinner = -1; // Index in this.players
+  this.winnerAutopicked = false;
+  this.czar = -1; // Index in this.players
+  this.playerMinLimit = 3;
+  this.playerMaxLimit = 6;
+  this.pointLimit = 5;
+  this.state = "awaiting players";
+  this.round = 0;
+  this.questions = null;
+  this.answers = null;
+  this.curQuestion = null;
+  this.timeLimits = {
+    stateChoosing: 21,
+    stateJudging: 16,
+    stateResults: 6
+  };
+  // setTimeout ID that triggers the czar judging state
+  // Used to automatically run czar judging if players don't pick before time limit
+  // Gets cleared if players finish picking before time limit.
+  this.choosingTimeout = 0;
+  // setTimeout ID that triggers the result state
+  // Used to automatically run result if czar doesn't decide before time limit
+  // Gets cleared if czar finishes judging before time limit.
+  this.judgingTimeout = 0;
+  this.resultsTimeout = 0;
+  this.guestNames = guestNames.slice();
+}
+&nbsp;
+Game.prototype.payload = function() {
+  var players = [];
+  this.players.forEach(function(player,index) {
+    players.push({
+      hand: player.hand,
+      points: player.points,
+      username: player.username,
+      avatar: player.avatar,
+      premium: player.premium,
+      socketID: player.socket.id,
+      color: player.color
+    });
+  });
+  return {
+    gameID: this.gameID,
+    players: players,
+    czar: this.czar,
+    state: this.state,
+    round: this.round,
+    gameWinner: this.gameWinner,
+    winningCard: this.winningCard,
+    winningCardPlayer: this.winningCardPlayer,
+    winnerAutopicked: this.winnerAutopicked,
+    table: this.table,
+    pointLimit: this.pointLimit,
+    curQuestion: this.curQuestion
+  };
+};
+&nbsp;
+Game.prototype.sendNotification = function(msg) {
+  this.io.sockets.in(this.gameID).emit('notification', {notification: msg});
+};
+&nbsp;
+// Currently called on each joinGame event from socket.js
+// Also called on removePlayer IF game is in 'awaiting players' state
+Game.prototype.assignPlayerColors = function() {
+  this.players.forEach(function(player,index) {
+    player.color = index;
+  });
+};
+&nbsp;
+Game.prototype.assignGuestNames = function() {
+  var self = this;
+  this.players.forEach(function(player) {
+    if (player.username === 'Guest') {
+      var randIndex = Math.floor(Math.random() * self.guestNames.length);
+      player.username = self.guestNames.splice(randIndex, 1)[0];
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (!self.guestNames.length) {
+<span class="cstat-no" title="statement not covered" >        self.guestNames = guestNames.slice();</span>
+      }
+    }
+  });
+};
+&nbsp;
+Game.prototype.prepareGame = function() {
+  this.state = "game in progress";
+&nbsp;
+  this.io.sockets.in(this.gameID).emit('prepareGame',
+    {
+      playerMinLimit: this.playerMinLimit,
+      playerMaxLimit: this.playerMaxLimit,
+      pointLimit: this.pointLimit,
+      timeLimits: this.timeLimits
+    });
+&nbsp;
+  var self = this;
+  async.parallel([
+    this.getQuestions,
+    this.getAnswers
+    ],
+<span class="fstat-no" title="function not covered" >    function(err, results){</span>
+<span class="cstat-no" title="statement not covered" >      if (err) {</span>
+<span class="cstat-no" title="statement not covered" >        console.log(err);</span>
+      }
+<span class="cstat-no" title="statement not covered" >      self.questions = results[0];</span>
+<span class="cstat-no" title="statement not covered" >      self.answers = results[1];</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      self.startGame();</span>
+    });
+};
+&nbsp;
+Game.prototype.startGame = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >  console.log(this.gameID,this.state);</span>
+<span class="cstat-no" title="statement not covered" >  this.shuffleCards(this.questions);</span>
+<span class="cstat-no" title="statement not covered" >  this.shuffleCards(this.answers);</span>
+<span class="cstat-no" title="statement not covered" >  this.stateChoosing(this);</span>
+};
+&nbsp;
+Game.prototype.sendUpdate = function() {
+  this.io.sockets.in(this.gameID).emit('gameUpdate', this.payload());
+};
+&nbsp;
+Game.prototype.stateChoosing = <span class="fstat-no" title="function not covered" >function(self) {</span>
+<span class="cstat-no" title="statement not covered" >  self.state = "waiting for players to pick";</span>
+  // console.log(self.gameID,self.state);
+<span class="cstat-no" title="statement not covered" >  self.table = [];</span>
+<span class="cstat-no" title="statement not covered" >  self.winningCard = -1;</span>
+<span class="cstat-no" title="statement not covered" >  self.winningCardPlayer = -1;</span>
+<span class="cstat-no" title="statement not covered" >  self.winnerAutopicked = false;</span>
+<span class="cstat-no" title="statement not covered" >  self.curQuestion = self.questions.pop();</span>
+<span class="cstat-no" title="statement not covered" >  if (!self.questions.length) {</span>
+<span class="cstat-no" title="statement not covered" >    self.getQuestions(<span class="fstat-no" title="function not covered" >function(err, data) {</span></span>
+<span class="cstat-no" title="statement not covered" >      self.questions = data;</span>
+    });
+  }
+<span class="cstat-no" title="statement not covered" >  self.round++;</span>
+<span class="cstat-no" title="statement not covered" >  self.dealAnswers();</span>
+  // Rotate card czar
+<span class="cstat-no" title="statement not covered" >  if (self.czar &gt;= self.players.length - 1) {</span>
+<span class="cstat-no" title="statement not covered" >    self.czar = 0;</span>
+  } else {
+<span class="cstat-no" title="statement not covered" >    self.czar++;</span>
+  }
+<span class="cstat-no" title="statement not covered" >  self.sendUpdate();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  self.choosingTimeout = setTimeout(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >    self.stateJudging(self);</span>
+  }, self.timeLimits.stateChoosing*1000);
+};
+&nbsp;
+Game.prototype.selectFirst = <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >  if (this.table.length) {</span>
+<span class="cstat-no" title="statement not covered" >    this.winningCard = 0;</span>
+<span class="cstat-no" title="statement not covered" >    var winnerIndex = this._findPlayerIndexBySocket(this.table[0].player);</span>
+<span class="cstat-no" title="statement not covered" >    this.winningCardPlayer = winnerIndex;</span>
+<span class="cstat-no" title="statement not covered" >    this.players[winnerIndex].points++;</span>
+<span class="cstat-no" title="statement not covered" >    this.winnerAutopicked = true;</span>
+<span class="cstat-no" title="statement not covered" >    this.stateResults(this);</span>
+  } else {
+    // console.log(this.gameID,'no cards were picked!');
+<span class="cstat-no" title="statement not covered" >    this.stateChoosing(this);</span>
+  }
+};
+&nbsp;
+Game.prototype.stateJudging = <span class="fstat-no" title="function not covered" >function(self) {</span>
+<span class="cstat-no" title="statement not covered" >  self.state = "waiting for czar to decide";</span>
+  // console.log(self.gameID,self.state);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  if (self.table.length &lt;= 1) {</span>
+    // Automatically select a card if only one card was submitted
+<span class="cstat-no" title="statement not covered" >    self.selectFirst();</span>
+  } else {
+<span class="cstat-no" title="statement not covered" >    self.sendUpdate();</span>
+<span class="cstat-no" title="statement not covered" >    self.judgingTimeout = setTimeout(<span class="fstat-no" title="function not covered" >function() {</span></span>
+      // Automatically select the first submitted card when time runs out.
+<span class="cstat-no" title="statement not covered" >      self.selectFirst();</span>
+    }, self.timeLimits.stateJudging*1000);
+  }
+};
+&nbsp;
+Game.prototype.stateResults = <span class="fstat-no" title="function not covered" >function(self) {</span>
+<span class="cstat-no" title="statement not covered" >  self.state = "winner has been chosen";</span>
+<span class="cstat-no" title="statement not covered" >  console.log(self.state);</span>
+  // TODO: do stuff
+<span class="cstat-no" title="statement not covered" >  var winner = -1;</span>
+<span class="cstat-no" title="statement not covered" >  for (var i = 0; i &lt; self.players.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >    if (self.players[i].points &gt;= self.pointLimit) {</span>
+<span class="cstat-no" title="statement not covered" >      winner = i;</span>
+    }
+  }
+<span class="cstat-no" title="statement not covered" >  self.sendUpdate();</span>
+<span class="cstat-no" title="statement not covered" >  self.resultsTimeout = setTimeout(<span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >    if (winner !== -1) {</span>
+<span class="cstat-no" title="statement not covered" >      self.stateEndGame(winner);</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      self.stateChoosing(self);</span>
+    }
+  }, self.timeLimits.stateResults*1000);
+};
+&nbsp;
+Game.prototype.stateEndGame = <span class="fstat-no" title="function not covered" >function(winner) {</span>
+<span class="cstat-no" title="statement not covered" >  this.state = "game ended";</span>
+<span class="cstat-no" title="statement not covered" >  this.gameWinner = winner;</span>
+<span class="cstat-no" title="statement not covered" >  this.sendUpdate();</span>
+};
+&nbsp;
+Game.prototype.stateDissolveGame = function() {
+  this.state = "game dissolved";
+  this.sendUpdate();
+};
+&nbsp;
+Game.prototype.getQuestions = function(cb) {
+  questions.allQuestionsForGame(<span class="fstat-no" title="function not covered" >function(data){</span>
+<span class="cstat-no" title="statement not covered" >    cb(null,data);</span>
+  });
+};
+&nbsp;
+Game.prototype.getAnswers = function(cb) {
+  answers.allAnswersForGame(<span class="fstat-no" title="function not covered" >function(data){</span>
+<span class="cstat-no" title="statement not covered" >    cb(null,data);</span>
+  });
+};
+&nbsp;
+Game.prototype.shuffleCards = <span class="fstat-no" title="function not covered" >function(cards) {</span>
+<span class="cstat-no" title="statement not covered" >  var shuffleIndex = cards.length;</span>
+<span class="cstat-no" title="statement not covered" >  var temp;</span>
+<span class="cstat-no" title="statement not covered" >  var randNum;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  while(shuffleIndex) {</span>
+<span class="cstat-no" title="statement not covered" >    randNum = Math.floor(Math.random() * shuffleIndex--);</span>
+<span class="cstat-no" title="statement not covered" >    temp = cards[randNum];</span>
+<span class="cstat-no" title="statement not covered" >    cards[randNum] = cards[shuffleIndex];</span>
+<span class="cstat-no" title="statement not covered" >    cards[shuffleIndex] = temp;</span>
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return cards;</span>
+};
+&nbsp;
+Game.prototype.dealAnswers = <span class="fstat-no" title="function not covered" >function(maxAnswers) {</span>
+<span class="cstat-no" title="statement not covered" >  maxAnswers = maxAnswers || 10;</span>
+<span class="cstat-no" title="statement not covered" >  var storeAnswers = <span class="fstat-no" title="function not covered" >function(err, data) {</span></span>
+<span class="cstat-no" title="statement not covered" >    this.answers = data;</span>
+  };
+<span class="cstat-no" title="statement not covered" >  for (var i = 0; i &lt; this.players.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >    while (this.players[i].hand.length &lt; maxAnswers) {</span>
+<span class="cstat-no" title="statement not covered" >      this.players[i].hand.push(this.answers.pop());</span>
+<span class="cstat-no" title="statement not covered" >      if (!this.answers.length) {</span>
+<span class="cstat-no" title="statement not covered" >        this.getAnswers(storeAnswers);</span>
+      }
+    }
+  }
+};
+&nbsp;
+Game.prototype._findPlayerIndexBySocket = function(thisPlayer) {
+  var playerIndex = -1;
+  _.each(this.players, function(player, index) {
+    if (player.socket.id === thisPlayer) {
+      playerIndex = index;
+    }
+  });
+  return playerIndex;
+};
+&nbsp;
+Game.prototype.pickCards = <span class="fstat-no" title="function not covered" >function(thisCardArray, thisPlayer) {</span>
+  // Only accept cards when we expect players to pick a card
+<span class="cstat-no" title="statement not covered" >  if (this.state === "waiting for players to pick") {</span>
+    // Find the player's position in the players array
+<span class="cstat-no" title="statement not covered" >    var playerIndex = this._findPlayerIndexBySocket(thisPlayer);</span>
+<span class="cstat-no" title="statement not covered" >    console.log('player is at index',playerIndex);</span>
+<span class="cstat-no" title="statement not covered" >    if (playerIndex !== -1) {</span>
+      // Verify that the player hasn't previously picked a card
+<span class="cstat-no" title="statement not covered" >      var previouslySubmitted = false;</span>
+<span class="cstat-no" title="statement not covered" >      _.each(this.table, <span class="fstat-no" title="function not covered" >function(pickedSet, index) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (pickedSet.player === thisPlayer) {</span>
+<span class="cstat-no" title="statement not covered" >          previouslySubmitted = true;</span>
+        }
+      });
+<span class="cstat-no" title="statement not covered" >      if (!previouslySubmitted) {</span>
+        // Find the indices of the cards in the player's hand (given the card ids)
+<span class="cstat-no" title="statement not covered" >        var tableCard = [];</span>
+<span class="cstat-no" title="statement not covered" >        for (var i = 0; i &lt; thisCardArray.length; i++ ) {</span>
+<span class="cstat-no" title="statement not covered" >          var cardIndex = null;</span>
+<span class="cstat-no" title="statement not covered" >          for (var j = 0; j &lt; this.players[playerIndex].hand.length; j++) {</span>
+<span class="cstat-no" title="statement not covered" >            if (this.players[playerIndex].hand[j].id === thisCardArray[i]) {</span>
+<span class="cstat-no" title="statement not covered" >              cardIndex = j;</span>
+            }
+          }
+<span class="cstat-no" title="statement not covered" >          console.log('card',i,'is at index',cardIndex);</span>
+<span class="cstat-no" title="statement not covered" >          if (cardIndex !== null) {</span>
+<span class="cstat-no" title="statement not covered" >            tableCard.push(this.players[playerIndex].hand.splice(cardIndex,1)[0]);</span>
+          }
+<span class="cstat-no" title="statement not covered" >          console.log('table object at',cardIndex,':',tableCard);</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if (tableCard.length === this.curQuestion.numAnswers) {</span>
+<span class="cstat-no" title="statement not covered" >          this.table.push({</span>
+            card: tableCard,
+            player: this.players[playerIndex].socket.id
+          });
+        }
+<span class="cstat-no" title="statement not covered" >        console.log('final table object',this.table);</span>
+<span class="cstat-no" title="statement not covered" >        if (this.table.length === this.players.length-1) {</span>
+<span class="cstat-no" title="statement not covered" >          clearTimeout(this.choosingTimeout);</span>
+<span class="cstat-no" title="statement not covered" >          this.stateJudging(this);</span>
+        } else {
+<span class="cstat-no" title="statement not covered" >          this.sendUpdate();</span>
+        }
+      }
+    }
+  } else {
+<span class="cstat-no" title="statement not covered" >    console.log('NOTE:',thisPlayer,'picked a card during',this.state);</span>
+  }
+};
+&nbsp;
+Game.prototype.getPlayer = <span class="fstat-no" title="function not covered" >function(thisPlayer) {</span>
+<span class="cstat-no" title="statement not covered" >  var playerIndex = this._findPlayerIndexBySocket(thisPlayer);</span>
+<span class="cstat-no" title="statement not covered" >  if (playerIndex &gt; -1) {</span>
+<span class="cstat-no" title="statement not covered" >    return this.players[playerIndex];</span>
+  } else {
+<span class="cstat-no" title="statement not covered" >    return {};</span>
+  }
+};
+&nbsp;
+Game.prototype.removePlayer = function(thisPlayer) {
+  var playerIndex = this._findPlayerIndexBySocket(thisPlayer);
+&nbsp;
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (playerIndex !== -1) {
+    // Just used to send the remaining players a notification
+    var playerName = this.players[playerIndex].username;
+&nbsp;
+    // If this player submitted a card, take it off the table
+    for (var i = 0; i &lt; this.table.length; i++) {
+<span class="cstat-no" title="statement not covered" >      if (this.table[i].player === thisPlayer) {</span>
+<span class="cstat-no" title="statement not covered" >        this.table.splice(i,1);</span>
+      }
+    }
+&nbsp;
+    // Remove player from this.players
+    this.players.splice(playerIndex,1);
+&nbsp;
+    if (this.state === "awaiting players") {
+      this.assignPlayerColors();
+    }
+&nbsp;
+    // Check if the player is the czar
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (this.czar === playerIndex) {
+      // If the player is the czar...
+      // If players are currently picking a card, advance to a new round.
+<span class="cstat-no" title="statement not covered" >      if (this.state === "waiting for players to pick") {</span>
+<span class="cstat-no" title="statement not covered" >        clearTimeout(this.choosingTimeout);</span>
+<span class="cstat-no" title="statement not covered" >        this.sendNotification('The Czar left the game! Starting a new round.');</span>
+<span class="cstat-no" title="statement not covered" >        return this.stateChoosing(this);</span>
+      } else <span class="cstat-no" title="statement not covered" >if (this.state === "waiting for czar to decide") {</span>
+        // If players are waiting on a czar to pick, auto pick.
+<span class="cstat-no" title="statement not covered" >        this.sendNotification('The Czar left the game! First answer submitted wins!');</span>
+<span class="cstat-no" title="statement not covered" >        this.pickWinning(this.table[0].card[0].id, thisPlayer, true);</span>
+      }
+    } else {
+      // Update the czar's position if the removed player is above the current czar
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (playerIndex &lt; this.czar) {
+<span class="cstat-no" title="statement not covered" >        this.czar--;</span>
+      }
+      this.sendNotification(playerName+' has left the game.');
+    }
+&nbsp;
+    this.sendUpdate();
+  }
+};
+&nbsp;
+Game.prototype.pickWinning = <span class="fstat-no" title="function not covered" >function(thisCard, thisPlayer, autopicked) {</span>
+<span class="cstat-no" title="statement not covered" >  autopicked = autopicked || false;</span>
+<span class="cstat-no" title="statement not covered" >  var playerIndex = this._findPlayerIndexBySocket(thisPlayer);</span>
+<span class="cstat-no" title="statement not covered" >  if ((playerIndex === this.czar || autopicked) &amp;&amp; this.state === "waiting for czar to decide") {</span>
+<span class="cstat-no" title="statement not covered" >    var cardIndex = -1;</span>
+<span class="cstat-no" title="statement not covered" >    _.each(this.table, <span class="fstat-no" title="function not covered" >function(winningSet, index) {</span></span>
+<span class="cstat-no" title="statement not covered" >      if (winningSet.card[0].id === thisCard) {</span>
+<span class="cstat-no" title="statement not covered" >        cardIndex = index;</span>
+      }
+    });
+<span class="cstat-no" title="statement not covered" >    if (cardIndex !== -1) {</span>
+<span class="cstat-no" title="statement not covered" >      this.winningCard = cardIndex;</span>
+<span class="cstat-no" title="statement not covered" >      var winnerIndex = this._findPlayerIndexBySocket(this.table[cardIndex].player);</span>
+<span class="cstat-no" title="statement not covered" >      this.sendNotification(this.players[winnerIndex].username+' has won the round!');</span>
+<span class="cstat-no" title="statement not covered" >      this.winningCardPlayer = winnerIndex;</span>
+<span class="cstat-no" title="statement not covered" >      this.players[winnerIndex].points++;</span>
+<span class="cstat-no" title="statement not covered" >      clearTimeout(this.judgingTimeout);</span>
+<span class="cstat-no" title="statement not covered" >      this.winnerAutopicked = autopicked;</span>
+<span class="cstat-no" title="statement not covered" >      this.stateResults(this);</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      console.log('WARNING: czar',thisPlayer,'picked a card that was not on the table.');</span>
+    }
+  } else {
+    // TODO: Do something?
+<span class="cstat-no" title="statement not covered" >    this.sendUpdate();</span>
+  }
+};
+&nbsp;
+Game.prototype.killGame = function() {
+  console.log('Killing game',this.gameID);
+  clearTimeout(this.resultsTimeout);
+  clearTimeout(this.choosingTimeout);
+  clearTimeout(this.judgingTimeout);
+};
+&nbsp;
+module.exports = Game;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Aug 24 2017 12:00:53 GMT+0100 (WAT)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>
