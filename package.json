@@ -14,7 +14,9 @@
   },
   "scripts": {
     "start": "node_modules/.bin/gulp",
-    "test": "gulp test"
+    "test": "gulp test",
+    "cover": "istanbul cover _mocha",
+    "coveralls": "npm run cover -- test/**/ -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "dependencies": {
     "async": "~0.2.9",
