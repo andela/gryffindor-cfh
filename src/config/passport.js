@@ -1,3 +1,4 @@
+import generateToken from '../config/generateToken';
 var mongoose = require('mongoose'),
     LocalStrategy = require('passport-local').Strategy,
     TwitterStrategy = require('passport-twitter').Strategy,
@@ -49,6 +50,7 @@ module.exports = function(passport) {
                 }
                 user.email = null;
                 user.hashed_password = null;
+                user.token = generateToken(user);
                 return done(null, user);
             });
         }
