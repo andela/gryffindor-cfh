@@ -55,9 +55,13 @@
     "console-stamp": "~0.1.1",
 <<<<<<< HEAD
     "dotenv": "^4.0.0",
+<<<<<<< HEAD
 =======
     "es6-constant": "^1.0.2",
 >>>>>>> chore/grunt-replaced-with-gulp
+=======
+     "gulp": "^3.9.1",
+>>>>>>> dependencies-updated
     "express": "~3.4.0",
     "forever": "latest",
     "grunt": "~0.4.1",
@@ -106,7 +110,6 @@
     "grunt-contrib-watch": "~0.5.3",
     "grunt-mocha-test": "~0.7.0",
     "grunt-nodemon": "~0.1.1",
-    "gulp": "^3.9.1",
     "gulp-cache": "^0.4.6",
     "gulp-concat": "^2.6.1",
     "gulp-es6-constant": "^0.1.0",
