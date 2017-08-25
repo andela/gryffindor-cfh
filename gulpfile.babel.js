@@ -9,6 +9,7 @@ import imagemin from 'gulp-imagemin';
 import cache from 'gulp-cache';
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 gulp.task('scripts', function() {
     return gulp.src(['public/js/**', 'app/**/*.js'])
       .pipe(concat('main.js'))
@@ -28,20 +29,29 @@ gulp.task('scripts', function() {
 });
 
 =======
+=======
+// TODO: use browserify to concatinate js files 
+
+>>>>>>> chore/gulp-file-refactored
 gulp.task('scripts', () => gulp.src(['public/js/**'])
   .pipe(concat('main.js'))
   .pipe(rename({ suffix: '.min' }))
   .pipe(uglify())
   .pipe(gulp.dest('build/js')));
 
-gulp.task('sass', () => sass('public/css/common.scss', { style: 'compressed' })
-  .pipe(rename({ suffix: '.min' }))
-  .pipe(gulp.dest('build/css')));
+gulp.task('sass', () => sass('public/scss/*.scss', { style: 'compressed' })
+  // .pipe(concat('main.css'))
+  // .pipe(rename({ suffix: '.min' }))
+  .pipe(gulp.dest('public/css')));
 
-gulp.task('images', () => gulp.src('public/img/**/*')
+gulp.task('images', () => gulp.src('public/img-assets/**/*')
   .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
+<<<<<<< HEAD
   .pipe(gulp.dest('build/img')));
 >>>>>>> Chore/gulp-and-pakage.json-file-refactored
+=======
+  .pipe(gulp.dest('public/img')));
+>>>>>>> chore/gulp-file-refactored
 
 gulp.task('server', () => {
   nodemon({
@@ -65,6 +75,7 @@ gulp.task('test', () => {
 });
   
 gulp.task('watch', () => {
+<<<<<<< HEAD
   gulp.watch('public/js/**/*.js', ['scripts']);
 >>>>>>> Chore/gulp-and-pakage.json-file-refactored
   gulp.watch('public/scss/*.scss', ['sass']);
@@ -73,3 +84,12 @@ gulp.task('watch', () => {
 
  
 gulp.task('default', ['scripts','sass', 'images', 'watch', 'server']);
+=======
+  // gulp.watch('public/js/**/*.js', ['scripts']);
+  gulp.watch('public/scss/**/*.scss', ['sass']);
+  gulp.watch('public/img-assets/**/*', ['images']);
+});
+
+
+gulp.task('default', ['sass', 'images', 'watch', 'server']);
+>>>>>>> chore/gulp-file-refactored
