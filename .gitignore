@@ -1,11 +1,12 @@
 node_modules
 public/lib
+coverage/*
 .sass-cache/
 .DS_store
 c4h_keys.txt
 .env
 npm-debug.log
-.package-lock.json
+package-lock.json
 build/
 .vscode
 coverage
