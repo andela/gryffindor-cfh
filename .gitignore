@@ -9,8 +9,12 @@ npm-debug.log
 .package-lock.json
 dist/
 .vscode
+<<<<<<< HEAD
 coverage
 gulp-cache
 build/
 .gulp-cache
+=======
+package-lock.json
+>>>>>>> Chore/150438314/deploy base application (#15)
 
