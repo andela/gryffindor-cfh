@@ -13,7 +13,7 @@
     "npm": "1.2.x"
   },
   "scripts": {
-    "start": "gulp",
+    "start": "node_modules/.bin/gulp",
     "test": "gulp test"
   },
   "dependencies": {
@@ -23,7 +23,6 @@
     "connect-flash": "~0.1.1",
     "connect-mongo": "~0.3.3",
     "console-stamp": "~0.1.1",
-    "es6-constant": "^1.0.2",
     "express": "~3.4.0",
     "forever": "latest",
     "grunt": "~0.4.1",
@@ -60,7 +59,6 @@
     "gulp": "^3.9.1",
     "gulp-cache": "^0.4.6",
     "gulp-concat": "^2.6.1",
-    "gulp-es6-constant": "^0.1.0",
     "gulp-imagemin": "^3.3.0",
     "gulp-mocha": "^4.3.1",
     "gulp-nodemon": "^2.2.1",
