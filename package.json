@@ -14,6 +14,7 @@
   },
   "scripts": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "start": "node_modules/.bin/gulp",
     "test": "node_modules/.bin/gulp test",
     "postinstall": "chmod +x ./update-commit-hooks.sh && ./update-commit-hooks.sh",
@@ -26,6 +27,9 @@
     "postinstall": "node node_modules/grunt-cli/bin/grunt install"
 >>>>>>> chore/#150438322/gulp-nodemon-added
 =======
+=======
+    "start": "node_modules/.bin/gulp",
+>>>>>>> Chore/gulp-and-pakage.json-file-refactored
     "test": "gulp test"
 <<<<<<< HEAD
     
@@ -54,6 +58,7 @@
     "connect-mongo": "~0.3.3",
     "console-stamp": "~0.1.1",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "dotenv": "^4.0.0",
 <<<<<<< HEAD
 =======
@@ -62,6 +67,8 @@
 =======
      "gulp": "^3.9.1",
 >>>>>>> dependencies-updated
+=======
+>>>>>>> Chore/gulp-and-pakage.json-file-refactored
     "express": "~3.4.0",
     "forever": "latest",
     "grunt": "~0.4.1",
@@ -112,7 +119,6 @@
     "grunt-nodemon": "~0.1.1",
     "gulp-cache": "^0.4.6",
     "gulp-concat": "^2.6.1",
-    "gulp-es6-constant": "^0.1.0",
     "gulp-imagemin": "^3.3.0",
 <<<<<<< HEAD
 <<<<<<< HEAD
