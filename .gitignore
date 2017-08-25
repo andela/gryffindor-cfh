@@ -12,6 +12,7 @@ package-lock.json
 gulp-cache
 build/
 .vscode
+<<<<<<< HEAD
 coverage
 gulp-cache
 
@@ -21,3 +22,6 @@ gulp-cache
 .package-lock.json
 build/
 >>>>>>> chore/#150438322/grunt-removed-gulp-corrected
+=======
+
+>>>>>>> Update .gitignore
