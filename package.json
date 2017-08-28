@@ -14,9 +14,9 @@
   },
   "scripts": {
     "start": "node_modules/.bin/gulp",
-    "test": "gulp test",
+    "test": "node_modules/.bin/gulp test",
     "postinstall": "node node_modules/grunt-cli/bin/grunt install",
-    "cover": "istanbul cover _mocha"
+    "coveralls": "node_modules/.bin/gulp coveralls"
   },
   "dependencies": {
     "async": "~0.2.9",
@@ -32,12 +32,8 @@
     "grunt": "~0.4.1",
     "grunt-bower-task": "~0.4.0",
     "grunt-cli": "~0.1.9",
-<<<<<<< HEAD
-=======
     "gulp": "^3.9.1",
     "gulp-ruby-sass": "^2.1.1",
->>>>>>> chore: #150438323/coveralls-code-coverage
-    "istanbul": "^0.4.5",
     "jade": "~0.35.0",
     "mean-logger": "~0.0.1",
     "mongodb": "^2.2.31",
@@ -71,7 +67,8 @@
     "gulp-concat": "^2.6.1",
     "gulp-coveralls": "^0.1.4",
     "gulp-imagemin": "^3.3.0",
-    "gulp-mocha": "^4.3.1",
+    "gulp-istanbul": "^1.1.2",
+    "gulp-mocha": "3.0.1",
     "gulp-nodemon": "^2.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.1.1",
