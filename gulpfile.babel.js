@@ -7,6 +7,11 @@ import rename from 'gulp-rename';
 import sass from 'gulp-ruby-sass';
 import imagemin from 'gulp-imagemin';
 import cache from 'gulp-cache';
+import coveralls from 'gulp-coveralls';
+import exit from 'exit';
+import istanbul from 'gulp-istanbul';
+import bower from 'gulp-bower';
+
 
 // TODO: use browserify to concatinate js files 
 
@@ -33,16 +38,28 @@ gulp.task('server', () => {
   });
 });
 
-gulp.task('test', () => {
-  gulp.src(['test/**/*.js'], { read: false })
-    .pipe(mocha({ reporter: 'spec' }));
-});
-  
 gulp.task('watch', () => {
   // gulp.watch('public/js/**/*.js', ['scripts']);
   gulp.watch('public/scss/**/*.scss', ['sass']);
   gulp.watch('public/img-assets/**/*', ['images']);
 });
 
+gulp.task('coveralls', ['test'], () => gulp.src('./coverage/lcov.info')
+  .pipe(coveralls())
+  .pipe(exit()));
 
-gulp.task('default', ['sass', 'images', 'watch', 'server']);
+
+gulp.task('pre-test', () => gulp.src(['server.js', 'app/**/*.js', 'config/**/*.js'])
+  // Covering files
+  .pipe(istanbul())
+  // Force `require` to return covered files
+  .pipe(istanbul.hookRequire()));
+
+gulp.task('test', ['pre-test'], () =>
+  gulp.src(['test/**/*.js'])
+    .pipe(mocha({ reporter: 'spec' }))
+    // Creating the reports after tests ran
+    .pipe(istanbul.writeReports())
+);
+gulp.task('bower', () => bower());
+gulp.task('default', ['sass', 'images', 'watch', 'server', 'bower']);
