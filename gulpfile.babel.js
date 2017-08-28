@@ -10,6 +10,7 @@ import cache from 'gulp-cache';
 import coveralls from 'gulp-coveralls';
 import exit from 'exit';
 import istanbul from 'gulp-istanbul';
+import bower from 'gulp-bower';
 
 
 // TODO: use browserify to concatinate js files 
@@ -60,5 +61,5 @@ gulp.task('test', ['pre-test'], () =>
     // Creating the reports after tests ran
     .pipe(istanbul.writeReports())
 );
-
-gulp.task('default', ['sass', 'images', 'watch', 'server']);
+gulp.task('bower', () => bower());
+gulp.task('default', ['sass', 'images', 'watch', 'server', 'bower']);
