@@ -7,6 +7,9 @@ import rename from 'gulp-rename';
 import sass from 'gulp-ruby-sass';
 import imagemin from 'gulp-imagemin';
 import cache from 'gulp-cache';
+import coveralls from 'gulp-coveralls';
+import exit from 'exit';
+import istanbul from 'istanbul';
 
 // TODO: use browserify to concatinate js files 
 
@@ -37,12 +40,17 @@ gulp.task('test', () => {
   gulp.src(['test/**/*.js'], { read: false })
     .pipe(mocha({ reporter: 'spec' }));
 });
-  
+
 gulp.task('watch', () => {
   // gulp.watch('public/js/**/*.js', ['scripts']);
   gulp.watch('public/scss/**/*.scss', ['sass']);
   gulp.watch('public/img-assets/**/*', ['images']);
 });
+
+gulp.task('coveralls', ['test'], () => gulp.src('./coverage/lcov.info')
+  .pipe(istanbul({ includeUntested: true }))
+  .pipe(coveralls())
+  .pipe(exit()));
 
 
 gulp.task('default', ['sass', 'images', 'watch', 'server']);
