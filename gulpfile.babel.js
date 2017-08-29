@@ -79,6 +79,11 @@ gulp.task('server', () => {
   });
 });
 
+gulp.task('test', () => {
+  gulp.src(['test/**/*.js'], { read: false })
+    .pipe(mocha({ reporter: 'spec' }));
+});
+
 gulp.task('watch', () => {
   // gulp.watch('public/js/**/*.js', ['scripts']);
   gulp.watch('public/scss/**/*.scss', ['sass']);
