@@ -1,12 +1,11 @@
 // import async from 'async';
-import validateRequestBody from '../config/validateRequestBody';
+// import validateRequestBody from '../config/validateRequestBody';
 import users from '../app/controllers/users';
 import answers from '../app/controllers/answers';
 import questions from '../app/controllers/questions';
 import avatars from '../app/controllers/avatars';
 import index from '../app/controllers/index';
 
-/* global res req next */
 
 /**
  * routes for cfh
@@ -15,7 +14,7 @@ import index from '../app/controllers/index';
  * @param {*} auth 
  * @returns {void}
  */
-export default function (app, passport) {
+export default function (app, passport, auth) {
   // User Routes
   // var users = require('../app/controllers/users');
   app.get('/signin', users.signin);
@@ -103,15 +102,11 @@ export default function (app, passport) {
 
   // New routes to use jwt authentication
   app.post('/api/auth/login',
-    validateRequestBody(req.body.email, req.body.password, null, next),
     passport.authenticate('local', {
-      failureRedirect: '/signin',
+      failureRedirect: '/login',
       failureFlash: 'Invalid email or password.'
     }),
-    (user) => {
-      res.status(200).send({
-        message: 'sign in complete',
-        userObject: user
-      });
+    (req, res) => {
+      res.status().send('sign in complete');
     });
 }
