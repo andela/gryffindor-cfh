@@ -35,22 +35,28 @@ module.exports = function(passport) {
             User.findOne({
                 email: email
             }, function(err, user) {
+                // console.log('finds the user, resolves');
                 if (err) {
+                    console.log(err);
                     return done(err);
                 }
                 if (!user) {
+                    console.log('doesnt find the user you were looking for');
                     return done(null, false, {
                         message: 'Unknown user'
                     });
                 }
                 if (!user.authenticate(password)) {
+                    console.log('finds user but incorrect password');
                     return done(null, false, {
                         message: 'Invalid password'
                     });
                 }
+                console.log('the user: ', user);
                 user.email = null;
                 user.hashed_password = null;
                 user.token = generateToken(user);
+                console.log('generates token');
                 return done(null, user);
             });
         }
