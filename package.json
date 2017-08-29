@@ -15,7 +15,6 @@
   "scripts": {
     "start": "node_modules/.bin/gulp",
     "test": "node_modules/.bin/gulp test",
-    "postinstall": "node node_modules/grunt-cli/bin/grunt install",
     "coveralls": "node_modules/.bin/gulp coveralls"
   },
   "dependencies": {
