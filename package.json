@@ -13,36 +13,17 @@
     "npm": ">=1.2.x"
   },
   "scripts": {
-<<<<<<< HEAD
-<<<<<<< HEAD
     "start": "node_modules/.bin/gulp",
     "test": "node_modules/.bin/gulp test",
     "postinstall": "chmod +x ./update-commit-hooks.sh && ./update-commit-hooks.sh",
     "commit-hook": "rsync pre-commit .git/hooks && chmod 755 .git/hooks/pre-commit",
     "coveralls": "node_modules/.bin/gulp coveralls"
-=======
-    "start": "gulp",
-<<<<<<< HEAD
-    "test": "node node_modules/grunt-cli/bin/grunt test",
-    "postinstall": "node node_modules/grunt-cli/bin/grunt install"
->>>>>>> chore/#150438322/gulp-nodemon-added
-=======
-=======
-    "start": "node_modules/.bin/gulp",
->>>>>>> Chore/gulp-and-pakage.json-file-refactored
-    "test": "gulp test"
-<<<<<<< HEAD
-    
->>>>>>> chore/grunt repleace with gulp
-=======
->>>>>>> chore/grunt-replaced-with-gulp
   },
   "dependencies": {
     "async": "~0.2.9",
     "bcryptjs": "~1.0.4",
     "bower": "~1.3.8",
     "connect-flash": "~0.1.1",
-<<<<<<< HEAD
     "connect-mongo": "^1.3.2",
     "console-stamp": "~0.1.1",
     "dotenv": "^4.0.0",
@@ -54,29 +35,6 @@
     "jade": "~0.35.0",
     "mean-logger": "~0.0.1",
     "mongodb": "^2.2.31",
-=======
-    "connect-mongo": "~0.3.3",
-    "console-stamp": "~0.1.1",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "dotenv": "^4.0.0",
-<<<<<<< HEAD
-=======
-    "es6-constant": "^1.0.2",
->>>>>>> chore/grunt-replaced-with-gulp
-=======
-     "gulp": "^3.9.1",
->>>>>>> dependencies-updated
-=======
->>>>>>> Chore/gulp-and-pakage.json-file-refactored
-    "express": "~3.4.0",
-    "forever": "latest",
-    "grunt": "~0.4.1",
-    "grunt-bower-task": "~0.4.0",
-    "grunt-cli": "~0.1.9",
-    "jade": "~0.35.0",
-    "mean-logger": "~0.0.1",
->>>>>>> gulp  task runner  added
     "mongoose": "~3.6.20",
     "passport": "~0.1.17",
     "passport-facebook": "~2.0.0",
@@ -91,10 +49,6 @@
     "view-helpers": "~0.1.3"
   },
   "devDependencies": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> chore/grunt-replaced-with-gulp
     "babel-core": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "eslint": "^4.5.0",
@@ -109,26 +63,6 @@
     "gulp-istanbul": "^1.1.2",
     "gulp-mocha": "3.0.1",
     "gulp-nodemon": "^2.2.1",
-=======
-    "grunt": "~0.4.1",
-    "grunt-concurrent": "~0.4.0",
-    "grunt-contrib-jshint": "~0.6.4",
-    "grunt-contrib-sass": "~0.5.0",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-mocha-test": "~0.7.0",
-    "grunt-nodemon": "~0.1.1",
-    "gulp-cache": "^0.4.6",
-    "gulp-concat": "^2.6.1",
-    "gulp-imagemin": "^3.3.0",
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> gulp  task runner  added
-=======
-=======
-    "gulp-mocha": "^4.3.1",
->>>>>>> chore/grunt repleace with gulp
-    "gulp-nodemon": "^2.2.1",
->>>>>>> chore/#150438322/gulp-nodemon-added
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^2.1.1",
     "gulp-uglify": "^3.0.0",
