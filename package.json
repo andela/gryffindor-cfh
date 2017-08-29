@@ -15,7 +15,8 @@
   "scripts": {
     "start": "node_modules/.bin/gulp",
     "test": "node_modules/.bin/gulp test",
-    "postinstall": "node node_modules/grunt-cli/bin/grunt install",
+    "postinstall": "chmod +x ./update-commit-hooks.sh && ./update-commit-hooks.sh",
+    "commit-hook": "rsync pre-commit .git/hooks && chmod 755 .git/hooks/pre-commit",
     "coveralls": "node_modules/.bin/gulp coveralls"
   },
   "dependencies": {
@@ -52,6 +53,7 @@
     "babel-preset-es2015": "^6.24.1",
     "eslint": "^4.5.0",
     "eslint-config-airbnb-base": "^11.3.2",
+    "eslint-import-resolver-node": "^0.3.0",
     "eslint-plugin-import": "^2.7.0",
     "gulp-bower": "0.0.13",
     "gulp-cache": "^0.4.6",
