@@ -16,6 +16,7 @@
     "test": "NODE_ENV=test node_modules/.bin/gulp test",
     "postinstall": "chmod +x ./update-commit-hooks.sh && ./update-commit-hooks.sh",
     "commit-hook": "rsync pre-commit .git/hooks && chmod 755 .git/hooks/pre-commit",
+    "dev-test": "mocha --compilers js:babel-core/register",
     "coveralls": "node_modules/.bin/gulp coveralls"
   },
   "dependencies": {
