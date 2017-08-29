@@ -16,7 +16,11 @@
     "test": "NODE_ENV=test node_modules/.bin/gulp test",
     "postinstall": "chmod +x ./update-commit-hooks.sh && ./update-commit-hooks.sh",
     "commit-hook": "rsync pre-commit .git/hooks && chmod 755 .git/hooks/pre-commit",
+<<<<<<< HEAD
     "dev-test": "karma start karma.conf.js --compilers js:babel-core/register",
+=======
+    "dev-test": "mocha --compilers js:babel-core/register",
+>>>>>>> chore(frontend unit testing ): implement unit testing at the front end
     "coveralls": "node_modules/.bin/gulp coveralls"
   },
   "dependencies": {
