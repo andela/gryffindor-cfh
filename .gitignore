@@ -1,27 +1,15 @@
 node_modules
-public/lib
+public/
 coverage/*
 .sass-cache/
 .DS_store
 c4h_keys.txt
 .env
 npm-debug.log
-<<<<<<< HEAD
-<<<<<<< HEAD
-package-lock.json
-gulp-cache
-build/
+.package-lock.json
+dist/
 .vscode
-<<<<<<< HEAD
 coverage
 gulp-cache
-
-=======
->>>>>>> chore/#150438322/convert-from-grunt-to-gulp
-=======
-.package-lock.json
 build/
->>>>>>> chore/#150438322/grunt-removed-gulp-corrected
-=======
 
->>>>>>> Update .gitignore
