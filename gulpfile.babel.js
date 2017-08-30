@@ -60,6 +60,12 @@ gulp.task('test', ['pre-test'], () =>
     .pipe(mocha({ reporter: 'spec' }))
     // Creating the reports after tests ran
     .pipe(istanbul.writeReports())
+    .once('error', () => {
+      process.exit(1);
+    })
+    .once('end', () => {
+      process.exit();
+    })
 );
 gulp.task('bower', () => bower());
 gulp.task('default', ['sass', 'images', 'watch', 'server', 'bower']);
