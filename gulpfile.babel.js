@@ -21,7 +21,7 @@ gulp.task('sass', () => sass('client/scss/main.scss', { style: 'compressed' })
   .pipe(gulp.dest('public/css')));
 
 gulp.task('images', () => gulp.src('client/img-assets/**/*')
-  .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
+  .pipe(cache(imagemin({ optimizationLegivel: 5, progressive: true, interlaced: true })))
   .pipe(gulp.dest('public/img')));
 
 gulp.task('server', ['compile'], () =>
@@ -61,6 +61,12 @@ gulp.task('test', ['pre-test'], () =>
     .pipe(mocha({ reporter: 'spec' }))
     // Creating the reports after tests ran
     .pipe(istanbul.writeReports())
+    .once('error', () => {
+      process.exit(1);
+    })
+    .once('end', () => {
+      process.exit();
+    })
 );
 gulp.task('transpile', () => gulp.src(['client/js/**/*.js'])
   .pipe(babel())
