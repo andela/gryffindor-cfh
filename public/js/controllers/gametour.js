@@ -19,15 +19,6 @@ angular.module('mean.system')
       intro: 'Choose an answer to the current question. After time out, CZAR then select a favorite answer. whoever submits CZAR\'s favorite answer wins the round.'
     },
     {
-      element: '#player-container',
-      intro: 'Players in the current game are shown here',
-    },
-    {
-      element: '#chat-for-Tour',
-      intro: 'Here, you can chat with other players.',
-      position: 'top'
-    },
-    {
       element: '#abandon-game-button',
       intro: 'Played enough? Click this button to quit the game'
     },
