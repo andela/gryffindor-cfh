@@ -1,18 +1,15 @@
-/* eslint-disable no-underscore-dangle, func-names,
-import/no-dynamic-require, vars-on-top, no-var */
-
-const Game = require('./game');
-const Player = require('./player');
+/* eslint-disable no-shadow, no-unused-vars, import/no-dynamic-require */
+import mongoose from 'mongoose';
+import Game from './game';
+import Player from './player';
+import User from './../../app/models/user';
 require('console-stamp')(console, 'm/dd HH:MM:ss');
-const mongoose = require('mongoose');
-const User = mongoose.model('User');
 
 const avatars = require(`${__dirname}/../../app/controllers/avatars.js`).all();
 // Valid characters to use to generate random private game IDs
 const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
 
-export default (io) => {
-  let game; // eslint-disable-line
+module.exports = (io) => {
   const allGames = {};
   const allPlayers = {};
   const gamesNeedingPlayers = [];
@@ -77,7 +74,7 @@ export default (io) => {
     });
   });
 
-  var joinGame = function (socket, data) {
+  const joinGame = (socket, data) => {
     const player = new Player(socket);
     data = data || {};
     player.userID = data.userID || 'unauthenticated';
@@ -108,13 +105,13 @@ export default (io) => {
     }
   };
 
-  var getGame = function (player, socket, requestedGameId, createPrivate) {
+  const getGame = (player, socket, requestedGameId, createPrivate) => {
     requestedGameId = requestedGameId || '';
     createPrivate = createPrivate || false;
     console.log(socket.id, 'is requesting room', requestedGameId);
     if (requestedGameId.length && allGames[requestedGameId]) {
       console.log('Room', requestedGameId, 'is valid');
-      const game = allGames[requestedGameId]; // eslint-disable-line
+      const game = allGames[requestedGameId];
       // Ensure that the same socket doesn't try to join the same game
       // This can happen because we rewrite the browser's URL to reflect
       // the new game ID, causing the view to reload.
@@ -150,8 +147,8 @@ export default (io) => {
     }
   };
 
-  var fireGame = function (player, socket) {
-    let game; // eslint-disable-line
+  const fireGame = (player, socket) => {
+    let game;
     if (gamesNeedingPlayers.length <= 0) {
       gameID += 1;
       const gameIDStr = gameID.toString();
@@ -184,7 +181,7 @@ export default (io) => {
     }
   };
 
-  var createGameWithFriends = function (player, socket) {
+  const createGameWithFriends = (player, socket) => {
     let isUniqueRoom = false;
     let uniqueRoom = '';
     // Generate a random 6-character game ID
@@ -198,7 +195,7 @@ export default (io) => {
       }
     }
     console.log(socket.id, 'has created unique game', uniqueRoom);
-    const game = new Game(uniqueRoom, io); // eslint-disable-line
+    const game = new Game(uniqueRoom, io);
     allPlayers[socket.id] = true;
     game.players.push(player);
     allGames[uniqueRoom] = game;
@@ -209,10 +206,10 @@ export default (io) => {
     game.sendUpdate();
   };
 
-  var exitGame = function (socket) {
+  const exitGame = (socket) => {
     console.log(socket.id, 'has disconnected');
     if (allGames[socket.gameID]) { // Make sure game exists
-      const game = allGames[socket.gameID]; // eslint-disable-line
+      const game = allGames[socket.gameID];
       console.log(socket.id, 'has left game', game.gameID);
       delete allPlayers[socket.id];
       if (game.state === 'awaiting players' ||
@@ -230,3 +227,4 @@ export default (io) => {
     socket.leave(socket.gameID);
   };
 };
+

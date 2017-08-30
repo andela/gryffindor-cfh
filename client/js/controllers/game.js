@@ -176,6 +176,7 @@ angular.module('mean.system')
               $scope.modalShown = true;
             }
           }
+          return false;
         }
       });
 
@@ -231,13 +232,4 @@ angular.module('mean.system')
         localStorage.removeItem('takenTour');
         $scope.takeTour();
       };
-
-
-      if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
-        game.joinGame('joinGame', $location.search().game);
-      } else if ($location.search().custom) {
-        game.joinGame('joinGame', null, true);
-      } else {
-        game.joinGame();
-      }
     }]);
