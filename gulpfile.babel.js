@@ -2,7 +2,6 @@ import gulp from 'gulp';
 import nodemon from 'gulp-nodemon';
 import mocha from 'gulp-mocha';
 import concat from 'gulp-concat';
-import uglify from 'gulp-uglify';
 import rename from 'gulp-rename';
 import sass from 'gulp-ruby-sass';
 import imagemin from 'gulp-imagemin';
