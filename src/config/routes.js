@@ -1,5 +1,8 @@
 const async = require('async');
 import expressJWT from 'express-JWT';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 
 module.exports = function (app, passport, auth) {
@@ -13,7 +16,7 @@ module.exports = function (app, passport, auth) {
   // Setting up the users api
   app.post('/users', users.create);
   app.post('/users/avatars', users.avatars);
-  app.use(expressJWT({ secret: 'Gryffindor JWt' }));
+  app.use(expressJWT({ secret: process.env.secret }));
   app.post('/api/auth/signup', users.signupJWT);
 
 

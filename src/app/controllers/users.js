@@ -5,6 +5,9 @@ var mongoose = require('mongoose'),
   User = mongoose.model('User');
 var avatars = require('./avatars').all();
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 /**
  * Auth callback
@@ -109,7 +112,7 @@ exports.create = function(req, res) {
 };
 
 
-exports.signupJWT = function (req, res) {
+exports.signupJWT = (req, res) => {
   if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
@@ -126,7 +129,7 @@ exports.signupJWT = function (req, res) {
               user
             });
           }
-          const myToken = jwt.sign({ user: req.user }, 'Gryffindor JWt');
+          const myToken = jwt.sign({ user: req.user }, process.env.secret);
           res.status(200).json(myToken);
         });
       } else {
