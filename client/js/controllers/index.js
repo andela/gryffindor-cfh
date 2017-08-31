@@ -1,22 +1,35 @@
+/* global angular */
 angular.module('mean.system')
-  .controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', function ($scope, Global, $location, socket, game, AvatarService) {
-    $scope.global = Global;
+  .controller('IndexController',
+    ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', 'AuthenticationService',
+      ($scope, Global, $location, socket, game, AvatarService, AuthenticationService) => {
+        $scope.global = Global;
+        $scope.email = '';
+        $scope.password = '';
 
-    $scope.playAsGuest = function() {
-      game.joinGame();
-      $location.path('/app');
-    };
+        $scope.login = (isValid) => {
+          if (isValid) {
+            AuthenticationService.login($scope.email, $scope.password);
+          } else {
+            console.log('form is not valid');
+          }
+        };
 
-    $scope.showError = function() {
-      if ($location.search().error) {
-        return $location.search().error;
-      }
-      return false;
-    };
+        $scope.playAsGuest = () => {
+          game.joinGame();
+          $location.path('/app');
+        };
 
-    $scope.avatars = [];
-    AvatarService.getAvatars()
-      .then((data) => {
-        $scope.avatars = data;
-      });
-  }]);
+        $scope.showError = () => {
+          if ($location.search().error) {
+            return $location.search().error;
+          }
+          return false;
+        };
+
+        $scope.avatars = [];
+        AvatarService.getAvatars()
+          .then((data) => {
+            $scope.avatars = data;
+          });
+      }]);
