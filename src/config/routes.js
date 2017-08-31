@@ -1,5 +1,6 @@
 const async = require('async');
-const expressJWT = require('express-jwt');
+import expressJWT from 'express-JWT';
+
 
 module.exports = function (app, passport, auth) {
   // User Routes
@@ -14,6 +15,7 @@ module.exports = function (app, passport, auth) {
   app.post('/users/avatars', users.avatars);
   app.use(expressJWT({ secret: 'Gryffindor JWt' }));
   app.post('/api/auth/signup', users.signupJWT);
+
 
   // Donation Routes
   app.post('/donations', users.addDonation);

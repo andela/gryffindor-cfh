@@ -41,7 +41,7 @@
 
       <div class="sign-body">
         <div class="more-sign">
-          <form class="signup form-horizontal" action="/users" method="post">
+          <form class="signup form-horizontal" ng-controller="IndexController">
             <div class="control-group">
               <label for="name" class="control-label"></label>
               <div class="controls">
@@ -70,7 +70,7 @@
               </ul>
             </div>
             <div class="form-actions">
-              <button id="sign-up-btn-other" type='submit'>Sign Up</button>
+              <button id="sign-up-btn-other" type='submit' ng-click="signUp()">Sign Up</button>
             </div>
           </form>
         </div>
