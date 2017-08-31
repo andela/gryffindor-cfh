@@ -69,6 +69,8 @@
     "import/resolver": "node"
   },
   "globals": {
-    "angular": true
+    "angular": true,
+    "document": true,
+    "$": true
   }
 }
