@@ -14,48 +14,49 @@ $(document).ready(function() {
 </script>
 
 <script></script>
+
 <div landing id="main-bod">
-  
+
+   <!-- Nav and Landing Start -->
   <section id="top-part" class="landing">
-
     <!-- Fixed Logo & Menu Bar Start -->
-    <nav class="navbar navbar-default navbar-fixed-top" id="navver">
-      <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div>
-          <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Card for Humanity</a>
-        </div>
+    <div class="wpb-top-bar">
+      <div>
+        <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Card for Humanity</a>
+            </div>
 
-        <!-- Collection of nav links and other content for toggling -->
-        <div id="navbarCollapse" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav" style="float: right;">
-            <li class="active"><a href="#" onClick="scroll(0,742);">Home</a></li>
-            <li><a href="#" scroll(0,0)>How to Play</a></li>
-            <li><a href="#" onClick="scroll(0,1411);">Charity</a></li>
-            <li><a href="#" onClick="scroll(0,2021);">About Us</a></li>
-            <!-- <span ng-show="showOptions"> -->
-              <li><a href="#!/signup">Sign Up</a></li>
-              <li><a href="#!/signin">Sign In</a></li>
-            <!-- </span>   -->
-            <span ng-hide="showOptions">
-              <li><a href="/signout">Sign Out</a></li>
-            </span>
-          </ul>
-        </div>
+            <!-- Collection of nav links and other content for toggling -->
+            <div id="navbarCollapse" class="collapse navbar-collapse">
+              <ul class="nav navbar-nav navbar-right">
+                <li><a href="#" onClick="scroll(0,0);">Home</a></li>
+                <li><a href="#" onClick="scroll(0,1250)">How to Play</a></li>
+                <li><a href="#" onClick="scroll(0,2070);">Charity</a></li>
+                <li><a href="#" onClick="scroll(0,2940);">About Us</a></li>
+                <li ng-show="showOptions"><a href="#!/signup">Sign Up</a></li>
+                <li ng-show="showOptions"><a href="#!/signin">Sign In</a></li>
+                <li ng-hide="showOptions"><a href="/signout">Sign Out</a></li>
+              </ul>
+            </div>
 
+          </div>
+        </nav>
       </div>
-    </nav>
+    </div>
     <!-- Fixed Logo & Menu Bar End -->
 
     <!-- Landing Start -->
-    <div class="container-fluid">
-      <div class="row">
+    <div class="container" id="homer">
+      <div class="row" id="main-text" ng-controller="IndexController">
         <div class="col-md-6 col-md-offset-3 text-center" style="color:white">
           <span class="cards">CARDS</span><br>
           <div class="sub-text-div">
@@ -69,17 +70,26 @@ $(document).ready(function() {
             </span>
           </div>
           <div>
-            <img src="/img/main-cards.png" alt="Team Member" class="card-samples">
+            <img src="/img/card-samples.png" alt="Team Member" class="card-samples">
           </div>
-          <div class="landing-btn-div">
-            <a href="#!/signup" type="button" class="btn signup-btn">SIGN UP</a>
-            <a href="/play" type="button" class="btn guest-btn">PLAY AS A GUEST</a>
-          </div>
+          <span ng-show="showOptions">
+            <div class="landing-btn-div">
+              <a href="#!/signup" type="button" class="btn signup-btn">SIGN UP</a>
+              <a href="/play" type="button" class="btn guest-btn">PLAY AS A GUEST</a>
+            </div>
+          </span>
+
+          <span ng-hide="showOptions">
+            <a href="/play" type="button" class="btn signup-btn">Play with Friends</a>
+            <a href="/play?custom" type="button" class="btn guest-btn">Play with Strangers</a>
+          </span>
         </div>
       </div>
     </div>
-    <!-- Landing End-->
+    <!-- Landing End -->
   </section>
+  <!-- Nav and Landing End -->
+
 
   <!-- Teaser Text Start -->
   <section class="teaser-section text-center section-spec">
@@ -87,16 +97,18 @@ $(document).ready(function() {
 
     <div class="container">
       <div class="row">
-        <div class="col-md-8 col-md-offset-2 text-center" style="color:white">
+        <div class="col-xs-12 col-md-8 col-md-offset-2 text-center" style="color:white">
           <p>
-            Cards for Humanity is a fast-paced online version of the popular card game, <a href="http://cardsagainsthumanity.com/" target="_blank"><span class="cah">Cards
-            Against Humanity</span></a>, that gives you the opportunity to donate to children
-            in need - all while remaining as despicable and awkward as you naturally
-            are.
+            Cards for Humanity is a fast-paced online version of the popular card game,
+            <a
+              href="http://cardsagainsthumanity.com/" target="_blank"><span class="cah">Cards
+              Against Humanity</span></a>, that gives you the opportunity to donate
+              to children in need - all while remaining as despicable and awkward as
+              you naturally are.
           </p>
         </div>
       </div>
-    </div>       
+    </div>
   </section>
   <!-- Teaser Text End -->
 
@@ -105,37 +117,51 @@ $(document).ready(function() {
     <h1 class="teaser-heading text-center black-font">How to Play</h1>
 
     <div class="container">
-      <div class="row text-center">
+      <div class="flex-row row text-center">
+
         <div class="col-xs-12 col-sm-6 col-md-3 how-to">
-          <p class="how-to-num">I</p>
-          <p class="how-to-desc">
-             Each player begins with, and will always have, 10 white answer cards
-          </p>
+          <div class="thumbnail">
+            <p class="how-to-num">I</p>
+            <p class="how-to-desc">
+              Each player begins with, and will always have, 10 white answer cards
+            </p>
+          </div>
         </div>
+
         <div class="col-xs-12 col-sm-6 col-md-3 how-to">
-          <p class="how-to-num">II</p>
-          <p class="how-to-desc">
-             For each round, one player is randomly chosen as the Card Czar
-          </p>
+          <div class="thumbnail">
+            <p class="how-to-num">II</p>
+            <p class="how-to-desc">
+              For each round, one player is randomly chosen as the Card Czar
+            </p>
+          </div>
         </div>
+
         <div class="col-xs-12 col-sm-6 col-md-3 how-to">
-          <p class="how-to-num">III</p>
-          <p class="how-to-desc">
-             Everyone else answers the black question card by clicking on the answer card they
-            want to use
-          </p>
+          <div class="thumbnail">
+            <p class="how-to-num">III</p>
+            <p class="how-to-desc">
+              Everyone else answers the black question card by clicking on the answer card they
+              want to use
+            </p>
+          </div>
         </div>
+
+
         <div class="col-xs-12 col-sm-6 col-md-3 how-to">
-          <p class="how-to-num">IV</p>
-          <p class="how-to-desc">
-             The Card Czar then picks a favorite answer, and whoever played that answer wins
-            the round
-          </p>
+          <div class="thumbnail">
+            <p class="how-to-num">IV</p>
+            <p class="how-to-desc">
+              The Card Czar then picks a favorite answer, and whoever played that answer wins the
+              round
+            </p>
+          </div>
         </div>
       </div>
     </div>
   </section>
   <!-- How to play End -->
+
 
   <!-- Donate to Charity Start -->
   <section class="teaser-section text-center section-spec">
@@ -146,7 +172,7 @@ $(document).ready(function() {
       <div class="row">
         <div class="col-md-10 col-md-offset-1 text-center" style="color:white">
           <p>
-             We're quite sure you feel the same way, so we've integrated donation widgets (via
+            We're quite sure you feel the same way, so we've integrated donation widgets (via
             crowdrise.com), along with some not-so-subtle reminders throughout the
             game to give you the opportunity to donate. If you're signed in when
             you donate, we'll even upgrade your account and place a crown on your
@@ -158,21 +184,23 @@ $(document).ready(function() {
       </div>
       <div class="make-a-wish">
         <a href="http://www.wish.org"><img src="img/make-a-wish-logo.png"/></a>
-        <a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity" type="button" class="btn signup-btn donate">DONATE NOW</a>
+        <a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity" type="button"
+          class="btn signup-btn donate">DONATE NOW</a>
       </div>
     </div>
   </section>
   <!-- Donate to Charity End -->
 
   <!-- About Us Start -->
-  <section class="how-to-play-section section-spec" id="how-to">
+  <section class="how-to-play-section section-spec">
     <h1 class="teaser-heading text-center black-font">The Team</h1>
 
     <div class="container">
       <div class="row">
-        <div class="col-md-8 col-md-offset-2 text-center">
-          <p>
-             Created by Team Gryffindor, Andela Cohort 29
+        <div class="col-xs-12 col-md-8 col-md-offset-2 text-center">
+          <p class="team">
+            Created by Team Gryffindor, Andela Cohort 29 as an
+            open source contribution to the orginal <a href="https://cfh.io"><span class="cah">CFH</span></a> game
           </p>
         </div>
       </div>
@@ -180,4 +208,28 @@ $(document).ready(function() {
   </section>
   <!-- About Us End -->
 
+  <!-- Footer Start -->
+  <footer class="footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-10">
+          <p>
+             <span>Legal:</span> This game is based on the Cards Against Humanity card game, which is CC licensed
+            (BY-NC-SA). Cards for Humanity is not affiliated with Cards Against Humanity.
+            In complying with the Creative Commons license of the Cards Against Humanity
+            card game, all proceeds from donations go directly to charity, as managed
+            by crowdrise.
+          </p>
+        </div>
+        <div class="col-xs-2 policy-div">
+          <div class="github-logo-div">
+            <img src="/img/github.png" class="github-logo">
+          </div>
+          <a href="/#!/privacy"><span class="privacy-policy cah">Privacy Policy</span></a>         
+        </div>  
+      </div>
+    </div>
+  </footer>
+  <!-- Footer End -->
+</div>
 

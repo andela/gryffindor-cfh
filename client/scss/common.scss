@@ -407,7 +407,7 @@ html{
 body{
     font-family: $main-font;
     background: transparent;
-    margin: 10px;
+    margin: 0;
 
     @include tablet-portrait-only{
         margin: 5px;
