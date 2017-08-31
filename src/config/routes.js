@@ -1,10 +1,9 @@
-// import async from 'async';
-// import validateRequestBody from '../config/validateRequestBody';
 import users from '../app/controllers/users';
 import answers from '../app/controllers/answers';
 import questions from '../app/controllers/questions';
 import avatars from '../app/controllers/avatars';
 import index from '../app/controllers/index';
+import validator from '../config/middlewares/loginValidationMiddleware';
 
 
 /**
@@ -14,9 +13,7 @@ import index from '../app/controllers/index';
  * @param {*} auth 
  * @returns {void}
  */
-export default function (app, passport, auth) {
-  // User Routes
-  // var users = require('../app/controllers/users');
+export default function (app, passport, auth) {  // eslint-disable-line 
   app.get('/signin', users.signin);
   app.get('/signup', users.signup);
   app.get('/chooseavatars', users.checkAvatar);
@@ -101,12 +98,11 @@ export default function (app, passport, auth) {
   app.get('/', index.render);
 
   // New routes to use jwt authentication
-  app.post('/api/auth/login',
+  app.post('/api/auth/login', validator,
     passport.authenticate('local', {
       failureRedirect: '/login',
+      successRedirect: '/',
       failureFlash: 'Invalid email or password.'
     }),
-    (req, res) => {
-      res.status().send('sign in complete');
-    });
+    users.jwtLogin);
 }
