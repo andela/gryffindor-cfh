@@ -9,8 +9,8 @@ import coveralls from 'gulp-coveralls';
 import exit from 'exit';
 import istanbul from 'gulp-istanbul';
 import bower from 'gulp-bower';
-import babel from 'gulp-babel';
-import FileCache from 'gulp-file-cache';
+import babel from 'gulp-babel'; // eslint-disable-line
+import FileCache from 'gulp-file-cache';  // eslint-disable-line
 
 const fileCache = new FileCache();
 

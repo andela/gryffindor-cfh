@@ -3,7 +3,7 @@ import answers from '../app/controllers/answers';
 import questions from '../app/controllers/questions';
 import avatars from '../app/controllers/avatars';
 import index from '../app/controllers/index';
-import validator from '../config/middlewares/loginValidationMiddleware';
+import validator from '../config/middlewares/loginValidationMiddleware';  // eslint-disable-line
 
 
 /**
@@ -100,8 +100,8 @@ export default function (app, passport, auth) {  // eslint-disable-line
   // New routes to use jwt authentication
   app.post('/api/auth/login', validator,
     passport.authenticate('local', {
+      session: false,
       failureRedirect: '/login',
-      successRedirect: '/',
       failureFlash: 'Invalid email or password.'
     }),
     users.jwtLogin);

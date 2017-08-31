@@ -29,4 +29,4 @@ export default function validateRequestBody(email, password, userName, next) {
   }
 
   next();
-};  
+}
