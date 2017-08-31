@@ -1321,7 +1321,8 @@ nav.navbar .container {
 }
 
 .navbar-default .navbar-nav > li > a,
-.navbar-default .navbar-brand {
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav > span > li > a {
   color: white;
 }    
 
@@ -1335,7 +1336,7 @@ nav.navbar .container {
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > .active > a:hover,
-.navbar-default .navbar-nav > li > a:focus  {
+.navbar-default .navbar-nav > li > a:focus {
   background-color: transparent;
   color: #f37f06;
 }
@@ -1344,6 +1345,16 @@ ul.nav.navbar-nav {
   padding-right: 40px;
 }
 
+.navbar-toggle {
+  float: left;
+  margin-left: 15px;
+  margin-right: 0;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+ background-color: transparent;
+ border-color: orange;
+}  
 .cards {
   text-align: center;
   font-size: 80px;
@@ -1354,16 +1365,18 @@ ul.nav.navbar-nav {
 }
 
 .for {
-  font-size: 32px;
+  font-size: 50px;
   color: orange;
+  margin-left: -12px;
 }
 
 .humanity {
   font-size: 50px;
+  margin-left: 10px;
 }
 
 .sub-text {
-  font-size: 29px;
+  font-size: 25px;
 }
 
 .signup-btn {
@@ -1420,14 +1433,14 @@ h1.teaser-heading{
 }
 
 .card-samples {
-  width: 60%;
-  padding-top: 40px;
-  padding-bottom: 30px;
+  width:60%;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
-.sub-text-div {
+/* .sub-text-div {
   padding-bottom: 10px;
-}
+} */
 
 .how-to {
   /* height: 300px; */
@@ -1436,9 +1449,13 @@ h1.teaser-heading{
   /* background-color: red */
 }
 
+.how-to-num {
+  padding-top: 30px;
+}
+
 .how-to-desc {
   font-size: 20px;
-  padding: 10px 20px 20px 10px;
+  padding: 10px 20px 40px 10px;
 }
 
 .how-to-play-section .container {
@@ -1462,8 +1479,182 @@ h1.teaser-heading{
   background-color: white;
   width: 40%;
   margin-top: 40px;
+  border-radius: 5px;
 }
 
 .donate {
   margin-top: 30px;
 }
+
+/* make gutter sizes consistent */
+.flex-row  {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+    
+  .flex-row {
+	display: flex;
+	flex-wrap: wrap;
+}
+.flex-row > [class*='col-'] {
+	display: flex;
+	flex-direction: column;
+}
+
+.flex-row .thumbnail,
+.flex-row .caption {
+	flex-direction: column;
+	display: flex;
+	flex: 1 0 auto;
+	height: auto;
+	position: relative;
+}
+.flex-text {
+	flex-grow: 1;
+}
+.flex-row img {
+	min-width: 0;
+	width: 100%;
+}
+
+.team {
+  font-size: 18px;
+}
+
+.footer {
+  background-color: black;
+  padding-bottom: 0;
+  padding-left: 20px;
+}
+
+footer p {
+  text-align: justify;
+  padding-top: 10px;
+  color: #b1a8a8;
+}
+
+footer p span {
+  color: red;
+}
+
+.github-logo {
+  width: 35px;
+  display: inline-block;
+}
+
+.privacy-policy {
+  /* color: white; */
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.policy-div {
+  padding-top: 22px;
+}
+
+.github-logo-div {
+  display: inline-block;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+  border-color: transparent;
+  border: 0;  
+}
+@media (max-width: 480px) {
+  .cards {
+    font-size: 30px;
+    padding-top: 103px;
+  }
+
+  .for {
+    font-size: 30px;
+  }
+
+  .humanity {
+    font-size: 30px;
+  }
+
+  .sub-text-div {
+    padding-top: 25px;
+  }
+
+  .sub-text {
+    font-size: 20px;
+  }
+
+  .btn {
+    width: 150px;
+    font-size:  14px;
+  }
+
+  h1.teaser-heading {
+    padding-top: 50px;
+  }
+  
+  h1 {
+    font-size: 20px;
+  }
+
+  .teaser-section p {
+    font-size: 16px;
+    padding-top: 15px;
+  }
+
+  .section-spec {
+    padding-bottom: 70px;
+  }
+
+  .how-to-play-section .container {
+    padding-top: 0px;
+  }
+
+  .charity {
+    font-size: 14px;
+  }  
+
+  .make-a-wish {
+    width: auto;
+  }
+
+  .team {
+    font-size: 13px;
+    padding-top: 7px;
+  }
+
+  .footer {
+    padding-left: 0;
+  }
+
+  footer p {
+    font-size: 10px;
+  }
+  
+  footer .col-xs-2 {
+    padding-left: 0;
+  }
+
+  .privacy-policy {
+    font-size: 10px;
+    padding-left: 0;
+  }
+} 
+
+@media (min-width : 426px) and (max-width : 768px)  {
+  .make-a-wish {
+    width: 48%;
+  }  
+
+  .privacy-policy {
+    padding-left: 0;
+  }  
+
+  .github-logo {
+    padding-bottom: 10px;
+    margin: auto;
+    display: block;
+  }
+
+  .github-logo-div {
+    display: block;
+  }
+}  
