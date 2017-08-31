@@ -19,8 +19,8 @@ angular.module('mean.system')
               $scope.sendPickedCards();
               $scope.hasPickedCards = true;
             } else if (game.curQuestion.numAnswers === 2 &&
-            $scope.pickedCards.length === 2) {
-            // delay and send
+              $scope.pickedCards.length === 2) {
+              // delay and send
               $scope.hasPickedCards = true;
               $timeout($scope.sendPickedCards, 300);
             }
@@ -71,25 +71,21 @@ angular.module('mean.system')
       };
 
       $scope.showFirst = card => game.curQuestion.numAnswers > 1
-      && $scope.pickedCards[0] === card.id;
+        && $scope.pickedCards[0] === card.id;
 
       $scope.showSecond = card => game.curQuestion.numAnswers > 1
-      && $scope.pickedCards[1] === card.id;
+        && $scope.pickedCards[1] === card.id;
 
       $scope.isCzar = () => game.czar === game.playerIndex;
 
-
       $scope.isPlayer = $index => $index === game.playerIndex;
 
-
       $scope.isCustomGame = () => !(/^\d+$/).test(game.gameID)
-      && game.state === 'awaiting players';
-
+        && game.state === 'awaiting players';
 
       $scope.isPremium = $index => game.players[$index].premium;
 
       $scope.currentCzar = $index => $index === game.czar;
-
 
       $scope.winningColor = ($index) => {
         if (game.winningCardPlayer !== -1 && $index === game.winningCard) {
@@ -139,12 +135,12 @@ angular.module('mean.system')
       $scope.$watch('game.gameID', () => {
         if (game.gameID && game.state === 'awaiting players') {
           if (!$scope.isCustomGame() && $location.search().game) {
-          // If the player didn't successfully enter the request room,
-          // reset the URL so they don't think they're in the requested room.
+            // If the player didn't successfully enter the request room,
+            // reset the URL so they don't think they're in the requested room.
             $location.search({});
           } else if ($scope.isCustomGame() && !$location.search().game) {
-          // Once the game ID is set, update the URL if this is a game with friends,
-          // where the link is meant to be shared.
+            // Once the game ID is set, update the URL if this is a game with friends,
+            // where the link is meant to be shared.
             $location.search({ game: game.gameID });
             if (!$scope.modalShown) {
               setTimeout(() => {
@@ -158,7 +154,6 @@ angular.module('mean.system')
           }
         }
       });
-
 
       $scope.gameTour = introJs();
 
@@ -197,7 +192,6 @@ angular.module('mean.system')
         }
         ]
       });
-
 
       $scope.takeTour = () => {
         if (!localStorage.takenTour) {
