@@ -23,5 +23,5 @@ exports.render = function(req, res) {
 };
 
 exports.tour = (req, res) => {
-  res.redirect('/#!/gameTour')
-}
+  res.redirect('/#!/gameTour');
+};
