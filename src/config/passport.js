@@ -1,14 +1,23 @@
 import mongoose from 'mongoose';
-import { Stategy as LocalStrategy } from 'passport-local';
-import { Stategy as TwitterStrategy } from 'passport-twitter';
-import { Stategy as FacebookStrategy } from 'passport-facebook';
-import { Stategy as GitHubStrategy } from 'passport-github';
-import { Stategy as GoogleStrategy } from 'passport-google-oauth';
+import Local from 'passport-local';
+import Twitter from 'passport-twitter';
+import Facebook from 'passport-facebook';
+import GitHub from 'passport-github';
+import Google from 'passport-google-oauth';
 import config from './config';
 
 const User = mongoose.model('User');
+const localStrategy = Local.Strategy;
+const twitterStrategy = Twitter.Strategy;
+const facebookStrategy = Facebook.Strategy;
+const gitHubStrategy = GitHub.Strategy;
+const googleStrategy = Google.OAuth2Strategy;
 
-export default (passport) => {
+/**
+ * @return {void}
+ * @param {*} passport 
+ */
+export default function (passport) {
 // Serialize sessions
   passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -26,7 +35,7 @@ export default (passport) => {
   });
 
   // Use local strategy
-  passport.use(new LocalStrategy({
+  passport.use(new localStrategy({
     usernameField: 'email',
     passwordField: 'password'
   },
@@ -58,7 +67,7 @@ export default (passport) => {
   ));
 
   // Use twitter strategy
-  passport.use(new TwitterStrategy({
+  passport.use(new twitterStrategy({
     consumerKey: process.env.TWITTER_CONSUMER_KEY || config.twitter.clientID,
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET || config.twitter.clientSecret,
     callbackURL: config.twitter.callbackURL
@@ -89,7 +98,7 @@ export default (passport) => {
   ));
 
   // Use facebook strategy
-  passport.use(new FacebookStrategy({
+  passport.use(new facebookStrategy({
     clientID: process.env.FB_CLIENT_ID || config.facebook.clientID,
     clientSecret: process.env.FB_CLIENT_SECRET || config.facebook.clientSecret,
     callbackURL: config.facebook.callbackURL
@@ -124,7 +133,7 @@ export default (passport) => {
   ));
 
   // Use github strategy
-  passport.use(new GitHubStrategy({
+  passport.use(new gitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID || config.github.clientID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET || config.github.clientSecret,
     callbackURL: config.github.callbackURL
@@ -156,7 +165,7 @@ export default (passport) => {
   ));
 
   //  Use google strategy
-  passport.use(new GoogleStrategy({
+  passport.use(new googleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID || config.google.clientID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || config.google.clientSecret,
     callbackURL: config.google.callbackURL
@@ -186,4 +195,4 @@ export default (passport) => {
     });
   }
   ));
-};
+}
