@@ -1,6 +1,5 @@
 /* global introJs, localStorage */
 angular.module('mean.system')
-<<<<<<< HEAD:client/js/controllers/game.js
   .controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog', function ($scope, game, $timeout, $location, MakeAWishFactsService, $dialog) {
     $scope.hasPickedCards = false;
     $scope.winningCardPicked = false;
@@ -23,59 +22,23 @@ angular.module('mean.system')
             // delay and send
             $scope.hasPickedCards = true;
             $timeout($scope.sendPickedCards, 300);
-=======
-  .controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog',
-    function GameController($scope, game, $timeout, $location, MakeAWishFactsService) {
-      $scope.hasPickedCards = false;
-      $scope.winningCardPicked = false;
-      $scope.showTable = false;
-      $scope.modalShown = false;
-      $scope.game = game;
-      $scope.pickedCards = [];
-      let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
-      $scope.makeAWishFact = makeAWishFacts.pop();
-
-      $scope.pickCard = (card) => {
-        if (!$scope.hasPickedCards) {
-          if ($scope.pickedCards.indexOf(card.id) < 0) {
-            $scope.pickedCards.push(card.id);
-            if (game.curQuestion.numAnswers === 1) {
-              $scope.sendPickedCards();
-              $scope.hasPickedCards = true;
-            } else if (game.curQuestion.numAnswers === 2 &&
-              $scope.pickedCards.length === 2) {
-              // delay and send
-              $scope.hasPickedCards = true;
-              $timeout($scope.sendPickedCards, 300);
-            }
-          } else {
-            $scope.pickedCards.pop();
->>>>>>>  feat(onboarding): implements onboarding of the app to the user:public/js/controllers/game.js
           }
         }
       };
 
-<<<<<<< HEAD:client/js/controllers/game.js
     $scope.pointerCursorStyle = function() {
       if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
         return { cursor: 'pointer' };
       }
       return {};
     };
-=======
-      $scope.pointerCursorStyle = () => {
-        if ($scope.isCzar() && $scope.game.state === 'waiting for czar to decide') {
-          return { cursor: 'pointer' };
-        }
-        return {};
-      };
->>>>>>>  feat(onboarding): implements onboarding of the app to the user:public/js/controllers/game.js
 
-      $scope.sendPickedCards = function () {
+      $scope.sendPickedCards = () => {
         game.pickCards($scope.pickedCards);
         $scope.showTable = true;
       };
 
+<<<<<<< HEAD:client/js/controllers/game.js
 <<<<<<< HEAD:client/js/controllers/game.js
     $scope.cardIsFirstSelected = function(card) {
       if (game.curQuestion.numAnswers > 1) {
@@ -106,27 +69,30 @@ angular.module('mean.system')
     };
 =======
       $scope.cardIsFirstSelected = function (card) {
+=======
+      $scope.cardIsFirstSelected = (card) => {
+>>>>>>> feat(onboarding): implements onboarding of the app to the user:public/js/controllers/game.js
         if (game.curQuestion.numAnswers > 1) {
           return card === $scope.pickedCards[0];
         }
         return false;
       };
 
-      $scope.cardIsSecondSelected = function (card) {
+      $scope.cardIsSecondSelected = (card) => {
         if (game.curQuestion.numAnswers > 1) {
           return card === $scope.pickedCards[1];
         }
         return false;
       };
 
-      $scope.firstAnswer = function ($index) {
+      $scope.firstAnswer = ($index) => {
         if ($index % 2 === 0 && game.curQuestion.numAnswers > 1) {
           return true;
         }
         return false;
       };
 
-      $scope.secondAnswer = function ($index) {
+      $scope.secondAnswer = ($index) => {
         if ($index % 2 === 1 && game.curQuestion.numAnswers > 1) {
           return true;
         }
@@ -134,34 +100,25 @@ angular.module('mean.system')
       };
 >>>>>>>  feat(onboarding): implements onboarding of the app to the user:public/js/controllers/game.js
 
-      $scope.showFirst = function (card) {
-        return game.curQuestion.numAnswers > 1 && $scope.pickedCards[0] === card.id;
-      };
+      $scope.showFirst = card => game.curQuestion.numAnswers > 1
+        && $scope.pickedCards[0] === card.id;
 
-      $scope.showSecond = function (card) {
-        return game.curQuestion.numAnswers > 1 && $scope.pickedCards[1] === card.id;
-      };
+      $scope.showSecond = card => game.curQuestion.numAnswers > 1
+        && $scope.pickedCards[1] === card.id;
 
-      $scope.isCzar = function () {
-        return game.czar === game.playerIndex;
-      };
+      $scope.isCzar = () => game.czar === game.playerIndex;
 
-      $scope.isPlayer = function ($index) {
-        return $index === game.playerIndex;
-      };
 
-      $scope.isCustomGame = function () {
-        return !(/^\d+$/).test(game.gameID) && game.state === 'awaiting players';
-      };
+      $scope.isPlayer = $index => $index === game.playerIndex;
 
-      $scope.isPremium = function ($index) {
-        return game.players[$index].premium;
-      };
 
-      $scope.currentCzar = function ($index) {
-        return $index === game.czar;
-      };
+      $scope.isCustomGame = () => !(/^\d+$/).test(game.gameID)
+        && game.state === 'awaiting players';
 
+
+      $scope.isPremium = $index => game.players[$index].premium;
+
+<<<<<<< HEAD:client/js/controllers/game.js
 <<<<<<< HEAD:client/js/controllers/game.js
     $scope.winningColor = function($index) {
       if (game.winningCardPlayer !== -1 && $index === game.winningCard) {
@@ -178,6 +135,12 @@ angular.module('mean.system')
     };
 =======
       $scope.winningColor = function ($index) {
+=======
+      $scope.currentCzar = $index => $index === game.czar;
+
+
+      $scope.winningColor = ($index) => {
+>>>>>>> feat(onboarding): implements onboarding of the app to the user:public/js/controllers/game.js
         if (game.winningCardPlayer !== -1 && $index === game.winningCard) {
           return $scope.colors[game.players[game.winningCardPlayer].color];
         }
@@ -185,22 +148,20 @@ angular.module('mean.system')
       };
 >>>>>>>  feat(onboarding): implements onboarding of the app to the user:public/js/controllers/game.js
 
-      $scope.pickWinning = function (winningSet) {
+      $scope.pickWinning = (winningSet) => {
         if ($scope.isCzar()) {
           game.pickWinning(winningSet.card[0]);
           $scope.winningCardPicked = true;
         }
       };
 
-      $scope.winnerPicked = function () {
-        return game.winningCard !== -1;
-      };
+      $scope.winnerPicked = () => game.winningCard !== -1;
 
-      $scope.startGame = function () {
+      $scope.startGame = () => {
         game.startGame();
       };
 
-      $scope.abandonGame = function () {
+      $scope.abandonGame = () => {
         game.leaveGame();
         $location.path('/');
       };
@@ -288,7 +249,7 @@ angular.module('mean.system')
       });
 
 
-      $scope.takeTour = function takeTour() {
+      $scope.takeTour = () => {
         if (!localStorage.takenTour) {
           setTimeout(() => {
             $scope.gameTour.start()
@@ -299,7 +260,7 @@ angular.module('mean.system')
         }
       };
 
-      $scope.retakeTour = function retakeTour() {
+      $scope.retakeTour = () => {
         localStorage.removeItem('takenTour');
         $scope.takeTour();
       };
@@ -360,7 +321,6 @@ angular.module('mean.system')
 =======
 
       if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
-        console.log('joining custom game');
         game.joinGame('joinGame', $location.search().game);
       } else if ($location.search().custom) {
         game.joinGame('joinGame', null, true);
