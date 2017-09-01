@@ -95,4 +95,4 @@ gulp.task('copy', ['copyServer', 'copyClient']);
 
 gulp.task('bower', () => bower());
 gulp.task('default', ['sass', 'images', 'watch', 'server', 'bower', 'transpile', 'copy']);
-
+gulp.task('heroku:production', ['sass', 'images', 'bower', 'transpile', 'copy', 'compile']);
