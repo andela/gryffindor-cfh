@@ -1,9 +1,8 @@
 import gulp from 'gulp';
 import nodemon from 'gulp-nodemon';
 import mocha from 'gulp-mocha';
-import concat from 'gulp-concat';
 import rename from 'gulp-rename';
-import sass from 'gulp-ruby-sass';
+import sass from 'gulp-sass';
 import imagemin from 'gulp-imagemin';
 import cache from 'gulp-cache';
 import coveralls from 'gulp-coveralls';
@@ -15,10 +14,11 @@ import FileCache from 'gulp-file-cache';
 
 const fileCache = new FileCache();
 
-gulp.task('sass', () => sass('client/scss/main.scss', { style: 'compressed' })
-  .pipe(concat('main.css'))
-  .pipe(rename({ suffix: '.min' }))
-  .pipe(gulp.dest('public/css')));
+gulp.task('sass', () =>
+  gulp.src('client/scss/main.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest('public/css')));
 
 gulp.task('images', () => gulp.src('client/img-assets/**/*')
   .pipe(cache(imagemin({ optimizationLegivel: 5, progressive: true, interlaced: true })))
