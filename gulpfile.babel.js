@@ -50,7 +50,7 @@ gulp.task('coveralls', ['test'], () => gulp.src('./coverage/lcov.info')
   .pipe(exit()));
 
 
-gulp.task('pre-test', () => gulp.src(['server.js', 'app/**/*.js', 'config/**/*.js'])
+gulp.task('pre-test', () => gulp.src(['src/server.js', 'src/app/**/*.js', 'src/config/**/*.js'])
   // Covering files
   .pipe(istanbul())
   // Force `require` to return covered files
