@@ -9,22 +9,7 @@ npm-debug.log
 .package-lock.json
 dist/
 .vscode
-<<<<<<< HEAD
 coverage
 gulp-cache
 build/
 .gulp-cache
-=======
-package-lock.json
-<<<<<<< HEAD
->>>>>>> Chore/150438314/deploy base application (#15)
-=======
-npm-debug.log
-package-lock.json
-gulp-cache
-build/
-.vscode
-coverage
-gulp-cache
->>>>>>> Chore: Integrate Coveralls code coverage service (#16)
-
