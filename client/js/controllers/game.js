@@ -1,6 +1,6 @@
 /* global introJs, localStorage */
 angular.module('mean.system')
-  .controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog',
+  .controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService',
     function GameController($scope, game, $timeout, $location, MakeAWishFactsService) {
       $scope.hasPickedCards = false;
       $scope.winningCardPicked = false;
@@ -187,7 +187,7 @@ angular.module('mean.system')
           intro: 'Played enough? Click this button to quit the game'
         },
         {
-          element: '.retake-tour',
+          element: '#retake-tour',
           intro: 'You can always take the tour again'
         },
         {
@@ -201,12 +201,11 @@ angular.module('mean.system')
 
       $scope.takeTour = () => {
         if (!localStorage.takenTour) {
-          setTimeout(() => {
-            $scope.gameTour.start()
-              .onexit(() => {
-              });
+          const timeout = setTimeout(() => {
+            $scope.gameTour.start();
+            clearTimeout(timeout);
           }, 500);
-          localStorage.takenTour = true;
+          localStorage.setItem('takenTour', true);
         }
       };
 
