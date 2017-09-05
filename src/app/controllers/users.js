@@ -239,7 +239,7 @@ exports.user = (req, res, next, id) => {
 exports.search = (req, res) => {
   res.header('Access-Control-Allow-Origin', '*');
   const name = req.params.searchName;
-  // console.log(email);
+  console.log(req.params);
   User.find({ name: new RegExp(name, 'i') }).exec((error, result) => {
     if (error) {
       return res.json(error);

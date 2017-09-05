@@ -27,7 +27,7 @@ gulp.task('images', () => gulp.src('client/img-assets/**/*')
 gulp.task('server', ['compile'], () =>
   nodemon({
     script: 'dist/server.js',
-    watch: 'server',
+    watch: 'src',
     tasks: ['compile', 'copyServer']
   })
 );

@@ -1,13 +1,16 @@
 /* global introJs, localStorage */
 angular.module('mean.system')
-  .controller('GameController', ['$scope', 'game', '$timeout', '$location', 'MakeAWishFactsService', '$dialog',
-    function GameController($scope, game, $timeout, $location, MakeAWishFactsService) {
+  .controller('GameController', ['$scope', 'game', '$timeout', 'userSearch', '$location', 'MakeAWishFactsService', '$dialog',
+    function GameController($scope, game, $timeout, userSearch, $location, MakeAWishFactsService) {
       $scope.hasPickedCards = false;
       $scope.winningCardPicked = false;
       $scope.showTable = false;
       $scope.modalShown = false;
       $scope.game = game;
       $scope.pickedCards = [];
+      $scope.searchedUsers = [];
+      $scope.invitedUsers = [];
+      $scope.selectedUser = '';
       let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       $scope.makeAWishFact = makeAWishFacts.pop();
 
@@ -27,6 +30,39 @@ angular.module('mean.system')
           } else {
             $scope.pickedCards.pop();
           }
+        }
+      };
+      $scope.selectUser = (selectedEmail) => {
+        if ($scope.invitedUsers.length <= 11) {
+          // console.log(_.indexOf($scope.invitedUsers, selectedEmail));
+          if (_.indexOf($scope.invitedUsers, selectedEmail) === -1) {// eslint-disable-line
+            $scope.invitedUsers.push(selectedEmail);
+          }
+
+          const mailObject = {
+            To: selectedEmail,
+            Link: document.URL
+          };
+          console.log(mailObject);// eslint-disable-line
+          userSearch.sendInvite(mailObject).then((data) => {
+            console.log(data.data);// eslint-disable-line
+          });
+        } else {
+          const myModal = $('#limit_modal');
+          myModal.modal('show');
+        }
+      };
+
+      $scope.searchUsers = () => {
+        if ($scope.selectedUser !== '') {
+          // console.log($scope.selectedUser);
+          userSearch.search($scope.selectedUser).then((data) => {
+            $scope.searchedUsers = data.data;
+            console.log(data.data);// eslint-disable-line
+          });
+          console.log(userSearch.search($scope.selectedUser));// eslint-disable-line
+        } else {
+          $scope.searchedUsers = [];
         }
       };
 
