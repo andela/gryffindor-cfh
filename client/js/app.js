@@ -32,7 +32,7 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ngRoute', 'm
       $locationProvider.hashPrefix('!');
     }
   ]).run(['$rootScope', ($rootScope) => {
-    $rootScope.safeApply = (fn) => {
+    $rootScope.safeApply = function safeApply(fn) {
       const phase = this.$root.$$phase;
       if (phase === '$apply' || phase === '$digest') {
         if (fn && (typeof (fn) === 'function')) {
