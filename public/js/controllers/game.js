@@ -111,7 +111,8 @@ angular.module('mean.system')
 
     $scope.isPlayer = $index => $index === game.playerIndex;
 
-    $scope.isCustomGame = () => !(/^\d+$/).test(game.gameID) && game.state === 'awaiting players';
+    $scope.isCustomGame = () => !(/^\d+$/).test(game.gameID) &&
+    game.state === 'awaiting players';
 
     $scope.isPremium = $index => game.players[$index].premium;
 

@@ -52,7 +52,6 @@ exports.signup = (req, res) => {
    * @param {Object} res response object
    * @returns {void} returns void
    */
-
 exports.signout = (req, res) => {
   req.logout();
   res.redirect('/');
@@ -214,8 +213,8 @@ exports.me = (req, res) => {
    * Find user by id
    * @param {Object} req request object
    * @param {Object} res response object
-   * @param {Object} next object
-   * @param {string} id string 
+   * @param {Object} next  object
+   * @param {Object} id string
    * @returns {void} returns void
    */
 exports.user = (req, res, next, id) => {
@@ -249,23 +248,19 @@ exports.search = (req, res) => {
   });
 };
 
-exports.search = (req, res) => {
-  const name = req.params.searchName;
-  // console.log(email);
-  User.find({ name: new RegExp(name, 'i') }).exec((error, result) => {
-    if (error) {
-      return res.json(error);
-    }
-    return res.json(result);
-  });
-};
 
+/**
+   * Send email
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} returns void
+   */
 exports.sendMail = (req, res) => { // eslint-disable-line
   const transporter = nodemailer.createTransport(smtpTransport({
     service: 'gmail',
     auth: {
-      user: 'nnamso.edemenang@gmail.com', // my mail
-      pass: 'F@1th@123'
+      user: 'postitbyyamen@gmail.com', // my mail
+      pass: '123postit890'
     }
   }));
   const mailOptions = {
