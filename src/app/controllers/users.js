@@ -1,6 +1,8 @@
 /**
  * Module dependencies.
  */
+import nodemailer from 'nodemailer';
+import smtpTransport from 'nodemailer-smtp-transport';
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const avatars = require('./avatars').all();
@@ -236,12 +238,47 @@ exports.user = (req, res, next, id) => {
    * @returns {void} returns void
    */
 exports.search = (req, res) => {
-  const email = req.params.searchEmail;
+  res.header('Access-Control-Allow-Origin', '*');
+  const name = req.params.searchName;
   // console.log(email);
-  User.find({ email: new RegExp(email, 'i') }).exec((error, result) => {
+  User.find({ name: new RegExp(name, 'i') }).exec((error, result) => {
     if (error) {
       return res.json(error);
     }
     return res.json(result);
+  });
+};
+
+exports.search = (req, res) => {
+  const name = req.params.searchName;
+  // console.log(email);
+  User.find({ name: new RegExp(name, 'i') }).exec((error, result) => {
+    if (error) {
+      return res.json(error);
+    }
+    return res.json(result);
+  });
+};
+
+exports.sendMail = (req, res) => { // eslint-disable-line
+  const transporter = nodemailer.createTransport(smtpTransport({
+    service: 'gmail',
+    auth: {
+      user: 'nnamso.edemenang@gmail.com', // my mail
+      pass: 'F@1th@123'
+    }
+  }));
+  const mailOptions = {
+    from: '"Cards for Humanity" <notification@cfh.com>',
+    to: req.body.To,
+    subject: 'Invitation to play',
+    text: `Follow the link to play: ${req.body.Link}`,
+    html: `<b>Follow the link to play: ${req.body.Link}</b>`
+  };
+
+  transporter.sendMail(mailOptions, (error) => {
+    if (error) {
+      console.log(error); // eslint-disable-line
+    }
   });
 };
