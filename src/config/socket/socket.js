@@ -7,13 +7,12 @@ require('console-stamp')(console, 'm/dd HH:MM:ss');
 const shortid = require('shortid');
 
 // console.log(shortid.generate());
-
-const avatars = require(`${__dirname}/../../app/controllers/avatars.js`).all();
+const avatars = require(`${__dirname}/../../app/controllers/avatars.js`).all();// eslint-disable-line
 // Valid characters to use to generate random private game IDs
 const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
 
 export default (io) => {
-  let game; // eslint-disable-line
+  let game;// eslint-disable-line
   const allGames = {};
   const allPlayers = {};
   const gamesNeedingPlayers = [];
@@ -56,12 +55,13 @@ export default (io) => {
     });
 
     socket.on('startGame', () => {
+      console.log('hi');
       if (allGames[socket.gameID]) {
         const thisGame = allGames[socket.gameID];
         console.log('comparing', thisGame.players[0].socket.id, 'with', socket.id);
         if (thisGame.players.length >= thisGame.playerMinLimit) {
           // Remove this game from gamesNeedingPlayers so new players can't join it.
-          gamesNeedingPlayers.forEach((game, index) => { // eslint-disable-line
+          gamesNeedingPlayers.forEach((game, index) => {
             if (game.gameID === socket.gameID) {
               return gamesNeedingPlayers.splice(index, 1);
             }
@@ -156,7 +156,7 @@ export default (io) => {
   };
 
   const fireGame = (player, socket) => {
-    let game;
+    let game; // eslint-disable-line
     if (gamesNeedingPlayers.length <= 0) {
       gameID = shortid.generate();
       const gameIDStr = gameID.toString();
@@ -217,7 +217,7 @@ export default (io) => {
   const exitGame = (socket) => {
     console.log(socket.id, 'has disconnected');
     if (allGames[socket.gameID]) { // Make sure game exists
-      const game = allGames[socket.gameID];
+      const game = allGames[socket.gameID];// eslint-disable-line
       console.log(socket.id, 'has left game', game.gameID);
       delete allPlayers[socket.id];
       if (game.state === 'awaiting players' ||
@@ -235,3 +235,4 @@ export default (io) => {
     socket.leave(socket.gameID);
   };
 };
+
