@@ -249,7 +249,7 @@ angular.module('mean.system')
             }
           }
           return false;
-        };
+        }
 
         $scope.firstAnswer = ($index) => {
           if ($index % 2 === 0 && game.curQuestion.numAnswers > 1) {
