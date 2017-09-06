@@ -9,9 +9,13 @@ angular.module('mean.system')
 
         $scope.login = (isValid) => {
           if (isValid) {
-            AuthenticationService.login($scope.email, $scope.password);
-          } else {
-            console.log('form is not valid');
+            AuthenticationService.login($scope.email, $scope.password)
+              .then(() => {
+                $location.path('/#!');
+              })
+              .catch(() => {
+                // TODO: INSERT ERROR FEEDBACK FOR USER
+              });
           }
         };
 

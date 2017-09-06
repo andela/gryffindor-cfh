@@ -1,32 +1,20 @@
-import validator from 'validator';
+import { isEmail, isLength, isAlphanumeric } from 'validator';
 
-/**
- * function to validate input fields
- * @param {*} email 
- * @param {*} password 
- * @param {*} username 
- * @return {boolean} true/false
- */
-export default function (email, password, username) {
-  if (email) {
-    if (!validator.isEmail(email)) {
-      return { status: false, message: 'Email is invalid' };
-    }
-  }
-  if (password) {
-    if (!validator.isLength(password, { max: 30, min: 6 })) {
-      return { status: false, message: 'Password is too short' };
-    }
-  }
-  if (username) {
-    if (!validator.isLength(username, { max: 30, min: 1 })) {
-      return { status: false, message: 'Username is invalid' };
-    }
+const fieldLength = {
+  password: { max: 30, min: 6 },
+  userName: { max: 30, min: 1 }
+};
 
-    if (!validator.isAlphanumeric(username)) {
-      return { status: false, message: 'Username is invalid' };
-    }
-  }
+const modifiedIsLength = field => val => isLength(val, fieldLength[field] || {});
 
-  return { status: true, message: 'Input fields are valid' };
-}
+export const fieldValidationFnMap = {
+  email: [isEmail],
+  password: [modifiedIsLength('password')],
+  userName: [modifiedIsLength('userName'), isAlphanumeric]
+};
+
+export const inValidFieldMessage = {
+  email: 'Email is invalid',
+  password: 'Password is too short or too long',
+  userName: 'Username is invalid'
+};

@@ -1,22 +1,13 @@
 import should from 'should';
 import jwt from 'jsonwebtoken';
-import generateToken from '../../config/generateToken';
-
-/* global dotenv */
-
-dotenv.config();
+import generateToken from '../../src/config/generateToken';
 
 const jwtSecret = process.env.JWT_TOKEN || 'SECRET';
-
-let user;
+const user = {
+  username: 'testUser'
+};
 
 describe('GenerateToken', () => {
-  before(() => {
-    user = {
-      username: 'testUser'
-    };
-  });
-
   it('should generate token when user object is passed', () => {
     const token = generateToken(user);
     should.exist(token);

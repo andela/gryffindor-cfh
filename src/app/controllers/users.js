@@ -15,7 +15,7 @@ const avatars = avatarsModule.all();
  * @param {callbackfunction} next
  * @return {void}
  */
-exports.authCallback = (req, res) => {
+export const authCallback = (req, res) => {
   res.redirect('/chooseavatars');
 };
 
@@ -25,7 +25,7 @@ exports.authCallback = (req, res) => {
  * @param {object} res
  * @return {void}
  */
-exports.signin = (req, res) => {
+export const signin = (req, res) => {
   if (!req.user) {
     res.redirect('/#!/signin?error=invalid');
   } else {
@@ -39,7 +39,7 @@ exports.signin = (req, res) => {
  * @param {object} res
  * @return {void}
  */
-exports.signup = (req, res) => {
+export const signup = (req, res) => {
   if (!req.user) {
     res.redirect('/#!/signup');
   } else {
@@ -53,7 +53,7 @@ exports.signup = (req, res) => {
  * @param {object} res
  * @return {void}
  */
-exports.signout = (req, res) => {
+export const signout = (req, res) => {
   req.logout();
   res.redirect('/');
 };
@@ -64,7 +64,7 @@ exports.signout = (req, res) => {
  * @param {object} res
  * @return {void}
  */
-exports.session = (req, res) => {
+export const session = (req, res) => {
   res.redirect('/');
 };
 
@@ -76,7 +76,7 @@ exports.session = (req, res) => {
  * @param {object} res
  * @return {void}
  */
-exports.checkAvatar = (req, res) => {
+export const checkAvatar = (req, res) => {
   if (req.user && req.user._id) { // eslint-disable-line no-underscore-dangle
     User.findOne({
       _id: req.user._id // eslint-disable-line no-underscore-dangle
@@ -101,7 +101,7 @@ exports.checkAvatar = (req, res) => {
  * @param {callbackFunction} next
  * @return {void}
  */
-exports.create = (req, res, next) => {
+export const create = (req, res, next) => {
   if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
@@ -138,7 +138,7 @@ exports.create = (req, res, next) => {
  * @param {object} res
  * @return {void}
  */
-exports.avatars = (req, res) => {
+export const avatarsChoice = (req, res) => {
   // Update the current user's profile to include the avatar choice they've made
 
   // eslint-disable-next-line 
@@ -155,7 +155,7 @@ exports.avatars = (req, res) => {
   return res.redirect('/#!/app');
 };
 
-exports.addDonation = (req, res) => {
+export const addDonation = (req, res) => {
   if (req.body && req.user && req.user._id) { // eslint-disable-line no-underscore-dangle
     // Verify that the object contains crowdrise data
     if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
@@ -188,7 +188,7 @@ exports.addDonation = (req, res) => {
  * @param {object} res
  * @return {void}
  */
-exports.show = (req, res) => {
+export const show = (req, res) => {
   const userObject = req.profile;
 
   res.render('users/show', {
@@ -203,7 +203,7 @@ exports.show = (req, res) => {
  * @param {object} res
  * @return {void}
  */
-exports.me = (req, res) => {
+export const me = (req, res) => {
   res.jsonp(req.user || null);
 };
 
@@ -215,7 +215,7 @@ exports.me = (req, res) => {
  * @param {number} id
  * @return {void}
  */
-exports.user = (req, res, next, id) => {
+export const user = (req, res, next, id) => {
   User
     .findOne({
       _id: id
@@ -228,8 +228,9 @@ exports.user = (req, res, next, id) => {
     });
 };
 
-exports.jwtLogin = (req, res) => {
-  const user = req.user;
-  const generatedToken = generateToken(user);
+export const jwtLogin = (req, res) => {
+  console.log('authentication gets to users controller');
+  const theUser = req.user;
+  const generatedToken = generateToken(theUser);
   res.status(200).send(generatedToken);
 };

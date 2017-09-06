@@ -9,8 +9,10 @@ import coveralls from 'gulp-coveralls';
 import exit from 'exit';
 import istanbul from 'gulp-istanbul';
 import bower from 'gulp-bower';
-import babel from 'gulp-babel'; // eslint-disable-line
-import FileCache from 'gulp-file-cache';  // eslint-disable-line
+import babel from 'gulp-babel';
+import FileCache from 'gulp-file-cache';
+
+const isparta = require('isparta');
 
 const fileCache = new FileCache();
 
@@ -27,7 +29,7 @@ gulp.task('images', () => gulp.src('client/img-assets/**/*')
 gulp.task('server', ['compile'], () =>
   nodemon({
     script: 'dist/server.js',
-    watch: 'server',
+    watch: 'src',
     tasks: ['compile', 'copyServer']
   })
 );
@@ -52,7 +54,7 @@ gulp.task('coveralls', ['test'], () => gulp.src('./coverage/lcov.info')
 
 gulp.task('pre-test', () => gulp.src(['src/server.js', 'src/app/**/*.js', 'src/config/**/*.js'])
   // Covering files
-  .pipe(istanbul())
+  .pipe(istanbul({ instrumenter: isparta.Instrumenter }))
   // Force `require` to return covered files
   .pipe(istanbul.hookRequire()));
 

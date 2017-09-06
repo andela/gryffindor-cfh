@@ -1,9 +1,23 @@
-import users from '../app/controllers/users';
+import {
+  signin,
+  signout,
+  signup,
+  checkAvatar,
+  avatarsChoice,
+  addDonation,
+  show,
+  me,
+  authCallback,
+  user,
+  jwtLogin,
+  session,
+  create
+} from '../app/controllers/users';
 import answers from '../app/controllers/answers';
 import questions from '../app/controllers/questions';
 import avatars from '../app/controllers/avatars';
 import index from '../app/controllers/index';
-import validator from '../config/middlewares/loginValidationMiddleware';  // eslint-disable-line
+import fieldValidationMiddleware from './middlewares/fieldValidationMiddleware';
 
 
 /**
@@ -14,53 +28,53 @@ import validator from '../config/middlewares/loginValidationMiddleware';  // esl
  * @returns {void}
  */
 export default function (app, passport, auth) {  // eslint-disable-line 
-  app.get('/signin', users.signin);
-  app.get('/signup', users.signup);
-  app.get('/chooseavatars', users.checkAvatar);
-  app.get('/signout', users.signout);
+  app.get('/signin', signin);
+  app.get('/signup', signup);
+  app.get('/chooseavatars', checkAvatar);
+  app.get('/signout', signout);
 
   // Setting up the users api
-  app.post('/users', users.create);
-  app.post('/users/avatars', users.avatars);
+  app.post('/users', create);
+  app.post('/users/avatars', avatarsChoice);
 
   // Donation Routes
-  app.post('/donations', users.addDonation);
+  app.post('/donations', addDonation);
 
   app.post('/users/session', passport.authenticate('local', {
     failureRedirect: '/signin',
     failureFlash: 'Invalid email or password.'
-  }), users.session);
+  }), session);
 
-  app.get('/users/me', users.me);
-  app.get('/users/:userId', users.show);
+  app.get('/users/me', me);
+  app.get('/users/:userId', show);
 
   // Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
     scope: ['email'],
     failureRedirect: '/signin'
-  }), users.signin);
+  }), signin);
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/signin'
-  }), users.authCallback);
+  }), authCallback);
 
   // Setting the github oauth routes
   app.get('/auth/github', passport.authenticate('github', {
     failureRedirect: '/signin'
-  }), users.signin);
+  }), signin);
 
   app.get('/auth/github/callback', passport.authenticate('github', {
     failureRedirect: '/signin'
-  }), users.authCallback);
+  }), authCallback);
 
   // Setting the twitter oauth routes
   app.get('/auth/twitter', passport.authenticate('twitter', {
     failureRedirect: '/signin'
-  }), users.signin);
+  }), signin);
 
   app.get('/auth/twitter/callback', passport.authenticate('twitter', {
     failureRedirect: '/signin'
-  }), users.authCallback);
+  }), authCallback);
 
   // Setting the google oauth routes
   app.get('/auth/google', passport.authenticate('google', {
@@ -69,14 +83,14 @@ export default function (app, passport, auth) {  // eslint-disable-line
       'https://www.googleapis.com/auth/userinfo.profile',
       'https://www.googleapis.com/auth/userinfo.email'
     ]
-  }), users.signin);
+  }), signin);
 
   app.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/signin'
-  }), users.authCallback);
+  }), authCallback);
 
   // Finish with setting up the userId param
-  app.param('userId', users.user);
+  app.param('userId', user);
 
   // Answer Routes
   app.get('/answers', answers.all);
@@ -98,11 +112,11 @@ export default function (app, passport, auth) {  // eslint-disable-line
   app.get('/', index.render);
 
   // New routes to use jwt authentication
-  app.post('/api/auth/login', validator,
+  app.post('/api/auth/login', fieldValidationMiddleware,
     passport.authenticate('local', {
       session: false,
       failureRedirect: '/login',
       failureFlash: 'Invalid email or password.'
     }),
-    users.jwtLogin);
+    jwtLogin);
 }

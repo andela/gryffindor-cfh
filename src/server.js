@@ -14,9 +14,8 @@ const express = require('express'),
  */
 
 // Load configurations
-// if test env, load example file
-const env = process.env.NODE_ENV = process.env.NODE_ENV || 'development', // eslint-disable-line
-  config = require('./config/config'),
+// if test env, load example file// eslint-disable-line
+const config = require('./config/config'),
   auth = require('./config/middlewares/authorization'),
   mongoose = require('mongoose');
 

@@ -61,6 +61,7 @@ export default function (passport) {
       }
       // user.email = null;
       // user.hashed_password = null;
+      console.log('authentication in passport');
       done(null, user);
     });
   }
