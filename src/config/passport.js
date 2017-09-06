@@ -45,7 +45,6 @@ export default function (passport) {
     }, (err, user) => {
     // console.log('finds the user, resolves');
       if (err) {
-        console.log(err);
         return done(err);
       }
       if (!user) {
@@ -54,14 +53,12 @@ export default function (passport) {
         });
       }
       if (!user.authenticate(password)) {
-        console.log('finds user but incorrect password');
         return done(null, false, {
           message: 'Invalid password'
         });
       }
       // user.email = null;
       // user.hashed_password = null;
-      console.log('authentication in passport');
       done(null, user);
     });
   }
@@ -85,10 +82,10 @@ export default function (passport) {
           name: profile.displayName,
           username: profile.username,
           provider: 'twitter',
-          twitter: profile._json
+          twitter: profile._json    // eslint-disable-line
         });
         user.save((err) => {
-          if (err) console.log(err);
+          if (err) console.log(err);  // eslint-disable-line
           return done(err, user);
         });
       } else {
@@ -118,10 +115,10 @@ export default function (passport) {
           email: (profile.emails && profile.emails[0].value) || '',
           username: profile.username,
           provider: 'facebook',
-          facebook: profile._json
+          facebook: profile._json   // eslint-disable-line
         });
         user.save((err) => {
-          if (err) console.log(err);
+          if (err) console.log(err);    // eslint-disable-line
           user.facebook = null;
           return done(err, user);
         });
@@ -152,10 +149,10 @@ export default function (passport) {
           email: profile.emails[0].value,
           username: profile.username,
           provider: 'github',
-          github: profile._json
+          github: profile._json   // eslint-disable-line
         });
         user.save((err) => {
-          if (err) console.log(err);
+          if (err) console.log(err);  // eslint-disable-line
           return done(err, user);
         });
       } else {
@@ -184,10 +181,10 @@ export default function (passport) {
           email: profile.emails[0].value,
           username: profile.username,
           provider: 'google',
-          google: profile._json
+          google: profile._json   // eslint-disable-line
         });
         user.save((err) => {
-          if (err) console.log(err);
+          if (err) console.log(err);    // eslint-disable-line
           return done(err, user);
         });
       } else {

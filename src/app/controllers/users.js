@@ -220,7 +220,7 @@ export const user = (req, res, next, id) => {
     .findOne({
       _id: id
     })
-    .exec((err, user) => {
+    .exec((err) => {
       if (err) return next(err);
       if (!user) return next(new Error(`Failed to load User ${id}`));
       req.profile = user;
@@ -229,7 +229,6 @@ export const user = (req, res, next, id) => {
 };
 
 export const jwtLogin = (req, res) => {
-  console.log('authentication gets to users controller');
   const theUser = req.user;
   const generatedToken = generateToken(theUser);
   res.status(200).send(generatedToken);
