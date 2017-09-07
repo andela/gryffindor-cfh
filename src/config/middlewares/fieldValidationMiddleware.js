@@ -1,6 +1,12 @@
 import { fieldValidationFnMap, inValidFieldMessage } from '../validate';
 import { BAD_FIELD_AUTHENTICATION } from '../statusCodeConstants';
 
+
+const fieldMap = {
+  '/api/auth/login': ['email', 'password'],
+  '/api/auth/signup': ['email', 'password', 'username']
+};
+
 /**
  * middleware for validation
  * @param {object} req
@@ -9,7 +15,8 @@ import { BAD_FIELD_AUTHENTICATION } from '../statusCodeConstants';
  * @returns {void}
  */
 export default function (req, res, next) {
-  const invalidField = ['email', 'password', 'userName']
+  const path = req.path;
+  const invalidField = fieldMap[path]
     .find((field) => {
       if (req.body[field]) {
         const validationFn = fieldValidationFnMap[field];
