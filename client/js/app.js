@@ -1,6 +1,6 @@
-angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.route', 'mean.system', 'mean.directives'])
+angular.module('mean', ['ngCookies', 'ngResource', 'firebase', 'ui.bootstrap', 'ui.route', 'mean.system', 'mean.directives'])
   .config(['$routeProvider',
-    function($routeProvider) {
+    ($routeProvider) => {
       $routeProvider
         .when('/', {
           templateUrl: 'views/index.html'
@@ -28,13 +28,13 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.route', '
         });
     }
   ]).config(['$locationProvider',
-    function($locationProvider) {
+    ($locationProvider) => {
       $locationProvider.hashPrefix('!');
     }
-  ]).run(['$rootScope', function($rootScope) {
-    $rootScope.safeApply = function(fn) {
+  ]).run(['$rootScope', ($rootScope) => {
+    $rootScope.safeApply = (fn) => {
       const phase = this.$root.$$phase;
-      if (phase == '$apply' || phase == '$digest') {
+      if (phase === '$apply' || phase === '$digest') {
         if (fn && (typeof (fn) === 'function')) {
           fn();
         }
@@ -42,8 +42,8 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ui.route', '
         this.$apply(fn);
       }
     };
-  }]).run(['DonationService', function (DonationService) {
-    window.userDonationCb = function (donationObject) {
+  }]).run(['DonationService', (DonationService) => {// eslint-disable-line
+    window.userDonationCb = (donationObject) => {// eslint-disable-line
       DonationService.userDonated(donationObject);
     };
   }]);
