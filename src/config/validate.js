@@ -10,7 +10,7 @@ const modifiedIsLength = field => val => isLength(val, fieldLength[field] || {})
 export const fieldValidationFnMap = {
   email: [isEmail],
   password: [modifiedIsLength('password')],
-  userName: [modifiedIsLength('userName'), isAlphanumeric]
+  userName: [modifiedIsLength('username'), isAlphanumeric]
 };
 
 export const inValidFieldMessage = {
