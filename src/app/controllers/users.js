@@ -1,12 +1,9 @@
 /**
  * Module dependencies.
  */
-import mongoose from 'mongoose';
 import generateToken from '../../config/generateToken';
-import avatarsModule from './avatars';
-
-const User = mongoose.model('User');
-const avatars = avatarsModule.all();
+import { all as avatars } from './avatars';
+import User from './../models/user';
 
 /**
  * Auth callback
@@ -68,7 +65,7 @@ export const session = (req, res) => {
   res.redirect('/');
 };
 
-/** 
+/**
  * Check avatar - Confirm if the user who logged in via passport
  * already has an avatar. If they don't have one, redirect them
  * to our Choose an Avatar page.
@@ -141,7 +138,7 @@ export const create = (req, res, next) => {
 export const avatarsChoice = (req, res) => {
   // Update the current user's profile to include the avatar choice they've made
 
-  // eslint-disable-next-line 
+  // eslint-disable-next-line
   if (req.user && req.user._id && req.body.avatar !== undefined &&
     /\d/.test(req.body.avatar) && avatars[req.body.avatar]) {
     User.findOne({
@@ -155,6 +152,12 @@ export const avatarsChoice = (req, res) => {
   return res.redirect('/#!/app');
 };
 
+/**
+ * Add donation
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
 export const addDonation = (req, res) => {
   if (req.body && req.user && req.user._id) { // eslint-disable-line no-underscore-dangle
     // Verify that the object contains crowdrise data
@@ -228,6 +231,12 @@ export const user = (req, res, next, id) => {
     });
 };
 
+/**
+ * Generate login token
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
 export const jwtLogin = (req, res) => {
   const theUser = req.user;
   const generatedToken = generateToken(theUser);

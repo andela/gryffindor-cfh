@@ -1,29 +1,27 @@
 /**
  * Module dependencies.
  */
-require('dotenv').config();
-const express = require('express'),
-  fs = require('fs'),
-  passport = require('passport'),
-  logger = require('mean-logger'),
-  io = require('socket.io');
-
+import express from 'express';
+import fs from 'fs';
+import passport from 'passport';
+import logger from 'mean-logger';
+import io from 'socket.io';
+import mongoose from 'mongoose';
+import config from './config/config';
+import db from './config/init'; // eslint-disable-line
+import passportConfig from './config/passport';
+import expressConfig from './config/express';
+import routeConfig from './config/routes';
+import socketConfig from './config/socket/socket';
+import auth from './config/middlewares/authorization';
 /**
  * Main application entry file.
  * Please note that the order of loading is important.
  */
-
-// Load configurations
-// if test env, load example file// eslint-disable-line
-const config = require('./config/config'),
-  auth = require('./config/middlewares/authorization'),
-  mongoose = require('mongoose');
-
-// Bootstrap db connection
-const db = mongoose.connect(config.db); // eslint-disable-line
+const app = express();
 
 // Bootstrap models
-const models_path = `${__dirname}/app/models`;  // eslint-disable-line
+const modelsPath = `${__dirname}/app/models`;
 const walk = (path) => {
   fs.readdirSync(path).forEach((file) => {
     const newPath = `${path}/${file}`;
@@ -37,33 +35,27 @@ const walk = (path) => {
     }
   });
 };
-walk(models_path);
+walk(modelsPath);
 
 // bootstrap passport config
-require('./config/passport').default(passport);
-
-const app = express();
-
-app.use((req, res, next) => {
-  next();
-});
+passportConfig(passport);
 
 // express settings
-require('./config/express')(app, passport, mongoose);
+expressConfig(app, passport, mongoose);
 
 // Bootstrap routes
-require('./config/routes').default(app, passport, auth);
+routeConfig(app, passport, auth);
 
 // Start the app by listening on <port>
 const port = config.port;
 const server = app.listen(port);
 const ioObj = io.listen(server, { log: false });
 // game logic handled here
-require('./config/socket/socket')(ioObj);
+socketConfig(ioObj);
 console.log(`Express app started on port ${port}`); // eslint-disable-line
 
 // Initializing logger
 logger.init(app, passport, mongoose);
 
 // expose app
-module.exports = app;
+export default app;

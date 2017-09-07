@@ -44,6 +44,7 @@ gulp.task('watch', () => {
   gulp.watch('client/js/**/*.js', ['transpile']);
   gulp.watch('client/scss/**/*.scss', ['sass']);
   gulp.watch('client/img-assets/**/*', ['images']);
+  gulp.watch('client/views/**/*', ['copyClient']);
   gulp.watch(['src/config/env/**/*.json', 'src/app/views/**/*.jade'], ['copyServer']);
 });
 
@@ -54,7 +55,9 @@ gulp.task('coveralls', ['test'], () => gulp.src('./coverage/lcov.info')
 
 gulp.task('pre-test', () => gulp.src(['src/server.js', 'src/app/**/*.js', 'src/config/**/*.js'])
   // Covering files
-  .pipe(istanbul({ instrumenter: isparta.Instrumenter }))
+  .pipe(istanbul({
+    instrumenter: isparta.Instrumenter
+  }))
   // Force `require` to return covered files
   .pipe(istanbul.hookRequire()));
 

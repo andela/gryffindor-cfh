@@ -1,33 +1,24 @@
 import {
-  signin,
-  signout,
-  signup,
-  checkAvatar,
-  avatarsChoice,
-  addDonation,
-  show,
-  me,
-  authCallback,
-  user,
-  jwtLogin,
-  session,
-  create
+  signin, signout, signup,
+  checkAvatar, avatarsChoice, addDonation,
+  show, me, authCallback, user,
+  jwtLogin, session, create
 } from '../app/controllers/users';
-import answers from '../app/controllers/answers';
-import questions from '../app/controllers/questions';
-import avatars from '../app/controllers/avatars';
-import index from '../app/controllers/index';
+import { all as allAnswers, show as showAnswers, answer as getAnswer } from '../app/controllers/answers';
+import { all as allQuestions, show as showQuestion, question as getQuestion } from '../app/controllers/questions';
+import { allJSON } from '../app/controllers/avatars';
+import { play, render } from '../app/controllers/index';
 import fieldValidationMiddleware from './middlewares/fieldValidationMiddleware';
 
 
 /**
  * routes for cfh
- * @param {*} app 
- * @param {*} passport 
- * @param {*} auth 
+ * @param {*} app
+ * @param {*} passport
+ * @param {*} auth
  * @returns {void}
  */
-export default function (app, passport, auth) {  // eslint-disable-line 
+export default function (app, passport, auth) {  // eslint-disable-line
   app.get('/signin', signin);
   app.get('/signup', signup);
   app.get('/chooseavatars', checkAvatar);
@@ -93,23 +84,23 @@ export default function (app, passport, auth) {  // eslint-disable-line
   app.param('userId', user);
 
   // Answer Routes
-  app.get('/answers', answers.all);
-  app.get('/answers/:answerId', answers.show);
+  app.get('/answers', allAnswers);
+  app.get('/answers/:answerId', showAnswers);
   // Finish with setting up the answerId param
-  app.param('answerId', answers.answer);
+  app.param('answerId', getAnswer);
 
   // Question Routes
-  app.get('/questions', questions.all);
-  app.get('/questions/:questionId', questions.show);
+  app.get('/questions', allQuestions);
+  app.get('/questions/:questionId', showQuestion);
   // Finish with setting up the questionId param
-  app.param('questionId', questions.question);
+  app.param('questionId', getQuestion);
 
   // Avatar Routes
-  app.get('/avatars', avatars.allJSON);
+  app.get('/avatars', allJSON);
 
   // Home route
-  app.get('/play', index.play);
-  app.get('/', index.render);
+  app.get('/play', play);
+  app.get('/', render);
 
   // New routes to use jwt authentication
   app.post('/api/auth/login', fieldValidationMiddleware,

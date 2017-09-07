@@ -1,6 +1,4 @@
 import jwt from 'jsonwebtoken';
-require('dotenv').config();
-
 
 const jwtSecret = process.env.JWT_SECRET || 'SECRET';
 
@@ -13,4 +11,3 @@ const generateToken = (user) => {
 };
 
 export default generateToken;
-

@@ -1,12 +1,11 @@
-import mongoose from 'mongoose';
 import Local from 'passport-local';
 import Twitter from 'passport-twitter';
 import Facebook from 'passport-facebook';
 import GitHub from 'passport-github';
 import Google from 'passport-google-oauth';
 import config from './config';
+import User from './../app/models/user';
 
-const User = mongoose.model('User');
 const localStrategy = Local.Strategy;
 const twitterStrategy = Twitter.Strategy;
 const facebookStrategy = Facebook.Strategy;
@@ -15,10 +14,10 @@ const googleStrategy = Google.OAuth2Strategy;
 
 /**
  * @return {void}
- * @param {*} passport 
+ * @param {*} passport
  */
 export default function (passport) {
-// Serialize sessions
+  // Serialize sessions
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
@@ -43,7 +42,7 @@ export default function (passport) {
     User.findOne({
       email: emailArgument
     }, (err, user) => {
-    // console.log('finds the user, resolves');
+      // console.log('finds the user, resolves');
       if (err) {
         return done(err);
       }
@@ -82,10 +81,10 @@ export default function (passport) {
           name: profile.displayName,
           username: profile.username,
           provider: 'twitter',
-          twitter: profile._json    // eslint-disable-line
+            twitter: profile._json    // eslint-disable-line
         });
         user.save((err) => {
-          if (err) console.log(err);  // eslint-disable-line
+            if (err) console.log(err);  // eslint-disable-line
           return done(err, user);
         });
       } else {
@@ -115,10 +114,10 @@ export default function (passport) {
           email: (profile.emails && profile.emails[0].value) || '',
           username: profile.username,
           provider: 'facebook',
-          facebook: profile._json   // eslint-disable-line
+            facebook: profile._json   // eslint-disable-line
         });
         user.save((err) => {
-          if (err) console.log(err);    // eslint-disable-line
+            if (err) console.log(err);    // eslint-disable-line
           user.facebook = null;
           return done(err, user);
         });
@@ -149,10 +148,10 @@ export default function (passport) {
           email: profile.emails[0].value,
           username: profile.username,
           provider: 'github',
-          github: profile._json   // eslint-disable-line
+            github: profile._json   // eslint-disable-line
         });
         user.save((err) => {
-          if (err) console.log(err);  // eslint-disable-line
+            if (err) console.log(err);  // eslint-disable-line
           return done(err, user);
         });
       } else {
@@ -181,10 +180,10 @@ export default function (passport) {
           email: profile.emails[0].value,
           username: profile.username,
           provider: 'google',
-          google: profile._json   // eslint-disable-line
+            google: profile._json   // eslint-disable-line
         });
         user.save((err) => {
-          if (err) console.log(err);    // eslint-disable-line
+            if (err) console.log(err);    // eslint-disable-line
           return done(err, user);
         });
       } else {
