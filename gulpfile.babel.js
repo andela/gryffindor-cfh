@@ -47,12 +47,8 @@ gulp.task('watch', () => {
   gulp.watch(['src/config/env/**/*.json', 'src/app/views/**/*.jade'], ['copyServer']);
 });
 
-gulp.task('coveralls', ['test'], () => gulp.src('./coverage/lcov.info')
-  .pipe(coveralls())
-  .on('end', () => {
-    process.exit();
-  }));
-
+gulp.task('coveralls', () => gulp.src('./coverage/lcov.info')
+  .pipe(coveralls()));
 
 gulp.task('pre-test', () => gulp.src(['src/server.js', 'src/app/**/*.js', 'src/config/**/*.js'])
   // Covering files
@@ -69,6 +65,9 @@ gulp.task('test', ['pre-test'], () =>
     .pipe(istanbul.writeReports())
     .once('error', () => {
       process.exit(1);
+    })
+    .on('end', () => {
+      process.exit();
     }));
 
 gulp.task('transpile', () => gulp.src(['client/js/**/*.js'])
