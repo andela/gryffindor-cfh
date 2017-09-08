@@ -25,14 +25,13 @@ describe('<Unit Test>', () => {
     });
 
     describe('importhod Save', () => {
-      it('should be able to save whithout problems', done => user.save((err) => {
+      it('should be able to save whithout problems', () => user.save((err) => {
         should.not.exist(err);
-        done();
       }));
 
-      it('should be able to show an error when try to save witout name', (done) => {
+      it('should be able to show an error when try to save without name', (done) => {
         user.name = '';
-        return user.save((err) => {
+        user.save((err) => {
           should.exist(err);
           done();
         });
