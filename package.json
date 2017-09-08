@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "node_modules/.bin/gulp",
-    "test": "node_modules/.bin/gulp test",
+    "test": "NODE_ENV=test node_modules/.bin/gulp test",
     "postinstall": "chmod +x ./update-commit-hooks.sh && ./update-commit-hooks.sh",
     "commit-hook": "rsync pre-commit .git/hooks && chmod 755 .git/hooks/pre-commit",
     "coveralls": "node_modules/.bin/gulp coveralls"
@@ -49,11 +49,11 @@
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^3.0.0",
+    "isparta": "^4.0.0",
     "jade": "~0.35.0",
     "jsonwebtoken": "^7.4.3",
     "mean-logger": "~0.0.1",
-    "mongodb": "^2.2.31",
-    "mongoose": "~3.6.20",
+    "mongoose": "^4.11.10",
     "passport": "~0.1.17",
     "passport-facebook": "~2.0.0",
     "passport-github": "~0.1.5",
@@ -66,6 +66,7 @@
     "socket.io-client": "~0.9.16",
     "supertest": "~0.8.0",
     "underscore": "~1.5.2",
+    "validator": "^8.1.0",
     "view-helpers": "~0.1.3"
   }
 }

@@ -1,30 +1,33 @@
+/* global angular */
 angular.module('mean.system')
-  .controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService',
-    'LocationStorageService',
-    ($scope, Global, $location, socket, game, AvatarService, LocationStorageService) => {
-      $scope.global = Global;
-      $scope.email = '';
-      $scope.username = '';
-      $scope.password = '';
+  .controller('IndexController',
+    ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', 'AuthenticationService',
+      'LocationStorageService',
+      ($scope, Global, $location, socket, game, AvatarService, AuthenticationService,
+        LocationStorageService) => { //eslint-disable-line
+        $scope.global = Global;
+        $scope.email = '';
+        $scope.username = '';
+        $scope.password = '';
 
-      $scope.playAsGuest = () => {
-        game.joinGame();
-        $location.path('/app');
-      };
-      $scope.showError = () => {
-        if ($location.search().error) {
-          return $location.search().error;
-        }
-        return false;
-      };
-      $scope.signUp = () => {
+        $scope.login = (isValid) => {
+          if (isValid) {
+            AuthenticationService.login($scope.email, $scope.password)
+              .then(() => {
+                $location.path('/#!');
+              })
+              .catch(() => {
+                // TODO: INSERT ERROR FEEDBACK FOR USER
+              });
+          }
+        };
+        $scope.signUp = () => {
         // AuthenticationService.signUp($scope.userName, $scope.email, $scope.password);
-      };
-
-      $scope.avatars = [];
-      AvatarService.getAvatars()
-        .then((data) => {
-          $scope.avatars = data;
-        });
-    }]);
+        };
+        $scope.avatars = [];
+        AvatarService.getAvatars()
+          .then((data) => {
+            $scope.avatars = data;
+          });
+      }]);
 

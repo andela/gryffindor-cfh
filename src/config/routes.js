@@ -1,63 +1,72 @@
-const async = require('async');
-import expressJWT from 'express-JWT';
-import dotenv from 'dotenv';
+import {
+  signin, signout, signup,
+  checkAvatar, avatarsChoice, addDonation,
+  show, me, authCallback, user,
+  jwtLogin, session, create, signupJWT
+} from '../app/controllers/users';
+import { all as allAnswers, show as showAnswers, answer as getAnswer } from '../app/controllers/answers';
+import { all as allQuestions, show as showQuestion, question as getQuestion } from '../app/controllers/questions';
+import { allJSON } from '../app/controllers/avatars';
+import { play, render } from '../app/controllers/index';
+import fieldValidationMiddleware from './middlewares/fieldValidationMiddleware';
 
-dotenv.config();
 
-
-module.exports = function (app, passport, auth) {
-  // User Routes
-  const users = require('../app/controllers/users');
-  app.get('/signin', users.signin);
-  app.get('/signup', users.signup);
-  app.get('/chooseavatars', users.checkAvatar);
-  app.get('/signout', users.signout);
+/**
+ * routes for cfh
+ * @param {*} app
+ * @param {*} passport
+ * @param {*} auth
+ * @returns {void}
+ */
+export default function (app, passport, auth) {  // eslint-disable-line
+  app.get('/signin', signin);
+  app.get('/signup', signup);
+  app.get('/chooseavatars', checkAvatar);
+  app.get('/signout', signout);
+  app.post('/api/auth/signup', signupJWT);
 
   // Setting up the users api
-  app.post('/users', users.create);
-  app.post('/users/avatars', users.avatars);
-  app.use(expressJWT({ secret: process.env.secret }));
-  app.post('/api/auth/signup', users.signupJWT);
-
+  app.post('/users', create);
+  app.post('/users/avatars', avatarsChoice);
 
   // Donation Routes
-  app.post('/donations', users.addDonation);
+  app.post('/donations', addDonation);
 
   app.post('/users/session', passport.authenticate('local', {
     failureRedirect: '/signin',
     failureFlash: 'Invalid email or password.'
-  }), users.session);
+  }), session);
 
-  app.get('/users/me', users.me);
-  app.get('/users/:userId', users.show);
+  app.get('/users/me', me);
+  app.get('/users/:userId', show);
 
   // Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
     scope: ['email'],
     failureRedirect: '/signin'
-  }), users.signin);
+  }), signin);
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/signin'
-  }), users.authCallback);
+  }), authCallback);
 
   // Setting the github oauth routes
   app.get('/auth/github', passport.authenticate('github', {
     failureRedirect: '/signin'
-  }), users.signin);
+  }), signin);
 
   app.get('/auth/github/callback', passport.authenticate('github', {
     failureRedirect: '/signin'
-  }), users.authCallback);
+  }), authCallback);
 
   // Setting the twitter oauth routes
   app.get('/auth/twitter', passport.authenticate('twitter', {
     failureRedirect: '/signin'
-  }), users.signin);
+  }), signin);
 
   app.get('/auth/twitter/callback', passport.authenticate('twitter', {
     failureRedirect: '/signin'
-  }), users.authCallback);
+  }), authCallback);
 
   // Setting the google oauth routes
   app.get('/auth/google', passport.authenticate('google', {
@@ -66,35 +75,40 @@ module.exports = function (app, passport, auth) {
       'https://www.googleapis.com/auth/userinfo.profile',
       'https://www.googleapis.com/auth/userinfo.email'
     ]
-  }), users.signin);
+  }), signin);
 
   app.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/signin'
-  }), users.authCallback);
+  }), authCallback);
 
   // Finish with setting up the userId param
-  app.param('userId', users.user);
+  app.param('userId', user);
 
   // Answer Routes
-  const answers = require('../app/controllers/answers');
-  app.get('/answers', answers.all);
-  app.get('/answers/:answerId', answers.show);
+  app.get('/answers', allAnswers);
+  app.get('/answers/:answerId', showAnswers);
   // Finish with setting up the answerId param
-  app.param('answerId', answers.answer);
+  app.param('answerId', getAnswer);
 
   // Question Routes
-  const questions = require('../app/controllers/questions');
-  app.get('/questions', questions.all);
-  app.get('/questions/:questionId', questions.show);
+  app.get('/questions', allQuestions);
+  app.get('/questions/:questionId', showQuestion);
   // Finish with setting up the questionId param
-  app.param('questionId', questions.question);
+  app.param('questionId', getQuestion);
 
   // Avatar Routes
-  const avatars = require('../app/controllers/avatars');
-  app.get('/avatars', avatars.allJSON);
+  app.get('/avatars', allJSON);
 
   // Home route
-  const index = require('../app/controllers/index');
-  app.get('/play', index.play);
-  app.get('/', index.render);
-};
+  app.get('/play', play);
+  app.get('/', render);
+
+  // New routes to use jwt authentication
+  app.post('/api/auth/login', fieldValidationMiddleware,
+    passport.authenticate('local', {
+      session: false,
+      failureRedirect: '/login',
+      failureFlash: 'Invalid email or password.'
+    }),
+    jwtLogin);
+}

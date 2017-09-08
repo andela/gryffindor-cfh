@@ -12,6 +12,8 @@ import bower from 'gulp-bower';
 import babel from 'gulp-babel';
 import FileCache from 'gulp-file-cache';
 
+const isparta = require('isparta');
+
 const fileCache = new FileCache();
 
 gulp.task('sass', () =>
@@ -27,7 +29,7 @@ gulp.task('images', () => gulp.src('client/img-assets/**/*')
 gulp.task('server', ['compile'], () =>
   nodemon({
     script: 'dist/server.js',
-    watch: 'server',
+    watch: 'src',
     tasks: ['compile', 'copyServer']
   })
 );
@@ -42,6 +44,7 @@ gulp.task('watch', () => {
   gulp.watch('client/js/**/*.js', ['transpile']);
   gulp.watch('client/scss/**/*.scss', ['sass']);
   gulp.watch('client/img-assets/**/*', ['images']);
+  gulp.watch('client/views/**/*', ['copyClient']);
   gulp.watch(['src/config/env/**/*.json', 'src/app/views/**/*.jade'], ['copyServer']);
 });
 
@@ -52,7 +55,9 @@ gulp.task('coveralls', ['test'], () => gulp.src('./coverage/lcov.info')
 
 gulp.task('pre-test', () => gulp.src(['src/server.js', 'src/app/**/*.js', 'src/config/**/*.js'])
   // Covering files
-  .pipe(istanbul())
+  .pipe(istanbul({
+    instrumenter: isparta.Instrumenter
+  }))
   // Force `require` to return covered files
   .pipe(istanbul.hookRequire()));
 
@@ -65,7 +70,7 @@ gulp.task('test', ['pre-test'], () =>
       process.exit(1);
     })
     .once('end', () => {
-      process.exit();
+      // process.exit();
     })
 );
 gulp.task('transpile', () => gulp.src(['client/js/**/*.js'])
