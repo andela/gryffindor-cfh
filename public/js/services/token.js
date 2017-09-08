@@ -1,4 +1,4 @@
-'use strict';
+
 
 /* global angular */
 angular.module('mean.system').factory('LocalStorageService', ['$window', function ($window) {
