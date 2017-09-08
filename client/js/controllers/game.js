@@ -34,18 +34,15 @@ angular.module('mean.system')
       };
       $scope.selectUser = (selectedEmail) => {
         if ($scope.invitedUsers.length <= 11) {
-          // console.log(_.indexOf($scope.invitedUsers, selectedEmail));
-          if (_.indexOf($scope.invitedUsers, selectedEmail) === -1) {// eslint-disable-line
-            $scope.invitedUsers.push(selectedEmail);
-          }
-
           const mailObject = {
             To: selectedEmail,
             Link: document.URL
           };
-          console.log(mailObject);// eslint-disable-line
           userSearch.sendInvite(mailObject).then((data) => {
             console.log(data.data);// eslint-disable-line
+            if (_.indexOf($scope.invitedUsers, selectedEmail) === -1) {// eslint-disable-line
+              $scope.invitedUsers.push(selectedEmail);
+            }
           });
         } else {
           const myModal = $('#limit_modal');
@@ -55,12 +52,9 @@ angular.module('mean.system')
 
       $scope.searchUsers = () => {
         if ($scope.selectedUser !== '') {
-          // console.log($scope.selectedUser);
           userSearch.search($scope.selectedUser).then((data) => {
             $scope.searchedUsers = data.data;
-            console.log(data.data);// eslint-disable-line
           });
-          console.log(userSearch.search($scope.selectedUser));// eslint-disable-line
         } else {
           $scope.searchedUsers = [];
         }

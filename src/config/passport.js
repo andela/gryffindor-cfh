@@ -26,9 +26,11 @@ export default function (passport) {
     User.findOne({
       _id: id
     }, (err, user) => {
-      user.email = null;
-      user.facebook = null;
-      user.hashed_password = null;
+      if (user) {
+        user.email = null;
+        user.facebook = null;
+        user.hashed_password = null;
+      }
       done(err, user);
     });
   });
