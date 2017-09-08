@@ -131,36 +131,32 @@ export const create = (req, res, next) => {
 
 
 export const signupJWT = (req, res) => {
-  if (req.body.username && req.body.password && req.body.email) {
-    User.findOne({
-      email: req.body.email
-    }).exec((err, existingUser) => {
-      if (!existingUser) {
-        const user = new User(req.body);
-        // Switch the user's avatar index to an actual avatar url
-        user.avatar = avatars[user.avatar];
-        user.provider = 'local';
-        user.save((err) => {
-          if (err) {
-            return res.json('error saving user', {
-              errors: err.errors,
-              user
-            });
-          }
-          const generatedToken = generateToken(user);
-          user.hashed_password = null;
-          res.status(200).json({
-            token: generatedToken,
-            users: user
+  User.findOne({
+    email: req.body.email
+  }).exec((err, existingUser) => {
+    if (!existingUser) {
+      const user = new User(req.body);
+      // Switch the user's avatar index to an actual avatar url
+      user.avatar = avatars[user.avatar];
+      user.provider = 'local';
+      user.save((err) => {
+        if (err) {
+          return res.json('error saving user', {
+            errors: err.errors,
+            user
           });
+        }
+        const generatedToken = generateToken(user);
+        user.hashed_password = null;
+        res.status(200).json({
+          token: generatedToken,
+          users: user
         });
-      } else {
-        return res.json({ message: 'There is an existing user' });
-      }
-    });
-  } else {
-    return res.json({ error: 'There is an error in email or password' });
-  }
+      });
+    } else {
+      return res.json({ message: 'There is an existing user' });
+    }
+  });
 };
 
 /**
