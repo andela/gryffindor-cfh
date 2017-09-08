@@ -70,7 +70,7 @@ gulp.task('test', ['pre-test'], () =>
       process.exit(1);
     })
     .once('end', () => {
-      process.exit();
+      // process.exit();
     })
 );
 gulp.task('transpile', () => gulp.src(['client/js/**/*.js'])
