@@ -3,15 +3,17 @@
  */
 import should from 'should';
 import mongoose from 'mongoose';
-
 import app from '../../src/server';  // eslint-disable-line
-const User = mongoose.model('User');
+import User from './../../src/app/models/user';
 
 // Globals
 let user;
 
 // The tests
 describe('<Unit Test>', () => {
+  after(() => {
+    mongoose.disconnect();
+  });
   describe('Model User:', () => {
     before((done) => {
       user = new User({
