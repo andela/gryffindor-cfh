@@ -1,10 +1,14 @@
 /**
  * Module dependencies.
  */
+import nodemailer from 'nodemailer';
+import smtpTransport from 'nodemailer-smtp-transport';
+import dotenv from 'dotenv';
 import generateToken from '../../config/generateToken';
 import { all as avatars } from './avatars';
 import User from './../models/user';
 
+dotenv.load();
 /**
  * Auth callback
  * @param {object} req
@@ -304,8 +308,8 @@ export const sendMail = (req, res) => { // eslint-disable-line
   const transporter = nodemailer.createTransport(smtpTransport({
     service: 'gmail',
     auth: {
-      user: 'postitbyyamen@gmail.com', // my mail
-      pass: '123postit890'
+      user: process.env.EMAIL_USERNAME, // my mail
+      pass: process.env.EMAIL_PASSWORD
     }
   }));
   const mailOptions = {

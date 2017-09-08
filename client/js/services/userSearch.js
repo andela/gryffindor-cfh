@@ -5,7 +5,7 @@ angular.module('mean.system')
     },
 
     sendInvite(mailObject) {
-      $http.post('/api/users/emailInvite', {
+      return $http.post('/api/users/emailInvite', {
         To: mailObject.To,
         Link: mailObject.Link
       });

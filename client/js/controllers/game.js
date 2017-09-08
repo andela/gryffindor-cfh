@@ -32,18 +32,23 @@ angular.module('mean.system')
           }
         }
       };
+
+      $scope.checkDisable = (selectedEmail) => {
+        if (_.indexOf($scope.invitedUsers, selectedEmail) === -1) {// eslint-disable-line
+          return false;
+        }
+        return true;
+      };
       $scope.selectUser = (selectedEmail) => {
         if ($scope.invitedUsers.length <= 11) {
           const mailObject = {
             To: selectedEmail,
             Link: document.URL
           };
-          userSearch.sendInvite(mailObject).then((data) => {
-            console.log(data.data);// eslint-disable-line
-            if (_.indexOf($scope.invitedUsers, selectedEmail) === -1) {// eslint-disable-line
-              $scope.invitedUsers.push(selectedEmail);
-            }
+          userSearch.sendInvite(mailObject).then(() => {
+          }).catch(() => {
           });
+          $scope.invitedUsers.push(selectedEmail);
         } else {
           const myModal = $('#limit_modal');
           myModal.modal('show');

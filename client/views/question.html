@@ -18,7 +18,74 @@
           Start Game</br>with {{game.players.length}} players
         </div>
       </div>
+      <div class="pull-left">
+          <button type="button" data-toggle="modal" data-target="#invite_player_modal" class="btn btn-primary">Invite Users</button>
+      </div>
     </div>
+
+
+<div class="modal fade" id="invite_player_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" style="color:black; font-size: 15px;">Search by username</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p style="color:black; font-size: 15px; ">Invited Users: {{invitedUsers.length}}</p>
+            <div class="form-group">
+                <input type="text" ng-keyup="searchUsers()" ng-model="selectedUser" placeholder="Search by email" class="form-control">
+            </div>
+            <hr/>
+            <div>
+                    <table class="table table-hover table-inverse" style="color:black; font-size: 12px; ">
+                            <thead>
+                              <tr>
+                                <th><span>Username</span></th>
+                                <th><span>Email</span></th>
+                                <th></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-repeat="user in searchedUsers">
+                                <td><span>{{user.name}}</span></td>
+                                <td><span>{{user.email}}</span></td>
+                                <td><span><a class="btn btn-primary" ng-disabled="checkDisable(user.email)" ng-click="selectUser(user.email)">Invite</a></span></td>
+                              </tr>
+                            </tbody>
+                          </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="modal fade" id="limit_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" style="color:red;">Warning!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+              <p style="color:black; ">You have exceeded your invite limit!</p>
+            </div>
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
     <!-- Game Over Stuff -->
     <div id="game-end-info">
       <div id="people-left-game-top" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
@@ -35,5 +102,6 @@
         That makes you a loser, unfortunately.
       </div>
     </div>
+  </div>
   </div>
 </div>
