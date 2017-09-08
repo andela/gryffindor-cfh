@@ -23,7 +23,7 @@ export default function (app, passport, auth) {  // eslint-disable-line
   app.get('/signup', signup);
   app.get('/chooseavatars', checkAvatar);
   app.get('/signout', signout);
-  app.post('/api/auth/signup', signupJWT);
+  app.post('/api/auth/signup', fieldValidationMiddleware, signupJWT);
 
   // Setting up the users api
   app.post('/users', create);

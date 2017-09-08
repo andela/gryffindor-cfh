@@ -131,7 +131,7 @@ export const create = (req, res, next) => {
 
 
 export const signupJWT = (req, res) => {
-  if (req.body.name && req.body.password && req.body.email) {
+  if (req.body.username && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
     }).exec((err, existingUser) => {
@@ -148,7 +148,11 @@ export const signupJWT = (req, res) => {
             });
           }
           const generatedToken = generateToken(user);
-          res.status(200).json(generatedToken);
+          user.hashed_password = null;
+          res.status(200).json({
+            token: generatedToken,
+            users: user
+          });
         });
       } else {
         return res.json({ message: 'There is an existing user' });
@@ -269,6 +273,10 @@ export const user = (req, res, next, id) => {
  */
 export const jwtLogin = (req, res) => {
   const theUser = req.user;
+  theUser.hashed_password = null;
   const generatedToken = generateToken(theUser);
-  res.status(200).send(generatedToken);
+  res.status(200).send({
+    token: generatedToken,
+    user: theUser
+  });
 };
