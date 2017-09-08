@@ -21,9 +21,7 @@ angular.module('mean.system')
           if (isValid) {
             AuthService.login($scope.email, $scope.password)
               .then(({ data: { token, user } }) => {
-                console.log(token, '==> this is the token');
                 AuthService.saveToken(token);
-                console.log(user);
                 TokenService.saveUser(user);
                 $location.path('/#!');
               })
