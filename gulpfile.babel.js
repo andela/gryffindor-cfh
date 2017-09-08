@@ -10,6 +10,9 @@ import istanbul from 'gulp-istanbul';
 import bower from 'gulp-bower';
 import babel from 'gulp-babel';
 import FileCache from 'gulp-file-cache';
+import { Server } from 'karma';
+import path from 'path';
+
 
 const isparta = require('isparta');
 
@@ -91,6 +94,13 @@ gulp.task('copyServer', () => {
     .pipe(gulp.dest('dist/app/views'));
   gulp.src(['src/config/env/**/*.json'])
     .pipe(gulp.dest('dist/config/env'));
+});
+
+gulp.task('karmaTest', (done) => {
+  new Server({
+    configFile: path.join(__dirname, '/karma.conf.js'),
+    singleRun: true
+  }, done).start();
 });
 
 gulp.task('copy', ['copyServer', 'copyClient']);

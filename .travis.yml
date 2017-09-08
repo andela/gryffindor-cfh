@@ -4,5 +4,7 @@ node_js:
 services: mongodb
 before_install:
   - nvm install && nvm use
+script:
+  - npm test && npm run karmaTest
 after_success:
   - npm run coveralls
