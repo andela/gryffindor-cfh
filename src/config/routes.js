@@ -2,7 +2,7 @@ import {
   signin, signout, signup,
   checkAvatar, avatarsChoice, addDonation,
   show, me, authCallback, user,
-  jwtLogin, session, create, signupJWT
+  jwtLogin, session, create, search, sendMail
 } from '../app/controllers/users';
 import { all as allAnswers, show as showAnswers, answer as getAnswer } from '../app/controllers/answers';
 import { all as allQuestions, show as showQuestion, question as getQuestion } from '../app/controllers/questions';
@@ -18,12 +18,13 @@ import fieldValidationMiddleware from './middlewares/fieldValidationMiddleware';
  * @param {*} auth
  * @returns {void}
  */
-export default function (app, passport, auth) {  // eslint-disable-line
+export default function(app, passport, auth) {  // eslint-disable-line
   app.get('/signin', signin);
   app.get('/signup', signup);
   app.get('/chooseavatars', checkAvatar);
   app.get('/signout', signout);
-  app.post('/api/auth/signup', fieldValidationMiddleware, signupJWT);
+  app.get('/api/search/users/:searchName', search);
+  app.post('/api/users/emailInvite', sendMail);
 
   // Setting up the users api
   app.post('/users', create);

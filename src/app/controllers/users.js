@@ -277,19 +277,48 @@ export const jwtLogin = (req, res) => {
   });
 };
 
-/**  
+/**
    * Find user
    * @param {Object} req request object
    * @param {Object} res response object
    * @returns {void} returns void
    */
-exports.search = (req, res) => {
-  const email = req.params.searchEmail;
-  // console.log(email);
-  User.find({ email: new RegExp(email, 'i') }).exec((error, result) => {
+export const search = (req, res) => {
+  const name = req.params.searchName;
+  User.find({ name: new RegExp(name, 'i') }).exec((error, result) => {
     if (error) {
       return res.json(error);
     }
     return res.json(result);
+  });
+};
+
+
+/**
+   * Send email
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} returns void
+   */
+export const sendMail = (req, res) => { // eslint-disable-line
+  const transporter = nodemailer.createTransport(smtpTransport({
+    service: 'gmail',
+    auth: {
+      user: 'postitbyyamen@gmail.com', // my mail
+      pass: '123postit890'
+    }
+  }));
+  const mailOptions = {
+    from: '"Cards for Humanity" <notification@cfh.com>',
+    to: req.body.To,
+    subject: 'Invitation to play',
+    text: `Follow the link to play: ${req.body.Link}`,
+    html: `<b>Follow the link to play: ${req.body.Link}</b>`
+  };
+
+  transporter.sendMail(mailOptions, (error) => {
+    if (error) {
+      console.log(error); // eslint-disable-line
+    }
   });
 };
