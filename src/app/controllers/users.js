@@ -276,3 +276,20 @@ export const jwtLogin = (req, res) => {
     user: theUser
   });
 };
+
+/**  
+   * Find user
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} returns void
+   */
+exports.search = (req, res) => {
+  const email = req.params.searchEmail;
+  // console.log(email);
+  User.find({ email: new RegExp(email, 'i') }).exec((error, result) => {
+    if (error) {
+      return res.json(error);
+    }
+    return res.json(result);
+  });
+};
