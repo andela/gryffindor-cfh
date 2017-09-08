@@ -1,7 +1,9 @@
 /**
  * Module dependencies.
  */
-import mongoose, { Schema } from 'mongoose';
+const mongoose = require('mongoose'),
+  config = require('../../config/config'),
+  Schema = mongoose.Schema;
 
 
 /**
@@ -26,6 +28,11 @@ const QuestionSchema = new Schema({
     type: String,
     default: '',
     trim: true
+  },
+  region: {
+    type: String,
+    default: '',
+    trim: true
   }
 });
 
@@ -33,7 +40,7 @@ const QuestionSchema = new Schema({
  * Statics
  */
 QuestionSchema.statics = {
-  load (id, cb) {
+  load(id, cb) {
     this.findOne({
       id
     }).select('-_id').exec(cb);
