@@ -129,6 +129,36 @@ export const create = (req, res, next) => {
   }
 };
 
+
+export const signupJWT = (req, res) => {
+  User.findOne({
+    email: req.body.email
+  }).exec((err, existingUser) => {
+    if (!existingUser) {
+      const user = new User(req.body);
+      // Switch the user's avatar index to an actual avatar url
+      user.avatar = avatars[user.avatar];
+      user.provider = 'local';
+      user.save((err) => {
+        if (err) {
+          return res.json('error saving user', {
+            errors: err.errors,
+            user
+          });
+        }
+        const generatedToken = generateToken(user);
+        user.hashed_password = null;
+        res.status(200).json({
+          token: generatedToken,
+          user
+        });
+      });
+    } else {
+      return res.json({ message: 'There is an existing user' });
+    }
+  });
+};
+
 /**
  * Assign avatar to user
  * @param {object} req
@@ -239,6 +269,10 @@ export const user = (req, res, next, id) => {
  */
 export const jwtLogin = (req, res) => {
   const theUser = req.user;
+  theUser.hashed_password = null;
   const generatedToken = generateToken(theUser);
-  res.status(200).send(generatedToken);
+  res.status(200).send({
+    token: generatedToken,
+    user: theUser
+  });
 };

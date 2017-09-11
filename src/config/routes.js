@@ -2,7 +2,7 @@ import {
   signin, signout, signup,
   checkAvatar, avatarsChoice, addDonation,
   show, me, authCallback, user,
-  jwtLogin, session, create
+  jwtLogin, session, create, signupJWT
 } from '../app/controllers/users';
 import { all as allAnswers, show as showAnswers, answer as getAnswer } from '../app/controllers/answers';
 import { all as allQuestions, show as showQuestion, question as getQuestion } from '../app/controllers/questions';
@@ -23,6 +23,7 @@ export default function (app, passport, auth) {  // eslint-disable-line
   app.get('/signup', signup);
   app.get('/chooseavatars', checkAvatar);
   app.get('/signout', signout);
+  app.post('/api/auth/signup', fieldValidationMiddleware, signupJWT);
 
   // Setting up the users api
   app.post('/users', create);
