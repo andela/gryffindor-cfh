@@ -6,7 +6,6 @@ import sass from 'gulp-sass';
 import imagemin from 'gulp-imagemin';
 import cache from 'gulp-cache';
 import coveralls from 'gulp-coveralls';
-import exit from 'exit';
 import istanbul from 'gulp-istanbul';
 import bower from 'gulp-bower';
 import babel from 'gulp-babel';
@@ -48,10 +47,8 @@ gulp.task('watch', () => {
   gulp.watch(['src/config/env/**/*.json', 'src/app/views/**/*.jade'], ['copyServer']);
 });
 
-gulp.task('coveralls', ['test'], () => gulp.src('./coverage/lcov.info')
-  .pipe(coveralls())
-  .pipe(exit()));
-
+gulp.task('coveralls', () => gulp.src('./coverage/lcov.info')
+  .pipe(coveralls()));
 
 gulp.task('pre-test', () => gulp.src(['src/server.js', 'src/app/**/*.js', 'src/config/**/*.js'])
   // Covering files
@@ -69,10 +66,10 @@ gulp.task('test', ['pre-test'], () =>
     .once('error', () => {
       process.exit(1);
     })
-    .once('end', () => {
-      // process.exit();
-    })
-);
+    .on('end', () => {
+      process.exit();
+    }));
+
 gulp.task('transpile', () => gulp.src(['client/js/**/*.js'])
   .pipe(babel())
   .pipe(gulp.dest('public/js')));
