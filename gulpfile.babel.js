@@ -43,7 +43,7 @@ gulp.task('watch', () => {
   gulp.watch('client/js/**/*.js', ['transpile']);
   gulp.watch('client/scss/**/*.scss', ['sass']);
   gulp.watch('client/img-assets/**/*', ['images']);
-  gulp.watch('client/views/**/*', ['copyClient']);
+  gulp.watch(['client/views/**/*', 'client/css/**/*.css'], ['copyClient']);
   gulp.watch(['src/config/env/**/*.json', 'src/app/views/**/*.jade'], ['copyServer']);
 });
 

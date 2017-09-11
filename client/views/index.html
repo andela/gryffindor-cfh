@@ -1,28 +1,29 @@
 <script type="text/javascript">
-$(document).ready(function() {
+  $(document).ready(function() {
 
-  var ChroMo = '(Chrome)/(\d+)\.(\d+)\.(\d+)\.(\d+) Mobile';
+    var ChroMo = '(Chrome)/(\d+)\.(\d+)\.(\d+)\.(\d+) Mobile';
 
-  if (/Android|webOS|CriOs|ChroMo|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) === false && location.href !== "http://localhost:3000/#!/app") {
-    $('body').append('<a href="http://hackreactor.com"><img style="z-index: 10000; position: absolute; top: 0; right: 0; width: 125px; height: 125px; border: 0;" src="http://i.imgur.com/x86kKmF.png" alt="Built at Hack Reactor"></a>');
-  }
+    if (/Android|webOS|CriOs|ChroMo|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) === false && location.href !== "http://localhost:3000/#!/app") {
+      $('body').append('<a href="http://hackreactor.com"><img style="z-index: 10000; position: absolute; top: 0; right: 0; width: 125px; height: 125px; border: 0;" src="http://i.imgur.com/x86kKmF.png" alt="Built at Hack Reactor"></a>');
+    }
 
-  //Twitter buttons
-  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+    //Twitter buttons
+    !function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');
 
   });
+
 </script>
 
 <script></script>
 
 <div id="main-bod" ng-controller="IndexController">
 
-   <!-- Nav and Landing Start -->
+  <!-- Nav and Landing Start -->
   <section id="top-part" class="landing">
     <!-- Fixed Logo & Menu Bar Start -->
     <div class="wpb-top-bar">
       <div>
-        <nav class="navbar navbar-default navbar-fixed-top" >
+        <nav class="navbar navbar-default navbar-fixed-top">
           <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -32,9 +33,9 @@ $(document).ready(function() {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              
+
               <a class="navbar-brand" href="#"><img src="/img/logo.png" alt="logo" ></a>
-              
+
             </div>
 
             <!-- Collection of nav links and other content for toggling -->
@@ -58,8 +59,8 @@ $(document).ready(function() {
 
     <!-- Landing Start -->
     <div class="container" id="homer">
-      <div class="row" id="main-text">
-        <div class="col-md-6 col-md-offset-3 text-center" style="color:white">
+      <div id="main-text">
+        <div class="col-md-6 text-center" style="color:white">
           <span class="cards">CARDS</span><br>
           <div class="sub-text-div">
             <span class="for"><i>for </i></span>
@@ -74,17 +75,17 @@ $(document).ready(function() {
           <div>
             <img src="/img/card-samples.png" alt="Team Member" class="card-samples">
           </div>
-          <span ng-show="showOptions()">
-            <div class="landing-btn-div">
-              <a href="#!/signup" type="button" class="btn signup-btn">SIGN UP</a>
-              <a href="/play" type="button" class="btn guest-btn">PLAY AS A GUEST</a>
-            </div>
-          </span>
+        </div>
+        <div class="text-center">
+          <div class="landing-btn-div" ng-show="showOptions()">
+            <a href="#!/signup" type="button" class="btn signup-btn">SIGN UP</a>
+            <a href="/play" type="button" class="btn guest-btn">PLAY AS A GUEST</a>
+          </div>
 
-          <span ng-hide="showOptions()">
+          <div class="landing-btn-div" ng-hide="showOptions()">
             <a href="/play" type="button" class="btn signup-btn">Play with Friends</a>
             <a href="/play?custom" type="button" class="btn guest-btn">Play with Strangers</a>
-          </span>
+          </div>
         </div>
       </div>
     </div>
@@ -102,11 +103,9 @@ $(document).ready(function() {
         <div class="col-xs-12 col-md-8 col-md-offset-2 text-center" style="color:white">
           <p>
             Cards for Humanity is a fast-paced online version of the popular card game,
-            <a
-              href="http://cardsagainsthumanity.com/" target="_blank"><span class="cah">Cards
-              Against Humanity</span></a>, that gives you the opportunity to donate
-              to children in need - all while remaining as despicable and awkward as
-              you naturally are.
+            <a href="http://cardsagainsthumanity.com/" target="_blank"><span class="cah">Cards
+              Against Humanity</span></a>, that gives you the opportunity to donate to children in need - all
+            while remaining as despicable and awkward as you naturally are.
           </p>
         </div>
       </div>
@@ -143,8 +142,7 @@ $(document).ready(function() {
           <div class="thumbnail">
             <p class="how-to-num">III</p>
             <p class="how-to-desc">
-              Everyone else answers the black question card by clicking on the answer card they
-              want to use
+              Everyone else answers the black question card by clicking on the answer card they want to use
             </p>
           </div>
         </div>
@@ -154,8 +152,7 @@ $(document).ready(function() {
           <div class="thumbnail">
             <p class="how-to-num">IV</p>
             <p class="how-to-desc">
-              The Card Czar then picks a favorite answer, and whoever played that answer wins the
-              round
+              The Card Czar then picks a favorite answer, and whoever played that answer wins the round
             </p>
           </div>
         </div>
@@ -174,20 +171,16 @@ $(document).ready(function() {
       <div class="row">
         <div class="col-md-10 col-md-offset-1 text-center" style="color:white">
           <p>
-            We're quite sure you feel the same way, so we've integrated donation widgets (via
-            crowdrise.com), along with some not-so-subtle reminders throughout the
-            game to give you the opportunity to donate. If you're signed in when
-            you donate, we'll even upgrade your account and place a crown on your
-            avatar's head (to remind other players how much better you are than them).
-            All donations go to the Make-a-Wish Foundation and benefit children in
-            need.
+            We're quite sure you feel the same way, so we've integrated donation widgets (via crowdrise.com), along with some not-so-subtle
+            reminders throughout the game to give you the opportunity to donate. If you're signed in when you donate, we'll
+            even upgrade your account and place a crown on your avatar's head (to remind other players how much better you
+            are than them). All donations go to the Make-a-Wish Foundation and benefit children in need.
           </p>
         </div>
       </div>
       <div class="make-a-wish">
         <a href="http://www.wish.org"><img src="img/make-a-wish-logo.png"/></a>
-        <a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity" type="button"
-          class="btn signup-btn donate">DONATE NOW</a>
+        <a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity" type="button" class="btn signup-btn donate">DONATE NOW</a>
       </div>
     </div>
   </section>
@@ -201,8 +194,7 @@ $(document).ready(function() {
       <div class="row">
         <div class="col-xs-12 col-md-8 col-md-offset-2 text-center">
           <p class="team">
-            Created by Team Gryffindor, Andela Cohort 29 as an
-            open source contribution to the orginal <a href="https://cfh.io"><span class="cah">CFH</span></a> game
+            Created by Team Gryffindor, Andela Cohort 29 as an open source contribution to the orginal <a href="https://cfh.io"><span class="cah">CFH</span></a>            game
           </p>
         </div>
       </div>
@@ -216,19 +208,17 @@ $(document).ready(function() {
       <div class="row">
         <div class="col-xs-10">
           <p>
-             <span>Legal:</span> This game is based on the Cards Against Humanity card game, which is CC licensed
-            (BY-NC-SA). Cards for Humanity is not affiliated with Cards Against Humanity.
-            In complying with the Creative Commons license of the Cards Against Humanity
-            card game, all proceeds from donations go directly to charity, as managed
-            by crowdrise.
+            <span>Legal:</span> This game is based on the Cards Against Humanity card game, which is CC licensed (BY-NC-SA).
+            Cards for Humanity is not affiliated with Cards Against Humanity. In complying with the Creative Commons license
+            of the Cards Against Humanity card game, all proceeds from donations go directly to charity, as managed by crowdrise.
           </p>
         </div>
         <div class="col-xs-2 policy-div">
           <div class="github-logo-div">
             <img src="/img/github.png" class="github-logo">
           </div>
-          <a href="/#!/privacy"><span class="privacy-policy cah">Privacy Policy</span></a>         
-        </div>  
+          <a href="/#!/privacy"><span class="privacy-policy cah">Privacy Policy</span></a>
+        </div>
       </div>
     </div>
   </footer>

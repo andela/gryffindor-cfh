@@ -51,7 +51,7 @@
             <div style="margin-bottom: 25px" class="input-group">
               <label for=“name” class=“control-label”></label>
               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-              <input class="form-control" id="name" type="text" name="username"  ng-model="username" placeholder="Full name" required />
+              <input class="form-control" id="name" type="text" name="username" ng-model="username" placeholder="Full name" required />
             </div>
             <div style="margin-bottom: 25px" class="input-group">
               <label for=“email” class=“email”></label>
@@ -62,13 +62,14 @@
             <div style="margin-bottom: 25px" class="input-group">
               <label for=“password” class=“control-label”></label>
               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-              <input class="form-control" id="password" type="password" name="password" ng-model="password" placeholder="Password" required />
+              <input class="form-control" id="password" type="password" name="password" ng-model="password" placeholder="Password" required
+              />
             </div>
 
             <span ng-show="showError()" class="error">
               {{ errorMessage }}
             </span>
-            
+
             <div id="contain-avatars">
               <ul ng-controller="IndexController" class="avatar-list">
                 <li ng-repeat="avatar in avatars" class="avatars ng-scope">

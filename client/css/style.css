@@ -276,9 +276,14 @@ background: #fff !important;
 
 
  /**** LANDING ****/
-
  #main-text {
-   margin: 5px;
+   display: flex;
+   flex-flow: column nowrap;
+   align-items: center;
+ }
+
+ .landing-btn-div > a {
+   margin-top: 20px;
  }
 
  #avatars {
@@ -339,10 +344,10 @@ background: #fff !important;
    text-align: center;
    color: #000;
  }
-  
+
 .panel-title {
   text-align: center;
-}  
+}
 
 .btn-style{
   text-align: center;
@@ -431,7 +436,7 @@ background: #fff !important;
    padding: 0.1em 35px;
    cursor: pointer;
    width: 250px;
-     height: 50px; 
+     height: 50px;
     border-radius: 7px;
  }
 
@@ -1178,10 +1183,6 @@ background: #fff !important;
       padding-top: 0;
    }
 
-   #main-text {
-      margin: 0;
-   }
-
    .wpb-menu-container {
       display: none;
    }
@@ -1195,7 +1196,7 @@ background: #fff !important;
    }
 
    #slogan {
-    font-family: 'Arima Madurai', cursive;  
+    font-family: 'Arima Madurai', cursive;
     text-align: center;
     color: white;
     font-size: 1em;
@@ -1344,7 +1345,7 @@ nav.navbar .container {
 .navbar-default .navbar-brand,
 .navbar-default .navbar-nav > span > li > a {
   color: white;
-}    
+}
 
 .navbar-default .navbar-nav > .active > a:focus {
   background-color: transparent;
@@ -1374,7 +1375,7 @@ ul.nav.navbar-nav {
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
  background-color: transparent;
  border-color: orange;
-}  
+}
 .cards {
   text-align: center;
   font-size: 80px;
@@ -1405,7 +1406,6 @@ ul.nav.navbar-nav {
   width: 250px;
   padding: 12px;
   font-size: 20px;
-  margin-right: 10px;
 }
 
 .guest-btn {
@@ -1511,7 +1511,7 @@ h1.teaser-heading{
   padding-left: 15px;
   padding-right: 15px;
 }
-    
+
   .flex-row {
 	display: flex;
 	flex-wrap: wrap;
@@ -1578,7 +1578,7 @@ footer p span {
 
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
   border-color: transparent;
-  border: 0;  
+  border: 0;
 }
 @media (max-width: 480px) {
   .cards {
@@ -1610,7 +1610,7 @@ footer p span {
   h1.teaser-heading {
     padding-top: 50px;
   }
-  
+
   h1 {
     font-size: 20px;
   }
@@ -1630,7 +1630,7 @@ footer p span {
 
   .charity {
     font-size: 14px;
-  }  
+  }
 
   .make-a-wish {
     width: auto;
@@ -1648,7 +1648,7 @@ footer p span {
   footer p {
     font-size: 10px;
   }
-  
+
   footer .col-xs-2 {
     padding-left: 0;
   }
@@ -1657,16 +1657,16 @@ footer p span {
     font-size: 10px;
     padding-left: 0;
   }
-} 
+}
 
 @media (min-width : 426px) and (max-width : 768px)  {
   .make-a-wish {
     width: 48%;
-  }  
+  }
 
   .privacy-policy {
     padding-left: 0;
-  }  
+  }
 
   .github-logo {
     padding-bottom: 10px;
@@ -1677,7 +1677,7 @@ footer p span {
   .github-logo-div {
     display: block;
   }
-}  
+}
 .error {
   color: red;
 }
