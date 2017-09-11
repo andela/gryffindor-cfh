@@ -2,13 +2,9 @@
  * Module dependencies.
  */
 import express from 'express';
-import connectMongo from 'connect-mongo';
-import flash from 'connect-flash';
 import helpers from 'view-helpers';
 import path from 'path';
 import config from './config';
-
-const mongoStore = connectMongo(express);
 
 /**
  * Define express configuration
@@ -17,7 +13,7 @@ const mongoStore = connectMongo(express);
  * @param {*} mongoose
  * @return {void}
  */
-export default function expressConfig(app, passport, mongoose) {
+export default function expressConfig(app, passport) {
   app.set('showStackError', true);
 
   // Should be placed before express.static
@@ -52,25 +48,11 @@ export default function expressConfig(app, passport, mongoose) {
     app.use(express.bodyParser());
     app.use(express.methodOverride());
 
-    // express/mongo session storage
-    app.use(express.session({
-      secret: 'MEAN',
-      store: new mongoStore({
-        url: config.db,
-        collection: 'sessions',
-        mongoose_connection: mongoose.connection
-      })
-    }));
-
-    // connect flash for flash messages
-    app.use(flash());
-
     // dynamic helpers
     app.use(helpers(config.app.name));
 
     // use passport session
     app.use(passport.initialize());
-    app.use(passport.session());
 
     // routes should be at the last
     app.use(app.router);
