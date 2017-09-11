@@ -145,8 +145,8 @@ export const signupJWT = (req, res) => {
       user.provider = 'local';
       user.save((err) => {
         if (err) {
-          return res.json('error saving user', {
-            errors: err.errors,
+          return res.status(500).json({
+            message: err.errors,
             user
           });
         }
@@ -158,7 +158,7 @@ export const signupJWT = (req, res) => {
         });
       });
     } else {
-      return res.json({ message: 'There is an existing user' });
+      return res.status(401).json({ message: 'Yikes! this user already exists' });
     }
   });
 };

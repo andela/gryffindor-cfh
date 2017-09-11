@@ -8,6 +8,7 @@ angular.module('mean.system')
         $scope.email = '';
         $scope.username = '';
         $scope.password = '';
+        $scope.errorMessage = '';
 
         $scope.showOptions = () => !AuthService.isAuthenticated();
 
@@ -25,9 +26,11 @@ angular.module('mean.system')
                 TokenService.saveUser(user);
                 $location.path('/#!');
               })
-              .catch(() => {
-              // TODO: INSERT ERROR FEEDBACK FOR USER
+              .catch(({ data: { message } }) => {
+                $scope.errorMessage = message;
               });
+          } else {
+            $scope.errorMessage = 'Please fill all fields';
           }
         };
         $scope.signUp = (isValid) => {
@@ -38,10 +41,16 @@ angular.module('mean.system')
                 TokenService.saveUser(user);
                 $location.path('/#!');
               })
-              .catch(() => {
-              // TODO: handler sign up error
+              .catch(({ data: { message } }) => {
+                $scope.errorMessage = message;
               });
+          } else {
+            $scope.errorMessage = 'Please fill all fields appropriately';
           }
+        };
+        $scope.showError = () => {
+          if ($scope.errorMessage !== '') return true;
+          return false;
         };
         $scope.avatars = [];
         AvatarService.getAvatars()

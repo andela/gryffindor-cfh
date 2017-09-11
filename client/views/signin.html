@@ -61,14 +61,15 @@
               <input class="form-control" id="password" type="password" name="password" ng-model="password" placeholder="Password" ng-minlength="6"
                 ng-maxlength="30" required />
             </div>
-
+            <span ng-show="showError()" style="color: red;">
+              {{ errorMessage }}
+            </span>
             <div style="margin-top:10px" class="form-group">
               <!-- Button -->
 
               <div class="col-sm-12 controls btn-style">
                 <button id="sign-up-btn-other" type='submit'>Sign In</button>
               </div>
-
             </div>
             <br/>
             <br/>

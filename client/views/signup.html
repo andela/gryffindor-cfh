@@ -64,6 +64,11 @@
               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
               <input class="form-control" id="password" type="password" name="password" ng-model="password" placeholder="Password" required />
             </div>
+
+            <span ng-show="showError()" style="color: red;">
+              {{ errorMessage }}
+            </span>
+            
             <div id="contain-avatars">
               <ul ng-controller="IndexController" class="avatar-list">
                 <li ng-repeat="avatar in avatars" class="avatars ng-scope">
@@ -75,7 +80,6 @@
             </div>
             <div style="margin-top:10px" class="form-group">
               <!-- Button -->
-
               <div class="col-sm-12 controls btn-style">
                 <button id="sign-up-btn-other" type="submit" ng-click="signUp()">Sign Up</button>
 
