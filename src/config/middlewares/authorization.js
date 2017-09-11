@@ -1,23 +1,31 @@
 /**
  * Generic require login routing middleware
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @return {void}
  */
-exports.requiresLogin = function(req, res, next) {
-    if (!req.isAuthenticated()) {
-        return res.send(401, 'User is not authorized');
-    }
-    next();
+export const requiresLogin = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    return res.send(401, 'User is not authorized');
+  }
+  next();
 };
 
 /**
  * User authorizations routing middleware
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @return {void}
  */
-exports.user = {
-    hasAuthorization: function(req, res, next) {
-        if (req.profile.id != req.user.id) {
-            return res.send(401, 'User is not authorized');
-        }
-        next();
+export const user = {
+  hasAuthorization(req, res, next) {
+    if (req.profile.id !== req.user.id) {
+      return res.send(401, 'User is not authorized');
     }
+    next();
+  }
 };
 
 /**

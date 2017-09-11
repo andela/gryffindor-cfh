@@ -12,15 +12,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-            <a class="navbar-brand" href="#">Card for Humanity</a>
+            <a class="navbar-brand" href="#"><img src="/img/logo.png" alt="logo" ></a>
           </div>
 
           <!-- Collection of nav links and other content for toggling -->
           <div id="navbarCollapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
               <li><a href="#" onClick="scroll(0,0);">Home</a></li>
-              <li ><a href="#!/signup">Sign Up</a></li>
-               
+              <li><a href="#!/signup">Sign Up</a></li>
+
             </ul>
           </div>
 
@@ -40,53 +40,50 @@
         <div class="panel-heading">
           <div class="panel-title">SIGN IN
           </div>
-         
         </div>
 
         <div style="padding-top:30px" class="panel-body">
-
           <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-           <div class="sign-error" ng-show="showError() === 'invalid'">
+          <div class="sign-error" ng-show="showError() === 'invalid'">
             Please check your username/password and try again.
           </div>
+          <form class="signup form-horizontal" name="loginForm" ng-submit="login(loginForm.$valid)" novalidate>
 
-          <form class="signup form-horizontal" action="/users/session" method="post">
-          
             <div style="margin-bottom: 25px" class="input-group">
               <label for=“email” class=“control-label”></label>
               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-              <input class="form-control" id="email" type="email" name="email" placeholder="Email" required novalidate />
+              <input class="form-control" id="email" type="email" name="email" ng-model="email" placeholder="Email" required />
             </div>
 
             <div style="margin-bottom: 25px" class="input-group">
               <label for=“password” class=“control-label”></label>
               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-              <input class="form-control" id="password" type="password" name="password" placeholder="Password" required novalidate />
+              <input class="form-control" id="password" type="password" name="password" ng-model="password" placeholder="Password" ng-minlength="6"
+                ng-maxlength="30" required />
             </div>
-            
-            </div>
+
             <div style="margin-top:10px" class="form-group">
               <!-- Button -->
 
               <div class="col-sm-12 controls btn-style">
                 <button id="sign-up-btn-other" type='submit'>Sign In</button>
+              </div>
+
             </div>
-             
-            </div>
-          <br/>
-          <br/>
+            <br/>
+            <br/>
             <div class="form-group">
               <h3 id="slogan">OR</h3>
-             <hr/>
+              <hr/>
               <h3 id="slogan">Log in Below:</h3>
-             
-                <div id="login-buttons">
-        <a href="/auth/facebook"><img class="login-item" src="/img/icons/facebook.png"></a>
-        <a href="/auth/github"><img class="login-item" src="/img/icons/github.png"></a>
-        <a href="/auth/twitter"><img class="login-item" src="/img/icons/twitter.png"></a>
-        <a href="/auth/google"><img class="login-item" src="/img/icons/google.png"></a>
-      </div>
-            
+
+              <div id="login-buttons">
+                <a href="/auth/facebook"><img class="login-item" src="/img/icons/facebook.png"></a>
+                <a href="/auth/github"><img class="login-item" src="/img/icons/github.png"></a>
+                <a href="/auth/twitter"><img class="login-item" src="/img/icons/twitter.png"></a>
+                <a href="/auth/google"><img class="login-item" src="/img/icons/google.png"></a>
+              </div>
+
             </div>
         </div>
         </form>
@@ -94,7 +91,6 @@
         
       </div>
     </div>
-  </div>
 
-</div>
+  </div>
 </div>

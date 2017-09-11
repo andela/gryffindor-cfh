@@ -27,6 +27,13 @@
         "commonjs": true
       }
     ],
+    "import/extensions": [
+      0,
+      "never",
+      {
+        "json": "always"
+      }
+    ],
     "import/newline-after-import": 0,
     "no-shadow": [
       "error",
@@ -62,6 +69,8 @@
     "import/resolver": "node"
   },
   "globals": {
-    "angular": true
+    "angular": true,
+    "document": true,
+    "$": true
   }
 }

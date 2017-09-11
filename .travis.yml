@@ -5,5 +5,4 @@ services: mongodb
 before_install:
   - nvm install && nvm use
 after_success:
-  - npm run coverage
-
+  - npm run coveralls

@@ -15,7 +15,7 @@ $(document).ready(function() {
 
 <script></script>
 
-<div landing id="main-bod">
+<div id="main-bod" ng-controller="IndexController">
 
    <!-- Nav and Landing Start -->
   <section id="top-part" class="landing">
@@ -32,19 +32,21 @@ $(document).ready(function() {
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">Card for Humanity</a>
+              
+              <a class="navbar-brand" href="#"><img src="/img/logo.png" alt="logo" ></a>
+              
             </div>
 
             <!-- Collection of nav links and other content for toggling -->
             <div id="navbarCollapse" class="collapse navbar-collapse">
               <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" onClick="scroll(0,0);">Home</a></li>
-                <li><a href="#" onClick="scroll(0,1250)">How to Play</a></li>
-                <li><a href="#" onClick="scroll(0,2070);">Charity</a></li>
-                <li><a href="#" onClick="scroll(0,2940);">About Us</a></li>
-                <li ng-show="showOptions"><a href="#!/signup">Sign Up</a></li>
-                <li ng-show="showOptions"><a href="#!/signin">Sign In</a></li>
-                <li ng-hide="showOptions"><a href="/signout">Sign Out</a></li>
+                <li><a href="#homer" onClick="scroll(0,0);">Home</a></li>
+                <li><a href="#how-to" onClick="scroll(0,1250)">How to Play</a></li>
+                <li><a href="#donate" onClick="scroll(0,2070);">Charity</a></li>
+                <li><a href="#about" onClick="scroll(0,2940);">About Us</a></li>
+                <li ng-show="showOptions()"><a href="#!/signup">Sign Up</a></li>
+                <li ng-show="showOptions()"><a href="#!/signin">Sign In</a></li>
+                <li ng-hide="showOptions()"><a href="#" ng-click="signOut()">Sign Out</a></li>
               </ul>
             </div>
 
@@ -56,7 +58,7 @@ $(document).ready(function() {
 
     <!-- Landing Start -->
     <div class="container" id="homer">
-      <div class="row" id="main-text" ng-controller="IndexController">
+      <div class="row" id="main-text">
         <div class="col-md-6 col-md-offset-3 text-center" style="color:white">
           <span class="cards">CARDS</span><br>
           <div class="sub-text-div">
@@ -72,14 +74,14 @@ $(document).ready(function() {
           <div>
             <img src="/img/card-samples.png" alt="Team Member" class="card-samples">
           </div>
-          <span ng-show="showOptions">
+          <span ng-show="showOptions()">
             <div class="landing-btn-div">
               <a href="#!/signup" type="button" class="btn signup-btn">SIGN UP</a>
               <a href="/play" type="button" class="btn guest-btn">PLAY AS A GUEST</a>
             </div>
           </span>
 
-          <span ng-hide="showOptions">
+          <span ng-hide="showOptions()">
             <a href="/play" type="button" class="btn signup-btn">Play with Friends</a>
             <a href="/play?custom" type="button" class="btn guest-btn">Play with Strangers</a>
           </span>
@@ -164,7 +166,7 @@ $(document).ready(function() {
 
 
   <!-- Donate to Charity Start -->
-  <section class="teaser-section text-center section-spec">
+  <section class="teaser-section text-center section-spec" id="donate">
     <h1 class="teaser-heading">Donate to Charity</h1>
     <span class="charity">"If you don't give back, no one will like you™" - crowdrise.com</span>
 
@@ -192,7 +194,7 @@ $(document).ready(function() {
   <!-- Donate to Charity End -->
 
   <!-- About Us Start -->
-  <section class="how-to-play-section section-spec">
+  <section class="how-to-play-section section-spec" id="about">
     <h1 class="teaser-heading text-center black-font">The Team</h1>
 
     <div class="container">

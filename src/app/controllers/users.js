@@ -1,21 +1,28 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-  User = mongoose.model('User');
-var avatars = require('./avatars').all();
+import generateToken from '../../config/generateToken';
+import { all as avatars } from './avatars';
+import User from './../models/user';
 
 /**
  * Auth callback
+ * @param {object} req
+ * @param {object} res
+ * @param {callbackfunction} next
+ * @return {void}
  */
-exports.authCallback = function(req, res, next) {
+export const authCallback = (req, res) => {
   res.redirect('/chooseavatars');
 };
 
 /**
  * Show login form
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
  */
-exports.signin = function(req, res) {
+export const signin = (req, res) => {
   if (!req.user) {
     res.redirect('/#!/signin?error=invalid');
   } else {
@@ -25,8 +32,11 @@ exports.signin = function(req, res) {
 
 /**
  * Show sign up form
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
  */
-exports.signup = function(req, res) {
+export const signup = (req, res) => {
   if (!req.user) {
     res.redirect('/#!/signup');
   } else {
@@ -36,64 +46,76 @@ exports.signup = function(req, res) {
 
 /**
  * Logout
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
  */
-exports.signout = function(req, res) {
+export const signout = (req, res) => {
   req.logout();
   res.redirect('/');
 };
 
 /**
  * Session
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
  */
-exports.session = function(req, res) {
+export const session = (req, res) => {
   res.redirect('/');
 };
 
-/** 
+/**
  * Check avatar - Confirm if the user who logged in via passport
  * already has an avatar. If they don't have one, redirect them
  * to our Choose an Avatar page.
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
  */
-exports.checkAvatar = function(req, res) {
-  if (req.user && req.user._id) {
+export const checkAvatar = (req, res) => {
+  if (req.user && req.user._id) { // eslint-disable-line no-underscore-dangle
     User.findOne({
-      _id: req.user._id
+      _id: req.user._id // eslint-disable-line no-underscore-dangle
     })
-    .exec(function(err, user) {
-      if (user.avatar !== undefined) {
-        res.redirect('/#!/');
-      } else {
-        res.redirect('/#!/choose-avatar');
-      }
-    });
+      .exec((err, user) => {
+        if (user.avatar !== undefined) {
+          res.redirect('/#!/');
+        } else {
+          res.redirect('/#!/choose-avatar');
+        }
+      });
   } else {
     // If user doesn't even exist, redirect to /
     res.redirect('/');
   }
-
 };
 
 /**
  * Create user
+ * @param {object} req
+ * @param {object} res
+ * @param {callbackFunction} next
+ * @return {void}
  */
-exports.create = function(req, res) {
+export const create = (req, res, next) => {
   if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
-    }).exec(function(err,existingUser) {
+    }).exec((err, existingUser) => {
       if (!existingUser) {
-        var user = new User(req.body);
+        const userObject = new User(req.body);
         // Switch the user's avatar index to an actual avatar url
-        user.avatar = avatars[user.avatar];
-        user.provider = 'local';
-        user.save(function(err) {
+        userObject.avatar = avatars[userObject.avatar];
+        userObject.provider = 'local';
+        userObject.save((err) => {
           if (err) {
             return res.render('/#!/signup?error=unknown', {
               errors: err.errors,
-              user: user
+              user: userObject
             });
           }
-          req.logIn(user, function(err) {
+          req.logIn(userObject, (err) => {
             if (err) return next(err);
             return res.redirect('/#!/');
           });
@@ -107,46 +129,87 @@ exports.create = function(req, res) {
   }
 };
 
+
+export const signupJWT = (req, res) => {
+  User.findOne({
+    email: req.body.email
+  }).exec((err, existingUser) => {
+    if (!existingUser) {
+      const user = new User(req.body);
+      // Switch the user's avatar index to an actual avatar url
+      user.avatar = avatars[user.avatar];
+      user.provider = 'local';
+      user.save((err) => {
+        if (err) {
+          return res.json('error saving user', {
+            errors: err.errors,
+            user
+          });
+        }
+        const generatedToken = generateToken(user);
+        user.hashed_password = null;
+        res.status(200).json({
+          token: generatedToken,
+          user
+        });
+      });
+    } else {
+      return res.json({ message: 'There is an existing user' });
+    }
+  });
+};
+
 /**
  * Assign avatar to user
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
  */
-exports.avatars = function(req, res) {
+export const avatarsChoice = (req, res) => {
   // Update the current user's profile to include the avatar choice they've made
+
+  // eslint-disable-next-line
   if (req.user && req.user._id && req.body.avatar !== undefined &&
     /\d/.test(req.body.avatar) && avatars[req.body.avatar]) {
     User.findOne({
-      _id: req.user._id
+      _id: req.user._id // eslint-disable-line no-underscore-dangle
     })
-    .exec(function(err, user) {
-      user.avatar = avatars[req.body.avatar];
-      user.save();
-    });
+      .exec((err, user) => {
+        user.avatar = avatars[req.body.avatar];
+        user.save();
+      });
   }
   return res.redirect('/#!/app');
 };
 
-exports.addDonation = function(req, res) {
-  if (req.body && req.user && req.user._id) {
+/**
+ * Add donation
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
+export const addDonation = (req, res) => {
+  if (req.body && req.user && req.user._id) { // eslint-disable-line no-underscore-dangle
     // Verify that the object contains crowdrise data
     if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
       User.findOne({
-        _id: req.user._id
+        _id: req.user._id // eslint-disable-line no-underscore-dangle
       })
-      .exec(function(err, user) {
-        // Confirm that this object hasn't already been entered
-        var duplicate = false;
-        for (var i = 0; i < user.donations.length; i++ ) {
-          if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {
-            duplicate = true;
+        .exec((err, user) => {
+          // Confirm that this object hasn't already been entered
+          let duplicate = false;
+          for (let i = 0; i < user.donations.length; i = +1) {
+            if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {
+              duplicate = true;
+            }
           }
-        }
-        if (!duplicate) {
-          console.log('Validated donation');
-          user.donations.push(req.body);
-          user.premium = 1;
-          user.save();
-        }
-      });
+          if (!duplicate) {
+            // console.log('Validated donation');
+            user.donations.push(req.body);
+            user.premium = 1;
+            user.save();
+          }
+        });
     }
   }
   res.send();
@@ -154,35 +217,62 @@ exports.addDonation = function(req, res) {
 
 /**
  *  Show profile
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
  */
-exports.show = function(req, res) {
-  var user = req.profile;
+export const show = (req, res) => {
+  const userObject = req.profile;
 
   res.render('users/show', {
-    title: user.name,
-    user: user
+    title: userObject.name,
+    user: userObject
   });
 };
 
 /**
  * Send User
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
  */
-exports.me = function(req, res) {
+export const me = (req, res) => {
   res.jsonp(req.user || null);
 };
 
 /**
  * Find user by id
+ * @param {object} req
+ * @param {object} res
+ * @param {function} next
+ * @param {number} id
+ * @return {void}
  */
-exports.user = function(req, res, next, id) {
+export const user = (req, res, next, id) => {
   User
     .findOne({
       _id: id
     })
-    .exec(function(err, user) {
+    .exec((err) => {
       if (err) return next(err);
-      if (!user) return next(new Error('Failed to load User ' + id));
+      if (!user) return next(new Error(`Failed to load User ${id}`));
       req.profile = user;
       next();
     });
+};
+
+/**
+ * Generate login token
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
+export const jwtLogin = (req, res) => {
+  const theUser = req.user;
+  theUser.hashed_password = null;
+  const generatedToken = generateToken(theUser);
+  res.status(200).send({
+    token: generatedToken,
+    user: theUser
+  });
 };

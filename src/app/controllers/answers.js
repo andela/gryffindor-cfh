@@ -1,55 +1,65 @@
 /**
  * Module dependencies.
  */
-var mongoose = require('mongoose'),
-    async = require('async'),
-    Answer = mongoose.model('Answer'),
-    _ = require('underscore');
-
+import Answer from './../models/answer';
 
 /**
  * Find answer by id
+ * @param {object} req
+ * @param {object} res
+ * @param {object} next
+ * @param {object} id
+ * @return {void}
  */
-exports.answer = function(req, res, next, id) {
-    Answer.load(id, function(err, answer) {
-        if (err) return next(err);
-        if (!answer) return next(new Error('Failed to load answer ' + id));
-        req.answer = answer;
-        next();
-    });
+export const answer = (req, res, next, id) => {
+  Answer.load(id, (err, ans) => {
+    if (err) return next(err);
+    if (!ans) return next(new Error(`Failed to load answer ${id}`));
+    req.answer = ans;
+    next();
+  });
 };
 
 /**
  * Show an answer
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
  */
-exports.show = function(req, res) {
-    res.jsonp(req.answer);
+export const show = (req, res) => {
+  res.jsonp(req.answer);
 };
 
 /**
  * List of Answers
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
  */
-exports.all = function(req, res) {
-    Answer.find({official:true}).select('-_id').exec(function(err, answers) {
-        if (err) {
-            res.render('error', {
-                status: 500
-            });
-        } else {
-            res.jsonp(answers);
-        }
-    });
+export const all = (req, res) => {
+  Answer.find({ official: true }).select('-_id').exec((err, answers) => {
+    if (err) {
+      res.render('error', {
+        status: 500
+      });
+    } else {
+      res.jsonp(answers);
+    }
+  });
 };
+
 
 /**
  * List of Answers (for Game class)
+ * @param {function} cb
+ * @return {void}
  */
-exports.allAnswersForGame = function(cb) {
-    Answer.find({official:true}).select('-_id').exec(function(err, answers) {
-        if (err) {
-            console.log(err);
-        } else {
-            cb(answers);
-        }
-    });
+export const allAnswersForGame = (cb) => {
+  Answer.find({ official: true }).select('-_id').exec((err, answers) => {
+    if (err) {
+      console.log(err);
+    } else {
+      cb(answers);
+    }
+  });
 };
