@@ -45,8 +45,11 @@ angular.module('mean.system')
             To: selectedEmail,
             Link: document.URL
           };
-          userSearch.sendInvite(mailObject).then(() => {
-          }).catch(() => {
+          userSearch.sendInvite(mailObject).catch((error) => {
+            const myModal = $('#limit_modal');
+            myModal.find('.modal-body')
+              .text(`Error occured:${error.message}`);
+            myModal.modal('show');
           });
           $scope.invitedUsers.push(selectedEmail);
         } else {

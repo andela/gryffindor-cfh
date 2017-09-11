@@ -38,7 +38,6 @@
     "express": "~3.4.0",
     "express-jwt": "^5.3.0",
     "forever": "latest",
-    "gem": "^2.4.2",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.0",
     "gulp-bower": "0.0.13",
