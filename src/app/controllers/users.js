@@ -150,7 +150,7 @@ export const signupJWT = (req, res) => {
         user.hashed_password = null;
         res.status(200).json({
           token: generatedToken,
-          users: user
+          user
         });
       });
     } else {
