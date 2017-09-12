@@ -33,12 +33,8 @@ angular.module('mean.system')
         }
       };
 
-      $scope.checkDisable = (selectedEmail) => {
-        if (_.indexOf($scope.invitedUsers, selectedEmail) === -1) {// eslint-disable-line
-          return false;
-        }
-        return true;
-      };
+      $scope.checkDisable = selectedEmail => $scope.invitedUsers.indexOf(selectedEmail) === -1;
+
       $scope.selectUser = (selectedEmail) => {
         if ($scope.invitedUsers.length <= 11) {
           const mailObject = {
@@ -55,9 +51,6 @@ angular.module('mean.system')
                 .text('Error occured while inviting users');
               myModal.modal('show');
             });
-        } else {
-          const myModal = $('#limit_modal');
-          myModal.modal('show');
         }
       };
 
@@ -97,19 +90,9 @@ angular.module('mean.system')
         return false;
       };
 
-      $scope.firstAnswer = ($index) => {
-        if ($index % 2 === 0 && game.curQuestion.numAnswers > 1) {
-          return true;
-        }
-        return false;
-      };
+      $scope.firstAnswer = $index => ($index % 2 === 0 && game.curQuestion.numAnswers > 1);
 
-      $scope.secondAnswer = ($index) => {
-        if ($index % 2 === 1 && game.curQuestion.numAnswers > 1) {
-          return true;
-        }
-        return false;
-      };
+      $scope.secondAnswer = $index => ($index % 2 === 1 && game.curQuestion.numAnswers > 1);
 
       $scope.showFirst = card => game.curQuestion.numAnswers > 1
         && $scope.pickedCards[0] === card.id;
