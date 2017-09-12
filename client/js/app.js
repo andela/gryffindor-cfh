@@ -32,11 +32,7 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ngRoute', 'm
       $locationProvider.hashPrefix('!');
     }
   ]).run(['$rootScope', ($rootScope) => {
-<<<<<<< HEAD
-    $rootScope.safeApply = (fn) => {
-=======
     $rootScope.safeApply = function safeApply(fn) {
->>>>>>> b75f726854b8eaf92e42e06717b63b210a16e702
       const phase = this.$root.$$phase;
       if (phase === '$apply' || phase === '$digest') {
         if (fn && (typeof (fn) === 'function')) {
@@ -46,14 +42,9 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ngRoute', 'm
         this.$apply(fn);
       }
     };
-<<<<<<< HEAD
-  }]).run(['DonationService', (DonationService) => {// eslint-disable-line
-    window.userDonationCb = (donationObject) => {// eslint-disable-line
-=======
   }])
   .run(['DonationService', '$window', (DonationService, $window) => {
     $window.userDonationCb = (donationObject) => {
->>>>>>> b75f726854b8eaf92e42e06717b63b210a16e702
       DonationService.userDonated(donationObject);
     };
   }]);
