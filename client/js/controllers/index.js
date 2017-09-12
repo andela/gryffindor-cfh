@@ -49,8 +49,7 @@ angular.module('mean.system')
           }
         };
         $scope.showError = () => {
-          if ($scope.errorMessage !== '') return true;
-          return false;
+          return $scope.errorMessage !== '';
         };
         $scope.avatars = [];
         AvatarService.getAvatars()
