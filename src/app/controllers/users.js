@@ -1,10 +1,14 @@
 /**
  * Module dependencies.
  */
+import nodemailer from 'nodemailer';
+import smtpTransport from 'nodemailer-smtp-transport';
+import dotenv from 'dotenv';
 import generateToken from '../../config/generateToken';
 import { all as avatars } from './avatars';
 import User from './../models/user';
 
+dotenv.load();
 /**
  * Auth callback
  * @param {object} req
@@ -274,5 +278,51 @@ export const jwtLogin = (req, res) => {
   res.status(200).send({
     token: generatedToken,
     user: theUser
+  });
+};
+
+/**
+   * Find user
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} returns void
+   */
+export const search = (req, res) => {
+  const name = req.params.searchName;
+  User.find({ name: new RegExp(name, 'i') }).exec((error, result) => {
+    if (error) {
+      return res.json(error);
+    }
+    return res.json(result);
+  });
+};
+
+
+/**
+   * Send email
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @returns {void} returns void
+   */
+export const sendMail = (req, res) => { // eslint-disable-line
+  const transporter = nodemailer.createTransport(smtpTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USERNAME, // my mail
+      pass: process.env.EMAIL_PASSWORD
+    }
+  }));
+  const mailOptions = {
+    from: '"Cards for Humanity" <notification@cfh.com>',
+    to: req.body.To,
+    subject: 'Invitation to play',
+    text: `Follow the link to play: ${req.body.Link}`,
+    html: `<b>Follow the link to play: ${req.body.Link}</b>`
+  };
+
+  transporter.sendMail(mailOptions, (error) => {
+    if (error) {
+      console.log(error); // eslint-disable-line
+    }
   });
 };
