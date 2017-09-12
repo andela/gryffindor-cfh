@@ -1,6 +1,10 @@
 body,html{
 background: #fff !important;
 }
+.navbar-header > a{
+ padding: 1px 1px;
+}
+
 .clear {
    clear:both;
  }
