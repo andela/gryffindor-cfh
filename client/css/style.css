@@ -1,4 +1,11 @@
- .clear {
+body,html{
+background: #fff !important;
+}
+.navbar-header > a{
+ padding: 1px 1px;
+}
+
+.clear {
    clear:both;
  }
 
@@ -330,8 +337,16 @@
 
  #slogan {
    text-align: center;
-   color: white;
+   color: #000;
  }
+  
+.panel-title {
+  text-align: center;
+}  
+
+.btn-style{
+  text-align: center;
+}
 
  .wpb-teaser .wpb-text p {
    color: #fff;
@@ -403,17 +418,21 @@
    border-radius: 8px;
    -moz-border-radius: 5px;
    -webkit-border-radius: 5px;
-   font-size: 20px;
-   font-size: 1.35em;
-   font-weight: 400;
+    font-family: 'Arima Madurai', cursive;
+   font-size: 15px;
+   font-size: 1.3em;
+   font-weight: 200;
    text-align: center;
    color: white;
-   background: #C54141;
+   background: orange;
    margin-top: 3px;
    margin-bottom: 3px;
    margin-right: 10px;
    padding: 0.1em 35px;
    cursor: pointer;
+   width: 250px;
+     height: 50px; 
+    border-radius: 7px;
  }
 
  /**** About Us ****/
@@ -443,7 +462,7 @@
  }
 
  .login-item {
-   max-width: 48%;
+   max-width: 10%;
  }
 
  .input-info {
@@ -522,7 +541,7 @@
  }
 
  #contain-avatars {
-   margin-top: 25px;
+   margin: auto 25px 0;
  }
 
  .avatar-list {
@@ -1176,9 +1195,10 @@
    }
 
    #slogan {
-      text-align: center;
-      color: white;
-      font-size: 1.3em;
+    font-family: 'Arima Madurai', cursive;  
+    text-align: center;
+    color: white;
+    font-size: 1em;
    }
 
    #how-to-play {

@@ -8,7 +8,8 @@
     "jquery": "~1.9.1",
     "underscore": "~1.5.2",
     "intro.js": "^2.7.0",
-    "mongoose": "^4.11.9"
+    "mongoose": "^4.11.9",
+    "angular-route": "^1.6.6"
   },
   "exportsOverride": {
     "bootstrap": {

@@ -1,6 +1,6 @@
 <div id="question-container-inner">
   <div class="card longBlack">
-    <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
+    <span ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'">{{game.curQuestion.text}}</span>
 
     <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
 
@@ -11,7 +11,7 @@
         <div id="the-word-players"> Players </div>
       </div>
       <div id="loading-container">
-        <div id="loading-gif"><img ng-src="../img/loader.gif"/></div>
+        <div id="loading-gif"><img ng-src="../img/loader.gif" /></div>
       </div>
       <div id="start-game-container" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride) && game.players.length >= game.playerMinLimit">
         <div id='start-game-button'>
@@ -52,7 +52,7 @@
                               <tr ng-repeat="user in searchedUsers">
                                 <td><span>{{user.name}}</span></td>
                                 <td><span>{{user.email}}</span></td>
-                                <td><span><a class="btn btn-primary" ng-click="selectUser(user.email)">Invite</a></span></td>
+                                <td><span><a class="btn btn-primary" ng-disabled="checkDisable(user.email)" ng-click="selectUser(user.email)">Invite</a></span></td>
                               </tr>
                             </tbody>
                           </table>
@@ -93,7 +93,9 @@
         Our sincere apologies.
       </div>
       <div ng-show="game.state === 'game ended' && game.gameWinner === game.playerIndex">
-        <div class="game-end-headline">Congratulations! You won the game, {{game.players[game.playerIndex].username | upperFirstLetter}}!</div>We hope you feel special. If you'd like to share that special feeling with the world, consider donating to charity. Or just horde it all for youself.
+        <div class="game-end-headline">Congratulations! You won the game, {{game.players[game.playerIndex].username | upperFirstLetter}}!</div>We hope you
+        feel special. If you'd like to share that special feeling with the world, consider donating to charity. Or just horde
+        it all for youself.
       </div>
       <div ng-show="game.state === 'game ended' && game.gameWinner !== game.playerIndex">
         <div class="game-end-headline">Aw, shucks! {{game.players[game.gameWinner].username | upperFirstLetter }} won the game!</div>
@@ -103,4 +105,3 @@
   </div>
   </div>
 </div>
-

@@ -3,28 +3,30 @@
  */
 import nodemailer from 'nodemailer';
 import smtpTransport from 'nodemailer-smtp-transport';
-const mongoose = require('mongoose');
-const User = mongoose.model('User');
-const avatars = require('./avatars').all();
+import dotenv from 'dotenv';
+import generateToken from '../../config/generateToken';
+import { all as avatars } from './avatars';
+import User from './../models/user';
 
+dotenv.load();
 /**
-   * Auth callback
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @param {next} next object
-   * @returns {void} returns void
-   */
-exports.authCallback = (req, res, next) => { // eslint-disable-line
+ * Auth callback
+ * @param {object} req
+ * @param {object} res
+ * @param {callbackfunction} next
+ * @return {void}
+ */
+export const authCallback = (req, res) => {
   res.redirect('/chooseavatars');
 };
 
 /**
-   * Show login form
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @returns {void} returns void
-   */
-exports.signin = (req, res) => {
+ * Show login form
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
+export const signin = (req, res) => {
   if (!req.user) {
     res.redirect('/#!/signin?error=invalid');
   } else {
@@ -33,12 +35,12 @@ exports.signin = (req, res) => {
 };
 
 /**
-   * Show sign up form
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @returns {void} returns void
-   */
-exports.signup = (req, res) => {
+ * Show sign up form
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
+export const signup = (req, res) => {
   if (!req.user) {
     res.redirect('/#!/signup');
   } else {
@@ -47,38 +49,38 @@ exports.signup = (req, res) => {
 };
 
 /**
-   * Logout
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @returns {void} returns void
-   */
-exports.signout = (req, res) => {
+ * Logout
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
+export const signout = (req, res) => {
   req.logout();
   res.redirect('/');
 };
 
 /**
-   * Session
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @returns {void} returns void
-   */
-exports.session = (req, res) => {
+ * Session
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
+export const session = (req, res) => {
   res.redirect('/');
 };
 
 /**
-   * Check avatar - Confirm if the user who logged in via passport
-   * already has an avatar. If they don't have one, redirect them
-   * to our Choose an Avatar page.
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @returns {void} returns void
-   */
-exports.checkAvatar = (req, res) => {
-  if (req.user && req.user._id) { // eslint-disable-line
+ * Check avatar - Confirm if the user who logged in via passport
+ * already has an avatar. If they don't have one, redirect them
+ * to our Choose an Avatar page.
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
+export const checkAvatar = (req, res) => {
+  if (req.user && req.user._id) { // eslint-disable-line no-underscore-dangle
     User.findOne({
-      _id: req.user._id// eslint-disable-line
+      _id: req.user._id // eslint-disable-line no-underscore-dangle
     })
       .exec((err, user) => {
         if (user.avatar !== undefined) {
@@ -94,30 +96,31 @@ exports.checkAvatar = (req, res) => {
 };
 
 /**
-   * Create user
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @returns {object} returns response object
-   */
-exports.create = (req, res) => {
+ * Create user
+ * @param {object} req
+ * @param {object} res
+ * @param {callbackFunction} next
+ * @return {void}
+ */
+export const create = (req, res, next) => {
   if (req.body.name && req.body.password && req.body.email) {
     User.findOne({
       email: req.body.email
     }).exec((err, existingUser) => {
       if (!existingUser) {
-        const user = new User(req.body);
+        const userObject = new User(req.body);
         // Switch the user's avatar index to an actual avatar url
-        user.avatar = avatars[user.avatar];
-        user.provider = 'local';
-        user.save((err) => {
+        userObject.avatar = avatars[userObject.avatar];
+        userObject.provider = 'local';
+        userObject.save((err) => {
           if (err) {
             return res.render('/#!/signup?error=unknown', {
               errors: err.errors,
-              user
+              user: userObject
             });
           }
-          req.logIn(user, (err) => {
-            if (err) return next(err);// eslint-disable-line
+          req.logIn(userObject, (err) => {
+            if (err) return next(err);
             return res.redirect('/#!/');
           });
         });
@@ -130,18 +133,50 @@ exports.create = (req, res) => {
   }
 };
 
+
+export const signupJWT = (req, res) => {
+  User.findOne({
+    email: req.body.email
+  }).exec((err, existingUser) => {
+    if (!existingUser) {
+      const user = new User(req.body);
+      // Switch the user's avatar index to an actual avatar url
+      user.avatar = avatars[user.avatar];
+      user.provider = 'local';
+      user.save((err) => {
+        if (err) {
+          return res.json('error saving user', {
+            errors: err.errors,
+            user
+          });
+        }
+        const generatedToken = generateToken(user);
+        user.hashed_password = null;
+        res.status(200).json({
+          token: generatedToken,
+          user
+        });
+      });
+    } else {
+      return res.json({ message: 'There is an existing user' });
+    }
+  });
+};
+
 /**
-   * Assign avatar to user
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @returns {object} returns response object
-   */
-exports.avatars = (req, res) => {
+ * Assign avatar to user
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
+export const avatarsChoice = (req, res) => {
   // Update the current user's profile to include the avatar choice they've made
-  if (req.user && req.user._id && req.body.avatar !== undefined &&// eslint-disable-line
+
+  // eslint-disable-next-line
+  if (req.user && req.user._id && req.body.avatar !== undefined &&
     /\d/.test(req.body.avatar) && avatars[req.body.avatar]) {
     User.findOne({
-      _id: req.user._id// eslint-disable-line
+      _id: req.user._id // eslint-disable-line no-underscore-dangle
     })
       .exec((err, user) => {
         user.avatar = avatars[req.body.avatar];
@@ -152,28 +187,28 @@ exports.avatars = (req, res) => {
 };
 
 /**
-   * Add user donations
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @returns {void} returns void
-   */
-exports.addDonation = (req, res) => {
-  if (req.body && req.user && req.user._id) {// eslint-disable-line
+ * Add donation
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
+export const addDonation = (req, res) => {
+  if (req.body && req.user && req.user._id) { // eslint-disable-line no-underscore-dangle
     // Verify that the object contains crowdrise data
     if (req.body.amount && req.body.crowdrise_donation_id && req.body.donor_name) {
       User.findOne({
-        _id: req.user._id// eslint-disable-line
+        _id: req.user._id // eslint-disable-line no-underscore-dangle
       })
         .exec((err, user) => {
-        // Confirm that this object hasn't already been entered
+          // Confirm that this object hasn't already been entered
           let duplicate = false;
-          for (let i = 0; i < user.donations.length; i += 1) {
+          for (let i = 0; i < user.donations.length; i = +1) {
             if (user.donations[i].crowdrise_donation_id === req.body.crowdrise_donation_id) {
               duplicate = true;
             }
           }
           if (!duplicate) {
-            console.log('Validated donation');// eslint-disable-line
+            // console.log('Validated donation');
             user.donations.push(req.body);
             user.premium = 1;
             user.save();
@@ -185,44 +220,44 @@ exports.addDonation = (req, res) => {
 };
 
 /**
-   * Show user
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @returns {void} returns void
-   */
-exports.show = (req, res) => {
-  const user = req.profile;
+ *  Show profile
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
+export const show = (req, res) => {
+  const userObject = req.profile;
 
   res.render('users/show', {
-    title: user.name,
-    user
+    title: userObject.name,
+    user: userObject
   });
 };
 
 /**
-   * Send user
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @returns {void} returns void
-   */
-exports.me = (req, res) => {
+ * Send User
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
+export const me = (req, res) => {
   res.jsonp(req.user || null);
 };
 
 /**
-   * Find user by id
-   * @param {Object} req request object
-   * @param {Object} res response object
-   * @param {Object} next  object
-   * @param {Object} id string
-   * @returns {void} returns void
-   */
-exports.user = (req, res, next, id) => {
+ * Find user by id
+ * @param {object} req
+ * @param {object} res
+ * @param {function} next
+ * @param {number} id
+ * @return {void}
+ */
+export const user = (req, res, next, id) => {
   User
     .findOne({
       _id: id
     })
-    .exec((err, user) => {
+    .exec((err) => {
       if (err) return next(err);
       if (!user) return next(new Error(`Failed to load User ${id}`));
       req.profile = user;
@@ -231,15 +266,29 @@ exports.user = (req, res, next, id) => {
 };
 
 /**
+ * Generate login token
+ * @param {object} req
+ * @param {object} res
+ * @return {void}
+ */
+export const jwtLogin = (req, res) => {
+  const theUser = req.user;
+  theUser.hashed_password = null;
+  const generatedToken = generateToken(theUser);
+  res.status(200).send({
+    token: generatedToken,
+    user: theUser
+  });
+};
+
+/**
    * Find user
    * @param {Object} req request object
    * @param {Object} res response object
    * @returns {void} returns void
    */
-exports.search = (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*');
+export const search = (req, res) => {
   const name = req.params.searchName;
-  console.log(req.params);
   User.find({ name: new RegExp(name, 'i') }).exec((error, result) => {
     if (error) {
       return res.json(error);
@@ -255,12 +304,12 @@ exports.search = (req, res) => {
    * @param {Object} res response object
    * @returns {void} returns void
    */
-exports.sendMail = (req, res) => { // eslint-disable-line
+export const sendMail = (req, res) => { // eslint-disable-line
   const transporter = nodemailer.createTransport(smtpTransport({
     service: 'gmail',
     auth: {
-      user: 'postitbyyamen@gmail.com', // my mail
-      pass: '123postit890'
+      user: process.env.EMAIL_USERNAME, // my mail
+      pass: process.env.EMAIL_PASSWORD
     }
   }));
   const mailOptions = {
