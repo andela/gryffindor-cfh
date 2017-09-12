@@ -48,9 +48,7 @@ angular.module('mean.system')
             $scope.errorMessage = 'Please fill all fields appropriately';
           }
         };
-        $scope.showError = () => {
-          return $scope.errorMessage !== '';
-        };
+        $scope.showError = () => $scope.errorMessage !== '';
         $scope.avatars = [];
         AvatarService.getAvatars()
           .then((data) => {
