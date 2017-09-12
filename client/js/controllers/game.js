@@ -45,13 +45,16 @@ angular.module('mean.system')
             To: selectedEmail,
             Link: document.URL
           };
-          userSearch.sendInvite(mailObject).catch((error) => {
-            const myModal = $('#limit_modal');
-            myModal.find('.modal-body')
-              .text(`Error occured:${error.message}`);
-            myModal.modal('show');
-          });
-          $scope.invitedUsers.push(selectedEmail);
+          userSearch.sendInvite(mailObject)
+            .then(() => {
+              $scope.invitedUsers.push(selectedEmail);
+            })
+            .catch(() => {
+              const myModal = $('#limit_modal');
+              myModal.find('.modal-body')
+                .text('Error occured while inviting users');
+              myModal.modal('show');
+            });
         } else {
           const myModal = $('#limit_modal');
           myModal.modal('show');
