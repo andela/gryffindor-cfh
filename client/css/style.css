@@ -1685,6 +1685,7 @@ footer p span {
   .github-logo-div {
     display: block;
   }
+<<<<<<< HEAD
 }
 .error {
   color: red;
@@ -2001,4 +2002,9 @@ footer p span {
 
 .header-text {
   font-family: 'Roboto Slab', serif;
+=======
+}  
+.error {
+  color: red;
+>>>>>>> chore:auth-error-handling (#34)
 }
