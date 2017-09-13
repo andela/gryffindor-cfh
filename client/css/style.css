@@ -1678,3 +1678,6 @@ footer p span {
     display: block;
   }
 }  
+.error {
+  color: red;
+}
