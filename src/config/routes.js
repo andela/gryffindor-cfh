@@ -109,11 +109,22 @@ export default function(app, passport, auth) {  // eslint-disable-line
 
   // New routes to use jwt authentication
   app.post('/api/auth/login', fieldValidationMiddleware,
-    passport.authenticate('local', {
-      session: false,
-      failureRedirect: '/login',
-      failureFlash: 'Invalid email or password.'
-    }),
+    (req, res, next) => {
+      passport.authenticate('local', (err, userStatus) => {
+        if (err) {
+          return res.status(500).json({
+            message: 'Please try again'
+          });
+        }
+        if (!userStatus) {
+          return res.status(401).send({
+            message: 'Invalid email or password'
+          });
+        }
+        req.user = userStatus;
+        next();
+      })(req, res, next);
+    },
     jwtLogin);
 
   app.post('/api/auth/friends', getFriends);

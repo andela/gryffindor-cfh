@@ -8,10 +8,7 @@ angular.module('mean.system')
         $scope.email = '';
         $scope.username = '';
         $scope.password = '';
-        $scope.friendRequests = [];
-        $scope.gameRequests = [];
-        $scope.resolvedFriendRequests = [];
-        $scope.friendNotifications = 0;
+        $scope.errorMessage = '';
 
         $scope.showOptions = () => !AuthService.isAuthenticated();
 
@@ -32,9 +29,11 @@ angular.module('mean.system')
                 TokenService.saveEmail(email);
                 $location.path('/#!');
               })
-              .catch(() => {
-              // TODO: INSERT ERROR FEEDBACK FOR USER
+              .catch(({ data: { message } }) => {
+                $scope.errorMessage = message;
               });
+          } else {
+            $scope.errorMessage = 'Please fill all fields';
           }
         };
         $scope.signUp = (isValid) => {
@@ -47,45 +46,14 @@ angular.module('mean.system')
                 TokenService.saveEmail(email);
                 $location.path('/#!');
               })
-              .catch(() => {
-              // TODO: handler sign up error
+              .catch(({ data: { message } }) => {
+                $scope.errorMessage = message;
               });
+          } else {
+            $scope.errorMessage = 'Please fill all fields appropriately';
           }
         };
-
-        const email = TokenService.getEmail();
-        const myUsername = TokenService.getUsername();
-
-        $scope.resolveFriendRequest = (inviterEmail, username, status) => {
-          $scope.resolvedFriendRequests.push(inviterEmail);
-          game.resolveFriendRequest(inviterEmail, username, email, myUsername, status);
-        };
-
-        $scope.checkRequestResolved = requestEmail => (
-          $scope.resolvedFriendRequests.indexOf(requestEmail) !== -1
-        );
-
-        const incrementNotifications = ({ inviter, inviterEmail }) => {
-          $scope.friendNotifications += 1;
-          $scope.friendRequests.push({ username: inviter, email: inviterEmail });
-        };
-
-        const incrementGameRequests = ({ username, link }) => {
-          $scope.friendNotifications += 1;
-          $scope.gameRequests.push({ username, link });
-        };
-
-        $scope.getRequests = () => {
-          userSearch.getRequests(email)
-            .then((data) => {
-              $scope.friendRequests = data.data;
-              $scope.friendNotifications = data.data.length;
-            })
-            .catch(error => (error));
-        };
-
-        game.getRequests(email, incrementNotifications);
-        game.getGameRequests(email, incrementGameRequests);
+        $scope.showError = () => $scope.errorMessage !== '';
         $scope.avatars = [];
         AvatarService.getAvatars()
           .then((data) => {
