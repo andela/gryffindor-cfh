@@ -28,10 +28,9 @@ const QuestionSchema = new Schema({
     default: '',
     trim: true
   },
-  region: {
-    type: String,
-    default: '',
-    trim: true
+  regionId: {
+    type: Schema.types.ObjectId,
+    ref: 'Regions'
   }
 });
 
