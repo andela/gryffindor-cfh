@@ -1,4 +1,4 @@
-import should from 'should'; // eslint-disable-line 
+import should from 'should'; // eslint-disable-line
 import { fieldValidationFnMap } from '../../src/config/validate';
 
 describe('ValidationMiddleware', () => {
@@ -39,7 +39,7 @@ describe('ValidationMiddleware', () => {
   });
 
   it('should not return false status in response when username is bad', () => {
-    const validationConstraints = fieldValidationFnMap.userName;
+    const validationConstraints = fieldValidationFnMap.username;
     const response = validationConstraints.every(fn => fn(badUsername));
     (response).should.be.eql(false);
   });
@@ -51,7 +51,7 @@ describe('ValidationMiddleware', () => {
     validationConstraints = fieldValidationFnMap.password;
     response = validationConstraints.every(fn => fn(goodPassword));
     (response).should.be.eql(true);
-    validationConstraints = fieldValidationFnMap.userName;
+    validationConstraints = fieldValidationFnMap.username;
     response = validationConstraints.every(fn => fn(goodUsername));
     (response).should.be.eql(true);
   });
