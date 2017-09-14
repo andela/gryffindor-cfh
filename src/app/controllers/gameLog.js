@@ -11,6 +11,7 @@ import GameLog from '../controllers/gameLog';
  */
 export const startGame = (req, res) => { // eslint-disable-line
   const games = new GameLog();
+  games.id = req.params.body;
   games.gameId = req.body.gameId;
   games.players = req.body.players;
   games.winner = req.body.winner;
