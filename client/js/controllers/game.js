@@ -232,4 +232,8 @@ angular.module('mean.system')
         localStorage.removeItem('takenTour');
         $scope.takeTour();
       };
+      $scope.display = false;
+      $timeout(() => {
+        $scope.display = true;
+      }, 5000);
     }]);
