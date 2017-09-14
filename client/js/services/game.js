@@ -1,3 +1,4 @@
+/* global _ */
 angular.module('mean.system')
   .factory('game', ['socket', '$timeout', (socket, $timeout) => {
     const game = {
@@ -125,31 +126,111 @@ angular.module('mean.system')
               game.table.splice(k, 1);
             }
           }
-        }
-      }
 
-      if (game.state !== 'waiting for players to pick' || game.players.length !== data.players.length) {
-        game.players = data.players;
-      }
+          const newState = (data.state !== game.state);
 
-      if (newState || game.curQuestion !== data.curQuestion) {
-        game.state = data.state;
-      }
+          // Handle updating game.time
+          if (data.round !== game.round && data.state !== 'awaiting players'
+           && data.state !== 'game ended' && data.state !== 'game dissolved') {
+            game.time = game.timeLimits.stateChoosing - 1;
+            timeSetViaUpdate = true;
+          } else if (newState && data.state === 'waiting for czar to decide') {
+            game.time = game.timeLimits.stateJudging - 1;
+            timeSetViaUpdate = true;
+          } else if (newState && data.state === 'winner has been chosen') {
+            game.time = game.timeLimits.stateResults - 1;
+            timeSetViaUpdate = true;
+          }
 
-      if (data.state === 'waiting for players to pick') {
-        game.czar = data.czar;
-        game.curQuestion = data.curQuestion;
-        // Extending the underscore within the question
-        game.curQuestion.text = data.curQuestion.text.replace(/_/g, '<u></u>');
+          // Set these properties on each update
+          game.round = data.round;
+          game.winningCard = data.winningCard;
+          game.winningCardPlayer = data.winningCardPlayer;
+          game.winnerAutopicked = data.winnerAutopicked;
+          game.gameWinner = data.gameWinner;
+          game.pointLimit = data.pointLimit;
 
-        // Set notifications only when entering state
-        if (newState) {
-          if (game.czar === game.playerIndex) {
-            addToNotificationQueue('You\'re the Card Czar! Please wait!');
-          } else if (game.curQuestion.numAnswers === 1) {
-            addToNotificationQueue('Select an answer!');
+          // Handle updating game.table
+          if (data.table.length === 0) {
+            game.table = [];
           } else {
-            addToNotificationQueue('Select TWO answers!');
+            const added = _.difference(_.pluck(data.table, 'player'),
+              _.pluck(game.table, 'player'));
+            const removed = _.difference(_.pluck(game.table, 'player'),
+              _.pluck(data.table, 'player'));
+            for (i = 0; i < added.length; i += 1) {
+              for (let j = 0; j < data.table.length; j += 1) {
+                if (added[i] === data.table[j].player) {
+                  game.table.push(data.table[j], 1);
+                }
+              }
+            }
+            for (i = 0; i < removed.length; i += 1) {
+              for (let k = 0; k < game.table.length; k += 1) {
+                if (removed[i] === game.table[k].player) {
+                  game.table.splice(k, 1);
+                }
+              }
+            }
+            if (data.state === 'game ended'
+            && data.gameWinner === game.playerIndex) {
+            // get players
+              const currentPlayers = [];
+              for (let m = 0; m < data.players.length; m += 1) {
+                currentPlayers.push(data.players[m].username);
+              }
+              // add to gameLog collections
+              const gameId = data.gameID;
+              // define the gameLog payload
+              const gamePayload = {
+                gameId,
+                winner: data.players[game.playerIndex].username,
+                players: currentPlayers,
+                rounds: game.round
+              };
+              $http.post(`/api/games/${gameId}/start`, gamePayload);
+            }
+          }
+
+          if (game.state !== 'waiting for players to pick' || game.players.length !== data.players.length) {
+            game.players = data.players;
+          }
+
+          if (newState || game.curQuestion !== data.curQuestion) {
+            game.state = data.state;
+          }
+
+          if (data.state === 'waiting for players to pick') {
+            game.czar = data.czar;
+            game.curQuestion = data.curQuestion;
+            // Extending the underscore within the question
+            game.curQuestion.text = data.curQuestion.text.replace(/_/g, '<u></u>');
+
+            // Set notifications only when entering state
+            if (newState) {
+              if (game.czar === game.playerIndex) {
+                addToNotificationQueue('You\'re the Card Czar! Please wait!');
+              } else if (game.curQuestion.numAnswers === 1) {
+                addToNotificationQueue('Select an answer!');
+              } else {
+                addToNotificationQueue('Select TWO answers!');
+              }
+            }
+          } else if (data.state === 'waiting for czar to decide') {
+            if (game.czar === game.playerIndex) {
+              addToNotificationQueue("Everyone's done. Choose the winner!");
+            } else {
+              addToNotificationQueue('The czar is contemplating...');
+            }
+          } else if (data.state === 'winner has been chosen' && game.curQuestion.text.indexOf('<u></u>') > -1) {
+            game.curQuestion = data.curQuestion;
+          } else if (data.state === 'awaiting players') {
+            joinOverrideTimeout = $timeout(() => {
+              game.joinOverride = true;
+            }, 15000);
+          } else if (data.state === 'game dissolved' || data.state === 'game ended') {
+            game.players[game.playerIndex].hand = [];
+            game.time = 0;
           }
         }
       } else if (data.state === 'waiting for czar to decide') {

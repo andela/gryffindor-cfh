@@ -1677,7 +1677,10 @@ footer p span {
   .github-logo-div {
     display: block;
   }
-}
-.error {
-  color: red;
-}
+  .parent-container {
+    position:relative;  
+  }
+  
+  .speed-dial {
+      position: absolute;
+  }}

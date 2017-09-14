@@ -428,7 +428,6 @@ body{
     width:70%
 }
 
-
 #main-container{
     height: 100%;
     #app-container {
@@ -1342,8 +1341,6 @@ body{
     }
 }
 
-
-
 .gradientButton{
     width: 80% !important;
     margin-top: 8px !important;
@@ -1356,5 +1353,153 @@ body{
         border-top: 0px solid black !important;
     }
 }
+@import url(https://fonts.googleapis.com/css?family=Roboto:200,300,400);
+
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
+
+@mixin circleShadow($vertical) {
+	box-shadow:0 0 $vertical rgba(0,0,0,.14),0 $vertical $vertical*2 rgba(0,0,0,.28)
+}
+
+.snackbar {
+	bottom: 1em;
+	left: 1em;
+	position: fixed;
+	
+	&-text {
+		background-color: #212121;
+		border-radius: 0.19em;
+		color: #FFF;
+		display: inherit;
+		font-family: 'Roboto';
+		font-size: 0.8em;
+		font-weight: 200;
+		min-width: 15em;
+		padding: 1em 2em;
+		position: relative;
+		text-align: left;
+  }
+}
+
+.FAB {
+	position: absolute;
+	bottom: 30px;
+	right: 60px;
+	width: 56px;
+	
+	&__action-button,
+	&__mini-action-button{
+		cursor: pointer;
+		position: absolute;
+	}
+	
+	&__action-button {
+		bottom: 0;
+		right: 0;
+		
+		&:hover {
+			.action-button__icon {
+				@include circleShadow(8px);
+			}
+		}
+	}
+	
+	&__mini-action-button {
+		bottom: 0;
+		right: 49px;
+		
+		
+	}
+	
+	
+}
+
+.action-button {
+	&__icon{
+		@include circleShadow(4px);
+		background-color: #ff4081;
+		border-radius: 500%;
+		color: #fff;
+        padding: 50px;
+        margin-right: 1000px;
+        margin-bottom: 2000px;
+	}
+	
+	&__text {
+		
+		&--hide {
+			display: none;
+		}
+		
+		&--show {
+			background-color: #212121;
+			border-radius: 3px;
+			color: #fff;
+			right: 75px;
+			font-size: 14px;
+			font-family: "Helvetica Neue";
+			opacity: .8;
+			padding: 5px 9px;
+			position: absolute;
+			top: 2px;
+			white-space: nowrap;
+		}
+	}
+}
+
+.mini-action-button {
+	
+	&__icon {
+		@include circleShadow(4px);
+		background-color: #536DFE;
+		border-radius: 50%;
+		color: #fff;
+		padding: 8px;
+		
+		&:hover {
+			@include circleShadow(8px);
+		}
+		
+	}
+	
+	&__text {
+		
+		&--hide {
+			display: none;
+		}
+		
+		&--show {
+			background-color: #212121;
+			border-radius: 3px;
+			color: #fff;
+			display: block;
+			right: 60px;
+			font-size: 14px;
+			font-family: "Helvetica Neue";
+			opacity: .8;
+			padding: 5px 9px;
+			position: absolute;
+			top: -6px;
+			white-space: nowrap;
+		}
+	}
+
+	&--show {
+		position: absolute;
+		text-align: center;	
+	}
+	
+	&--hide {
+		display: none;
+		opacity: 0;
+	}
+}
+
+@for $i from 1 through 10 {
+	.mini-action-button--show:nth-child(#{$i}) {
+		bottom: 20px + 60px * $i;
+	}
+}
+
 
 

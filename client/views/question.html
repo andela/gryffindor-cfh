@@ -13,9 +13,31 @@
       <div id="loading-container">
         <div id="loading-gif"><img ng-src="../img/loader.gif" /></div>
       </div>
-      <div id="start-game-container" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride) && game.players.length >= game.playerMinLimit">
-        <div id='start-game-button'>
-          Start Game</br>with {{game.players.length}} players
+    <div id="start-game-container">
+    <div class="row start-game-row">
+      <div class="pull-left">
+          <button type="button" data-toggle="modal" data-target="#start_game_modal" class="btn btn-primary">Start Game</button>
+      </div>
+      <!-- Modal -->
+      <div id="start_game_modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div id="modal_content"class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Player Requirement</h4>
+            </div>
+            <div id="modal_body"class="modal-body">
+              <p ng-show="game.players.length >= game.playerMinLimit">Click start to begin new game..</p>
+              <p ng-show="game.players.length < game.playerMinLimit">Oops! You need a minimum of three (3) players to start game...</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              <button type="button" ng-show="game.players.length >= game.playerMinLimit" ng-click="startGame()" class="btn btn-primary" data-dismiss="modal">Start</button>
+            </div>
+          </div>
+        </div>
+      
         </div>
       </div>
       <div class="pull-left">
