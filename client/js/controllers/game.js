@@ -1,7 +1,7 @@
 /* global introJs, localStorage */
 angular.module('mean.system')
-  .controller('GameController', ['$scope', 'game', '$timeout', 'socket', 'userSearch', '$firebaseArray', '$location', 'MakeAWishFactsService', '$dialog',
-    function GameController($scope, game, $timeout, socket, userSearch, $firebaseArray, $location, MakeAWishFactsService) {// eslint-disable-line
+  .controller('GameController', ['$scope', 'game', '$timeout', 'userSearch', '$firebaseArray', '$location', 'MakeAWishFactsService', '$dialog',
+    function GameController($scope, game, $timeout, userSearch, $firebaseArray, $location, MakeAWishFactsService) {// eslint-disable-line
       // eslint-disable-line
       $scope.hasPickedCards = false;
       $scope.winningCardPicked = false;
