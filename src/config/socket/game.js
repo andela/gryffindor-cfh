@@ -41,6 +41,7 @@ function Game(gameID, io) {
   this.questions = null;
   this.answers = null;
   this.curQuestion = null;
+  this.region = null;
   this.timeLimits = {
     stateChoosing: 21,
     stateJudging: 16,
@@ -84,7 +85,8 @@ Game.prototype.payload = function () {
     winnerAutopicked: this.winnerAutopicked,
     table: this.table,
     pointLimit: this.pointLimit,
-    curQuestion: this.curQuestion
+    curQuestion: this.curQuestion,
+    region: this.region
   };
 };
 
@@ -126,7 +128,7 @@ Game.prototype.prepareGame = function () {
 
   const self = this;
   async.parallel([
-    this.getQuestions,
+    cb => this.getQuestions(cb),
     this.getAnswers
   ], (err, results) => {
     if (err) {
@@ -247,8 +249,9 @@ Game.prototype.stateDissolveGame = function () {
 };
 
 Game.prototype.getQuestions = function (cb) {
-  questions.allQuestionsForGame((data) => {
+  questions.allQuestionsForGame(this.region, (data) => {
     cb(null, data);
+    console.log(data, 'these are questions');
   });
 };
 
@@ -443,6 +446,9 @@ Game.prototype.startNextRound = (self) => {
   } else if (self.state === 'czar left game') {
     self.changeCzar(self);
   }
+  Game.prototype.setRegion = function (region) {
+    this.region = region;
+  };
 };
 
 module.exports = Game;

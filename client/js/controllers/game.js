@@ -328,6 +328,7 @@ angular.module('mean.system')
         });
 
         $scope.$watch('game.gameID', () => {
+          console.log(game);
           if (game.gameID && game.state === 'awaiting players') {
             if (!$scope.isCustomGame() && $location.search().game) {
             // If the player didn't successfully enter the request room,
@@ -347,16 +348,23 @@ angular.module('mean.system')
                 $scope.modalShown = true;
               }
             }
+            console.log(game.region);
+            if (!game.region && game.playerIndex === 0 && game.gameID) {
+              $('#regionModal').modal('show');
+            }
           }
         });
 
         if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
           console.log('joining custom game');
-          game.joinGame('joinGame', $location.search().game);
+          game.joinGame(
+            'joinGame',
+            $location.search().game,
+            null);
         } else if ($location.search().custom) {
           game.joinGame('joinGame', null, true);
         } else {
-          game.joinGame();
+          game.joinGame(null, null, null);
         }
       });
 
@@ -420,11 +428,11 @@ angular.module('mean.system')
 
 
       if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
-        game.joinGame('joinGame', $location.search().game);
+        game.joinGame('joinGame', $location.search().game, null, localStorage.getItem('region'));
       } else if ($location.search().custom) {
-        game.joinGame('joinGame', null, true);
+        game.joinGame('joinGame', null, true, localStorage.getItem('region'));
       } else {
-        game.joinGame();
+        game.joinGame(null, null, null, localStorage.getItem('region'));
       }
       $scope.display = false;
       $timeout(() => {

@@ -20,30 +20,28 @@ angular.module('mean.system')
         curQuestion: null,
         notification: null,
         timeLimits: {},
-        joinOverride: false
+        joinOverride: false,
+        region: null
       };
 
       const notificationQueue = [];
       let timeout = false;
-    let joinOverrideTimeout = 0; //eslint-disable-line
+    const self = this;// eslint-disable-line
+    let joinOverrideTimeout = 0;// eslint-disable-line
 
       const addToNotificationQueue = (msg) => {
         notificationQueue.push(msg);
-        if (!timeout) {
-        // Start a cycle if there isn't one
+        if (!timeout) { // Start a cycle if there isn't one
           setNotification();
         }
       };
-
       const setNotification = () => {
-        if (notificationQueue.length === 0) {
-        // If notificationQueue is empty, stop
+        if (notificationQueue.length === 0) { // If notificationQueue is empty, stop
           clearInterval(timeout);
           timeout = false;
           game.notification = '';
         } else {
-        // Show a notification and check again in a bit
-          game.notification = notificationQueue.shift();
+          game.notification = notificationQueue.shift(); // Show a notification and check again
           timeout = $timeout(setNotification, 1300);
         }
       };
@@ -70,8 +68,9 @@ angular.module('mean.system')
       });
 
       socket.on('gameUpdate', (data) => {
-      // Update gameID field only if it changed.
-      // That way, we don't trigger the $scope.$watch too often
+        console.log(data);
+        // Update gameID field only if it changed.
+        // That way, we don't trigger the $scope.$watch too often
         if (game.gameID !== data.gameID) {
           game.gameID = data.gameID;
         }
@@ -86,6 +85,7 @@ angular.module('mean.system')
             game.playerIndex = i;
           }
         }
+
 
         const newState = (data.state !== game.state);
 
@@ -244,6 +244,12 @@ angular.module('mean.system')
 
       game.pickWinning = (card) => {
         socket.emit('pickWinning', { card: card.id });
+      };
+
+      game.fetchRegions = () => $http.get('/api/regions');
+
+      game.setRegion = (region) => {
+        socket.emit('setRegion', { region, gameID: game.gameID });
       };
 
       decrementTime();

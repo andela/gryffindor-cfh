@@ -17,15 +17,4 @@ const RegionSchema = new Schema({
   }
 });
 
-/**
-* Statics
-*/
-RegionSchema.statics = {
-  load(id, cb) {
-    this.findOne({
-      id
-    }).select('-_id').exec(cb);
-  }
-};
-
 export default mongoose.model('Region', RegionSchema);

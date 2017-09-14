@@ -29,7 +29,7 @@ const QuestionSchema = new Schema({
     trim: true
   },
   regionId: {
-    type: Schema.types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Regions'
   }
 });
