@@ -17,7 +17,8 @@
       <div id="start-game-container">
         <div class="row start-game-row">
           <div class="pull-left">
-            <button type="button" data-toggle="modal" data-target="#start_game_modal" class="btn btn-primary">Start Game</button>
+            <button type="button" ng-show="(game.playerIndex === 0 || game.joinOverride) && game.players.length >= game.playerMinLimit"
+              data-toggle="modal" data-target="#start_game_modal" class="btn btn-primary">Start Game</br>with {{game.players.length}} players</button>
           </div>
           <!-- Modal -->
           <div id="start_game_modal" class="modal fade" role="dialog">
@@ -50,18 +51,18 @@
     </div>
 
 
-<div class="modal fade" id="invite_player_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-padding" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" style="color:black; font-size: 15px; display: inline-block;">Search by username</h5>
-          <button id="close-modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <div class="modal fade" id="invite_player_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-padding" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" style="color:black; font-size: 15px; display: inline-block;">Search by username</h5>
+              <button id="close-modal" type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-        </div>
-        <div class="modal-body">
-          <p style="color:black; font-size: 15px;">Invited Users: {{invitedUsers.length}}</p>
-            <div class="form-group">
+            </div>
+            <div class="modal-body">
+              <p style="color:black; font-size: 15px;">Invited Users: {{invitedUsers.length}}</p>
+              <div class="form-group">
                 <input type="text" ng-keyup="searchUsers()" ng-model="selectedUser" placeholder="Search by email" class="form-control">
                 </div>
                 <hr/>
@@ -112,22 +113,21 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-    <!-- Game Over Stuff -->
-    <div id="game-end-info">
-      <div id="people-left-game-top" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
-        <div class="game-end-headline">What the!? <br>The game ended because too many people left! </div>
-        Our sincere apologies.
-      </div>
-      <div ng-show="game.state === 'game ended' && game.gameWinner === game.playerIndex">
-        <div class="game-end-headline">Congratulations! You won the game, {{game.players[game.playerIndex].username | upperFirstLetter}}!</div>We hope you
-        feel special. If you'd like to share that special feeling <br> with the world, consider donating to charity. <br> Or just horde
-        it all for youself.
-      </div>
-      <div ng-show="game.state === 'game ended' && game.gameWinner !== game.playerIndex">
-        <div class="game-end-headline">Aw, shucks! {{game.players[game.gameWinner].username | upperFirstLetter }} won the game!</div>
-        That makes you a loser, unfortunately.
+      <!-- Game Over Stuff -->
+      <div id="game-end-info">
+        <div id="people-left-game-top" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
+          <div class="game-end-headline">What the!? <br>The game ended because too many people left! </div>
+          Our sincere apologies.
+        </div>
+        <div ng-show="game.state === 'game ended' && game.gameWinner === game.playerIndex">
+          <div class="game-end-headline">Congratulations! You won the game, {{game.players[game.playerIndex].username | upperFirstLetter}}!</div>We hope
+          you feel special. If you'd like to share that special feeling <br> with the world, consider donating to charity.
+          <br> Or just horde it all for youself.
+        </div>
+        <div ng-show="game.state === 'game ended' && game.gameWinner !== game.playerIndex">
+          <div class="game-end-headline">Aw, shucks! {{game.players[game.gameWinner].username | upperFirstLetter }} won the game!</div>
+          That makes you a loser, unfortunately.
+        </div>
       </div>
     </div>
   </div>
