@@ -8,7 +8,7 @@ import { all as allAnswers, show as showAnswers, answer as getAnswer } from '../
 import { all as allQuestions, show as showQuestion, question as getQuestion } from '../app/controllers/questions';
 import { allJSON } from '../app/controllers/avatars';
 import { play, render } from '../app/controllers/index';
-import { startGame } from '../app/controllers/gameLog';
+import { startGame, retrieveGameLog, retrieveLeaderBoard, retrieveDonations } from '../app/controllers/gameLog';
 import fieldValidationMiddleware from './middlewares/fieldValidationMiddleware';
 import authMiddleware from './middlewares/authentication';
 
@@ -127,5 +127,8 @@ export default function(app, passport, auth) {  // eslint-disable-line
     },
     jwtLogin);
 
-  app.post('/api/games/:id/start', startGame);
+  app.post('/api/games/:id/start', authMiddleware, startGame);
+  app.get('/api/games/history', authMiddleware, retrieveGameLog);
+  app.get('/api/leaderboard', authMiddleware, retrieveLeaderBoard);
+  app.get('/api/donations', authMiddleware, retrieveDonations);
 }

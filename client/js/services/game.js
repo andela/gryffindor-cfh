@@ -133,9 +133,8 @@ angular.module('mean.system')
               }
             }
           }
-          if (data.state === 'game ended'
-            && data.gameWinner === game.playerIndex) {
-            // get players
+          if (data.state === 'game ended') {
+          // get players
             const currentPlayers = [];
             for (let m = 0; m < data.players.length; m += 1) {
               currentPlayers.push(data.players[m].username);
@@ -145,7 +144,9 @@ angular.module('mean.system')
             // define the gameLog payload
             const gamePayload = {
               gameId,
-              winner: data.players[game.playerIndex].username,
+              // winner: data.players[game.playerIndex].username,
+              winner: game.players[game.gameWinner].username,
+              winnerId: game.players[game.gameWinner].userId,
               players: currentPlayers,
               rounds: game.round
             };
@@ -217,9 +218,14 @@ angular.module('mean.system')
         mode = mode || 'joinGame';
         room = room || '';
         createPrivate = createPrivate || false;
+        let userID;
         const user = LocalStorageService.getUser();
-        const userObject = JSON.parse(user);
-        const userID = userObject._id || 'unauthenticated'; //eslint-disable-line
+        if (user) {
+          const userObject = JSON.parse(user) || {};
+          userID = userObject._id; //eslint-disable-line
+        } else {
+          userID = 'unauthenticated';
+        }
         socket.emit(mode, { userID, room, createPrivate });
       };
 
