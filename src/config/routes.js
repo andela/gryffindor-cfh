@@ -8,6 +8,7 @@ import { all as allAnswers, show as showAnswers, answer as getAnswer } from '../
 import { all as allQuestions, show as showQuestion, question as getQuestion } from '../app/controllers/questions';
 import { allJSON } from '../app/controllers/avatars';
 import { play, render } from '../app/controllers/index';
+import { startGame } from '../app/controllers/gameLog';
 import fieldValidationMiddleware from './middlewares/fieldValidationMiddleware';
 
 
@@ -124,4 +125,6 @@ export default function(app, passport, auth) {  // eslint-disable-line
       })(req, res, next);
     },
     jwtLogin);
+
+  app.post('/api/games/:id/start', startGame);
 }
