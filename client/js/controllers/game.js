@@ -108,7 +108,7 @@ angular.module('mean.system')
         }
       };
 
-      $scope.checkDisable = selectedEmail => $scope.invitedUsers.indexOf(selectedEmail) === -1;
+      $scope.checkDisable = selectedEmail => $scope.invitedUsers.indexOf(selectedEmail) !== -1;
 
       $scope.selectUser = (selectedEmail) => {
         if ($scope.invitedUsers.length <= 11) {
@@ -116,15 +116,17 @@ angular.module('mean.system')
             To: selectedEmail,
             Link: document.URL
           };
+          $scope.invitedUsers.push(selectedEmail);
           userSearch.sendInvite(mailObject)
             .then(() => {
-              $scope.invitedUsers.push(selectedEmail);
             })
             .catch(() => {
               const myModal = $('#limit_modal');
               myModal.find('.modal-body')
                 .text('Error occured while inviting users');
               myModal.modal('show');
+              // remove invited from array;
+              $scope.invitedUsers.pop(selectedEmail);
             });
         }
       };

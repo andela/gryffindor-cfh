@@ -2064,6 +2064,10 @@ h3.panel-title {
 .panel{
     margin-bottom: 0px;
 }
+.chat-wrapper{
+    position: relative;
+    left: -8rem;
+}
 .chat-window{
     bottom:0;
     position:fixed;
