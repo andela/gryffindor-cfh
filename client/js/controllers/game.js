@@ -273,13 +273,18 @@ angular.module('mean.system')
           intro: 'You can always take the tour again'
         },
         {
+          element: '#invite-users',
+          intro: 'Invite other users to play'
+        },
+
+        {
           element: '#info-container',
           intro: 'These are the rules of the game',
           position: 'top'
         }
         ]
       });
-
+      
       $scope.takeTour = () => {
         if (!localStorage.takenTour) {
           const timeout = setTimeout(() => {
