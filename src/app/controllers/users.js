@@ -289,12 +289,37 @@ export const jwtLogin = (req, res) => {
    */
 export const search = (req, res) => {
   const name = req.params.searchName;
-  User.find({ name: new RegExp(name, 'i') }).exec((error, result) => {
+  User.find({ username: new RegExp(name, 'i') }).exec((error, result) => {
     if (error) {
       return res.json(error);
     }
     return res.json(result);
   });
+};
+
+export const getRequests = (req, res) => {
+  const userEmail = req.body.email;
+  User.findOne({ email: userEmail }, 'requests',
+    (error, response) => {
+      if (error) return error;
+      if (response) {
+        const requests = response.requests;
+        return res.json(requests);
+      }
+      return res.status(404).send('user not found');
+    });
+};
+
+export const getFriends = (req, res) => {
+  const userEmail = req.body.email;
+  User.findOne({ email: userEmail },
+    (error, response) => {
+      if (error) return res.json(error);
+      if (response) {
+        return res.json(response.friends);
+      }
+      return res.status(404).send('user not found');
+    });
 };
 
 
