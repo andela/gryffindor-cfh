@@ -9,7 +9,18 @@ angular.module('mean.system')
         To: mailObject.To,
         Link: mailObject.Link
       });
-    }
+    },
 
+    getFriends(email) {
+      return $http.post('/api/auth/friends', {
+        email
+      });
+    },
+
+    getRequests(email) {
+      return $http.post('/api/auth/requests', {
+        email
+      });
+    }
   }
   )]);
