@@ -201,6 +201,28 @@ angular.module('mean.system')
       socket.emit('pickWinning', { card: card.id });
     };
 
+    game.inviteFriend = (friendEmail, email, username) => {
+      socket.emit('inviteFriend',
+        { username, friendEmail, email }
+      );
+    };
+
+    game.inviteToGame = (inviteLink, inviter, selectedEmail) => {
+      socket.emit('inviteToGame', { inviteLink, inviter, selectedEmail });
+    };
+
+    game.getGameRequests = (email, callback) => {
+      socket.on(`gameInvite${email}`, callback);
+    };
+
+    game.getRequests = (email, callback) => {
+      socket.on(`invite${email}`, callback);
+    };
+
+    game.resolveFriendRequest = (email, username, invitedEmail, invitedUsername, status) => {
+      socket.emit('resolveFriendRequest', { email, username, invitedEmail, invitedUsername, status });
+    };
+
     decrementTime();
 
     return game;
