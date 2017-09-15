@@ -45,6 +45,43 @@ export default (io) => {
       }
     });
 
+    socket.on('inviteFriend', ({ username, friendEmail, email }) => {
+      User.update({ email: friendEmail },
+        { $addToSet: { requests: { email, username } } },
+        (err, response) => {
+          if (err) return err;
+          socket.broadcast
+            .emit(`invite${friendEmail}`, { username, email });
+          return response;
+        }
+      );
+    });
+
+    socket.on('resolveFriendRequest', ({ email, username, invitedEmail, invitedUsername, status }) => {
+      if (status) {
+        User.update({ email: invitedEmail },
+          { $addToSet: { friends: { email, username } } },
+          (err) => {
+            if (err) return err;
+          });
+        User.update({ email },
+          { $addToSet: { friends: { email: invitedEmail, username: invitedUsername } } },
+          (err) => {
+            if (err) return err;
+          });
+      }
+      User.update({ email: invitedEmail },
+        { $pull: { requests: { email } } },
+        (err, res) => {
+          if (err) return err;
+          return res;
+        });
+    });
+
+    socket.on('inviteToGame', ({ inviteLink, inviter, selectedEmail }) => {
+      socket.broadcast.emit(`gameInvite${selectedEmail}`, { inviter, inviteLink });
+    });
+
     socket.on('joinNewGame', (data) => {
       exitGame(socket);
       joinGame(socket, data);
