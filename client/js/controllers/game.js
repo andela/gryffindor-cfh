@@ -1,9 +1,9 @@
 /* global introJs, localStorage */
 angular.module('mean.system')
   .controller('GameController', ['$scope', 'game', '$timeout', 'userSearch', '$location', 'MakeAWishFactsService',
-    'LocalStorageService',
+    'LocalStorageService', 'AuthService',
     function GameController($scope, game, $timeout, userSearch, $location,
-      MakeAWishFactsService, LocalStorageService) {
+      MakeAWishFactsService, LocalStorageService, AuthService) {
       $scope.hasPickedCards = false;
       $scope.winningCardPicked = false;
       $scope.showTable = false;
@@ -35,6 +35,8 @@ angular.module('mean.system')
           }
         }
       };
+
+      $scope.hideSelectUser = () => (!AuthService.isAuthenticated());
 
       $scope.checkDisable = selectedEmail => $scope.invitedUsers.indexOf(selectedEmail) !== -1;
 
