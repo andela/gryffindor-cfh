@@ -2,12 +2,8 @@ import {
   signin, signout, signup,
   checkAvatar, avatarsChoice, addDonation,
   show, me, authCallback, user,
-<<<<<<< HEAD
   jwtLogin, session, create, search, sendMail,
   signupJWT, getFriends, getRequests
-=======
-  jwtLogin, session, create, search, sendMail, signupJWT
->>>>>>> add more regions
 } from '../app/controllers/users';
 import { all as allAnswers, show as showAnswers, answer as getAnswer } from '../app/controllers/answers';
 import { all as allQuestions, show as showQuestion, question as getQuestion } from '../app/controllers/questions';
@@ -134,10 +130,7 @@ export default function(app, passport, auth) {  // eslint-disable-line
     },
     jwtLogin);
 
-<<<<<<< HEAD
   app.post('/api/auth/friends', getFriends);
   app.post('/api/auth/requests', getRequests);
-=======
   app.post('/api/games/:id/start', startGame);
->>>>>>> Feature/150438328/create and start new game (#31)
 }
