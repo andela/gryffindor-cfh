@@ -26,9 +26,7 @@ angular.module('mean.system')
 
       const notificationQueue = [];
       let timeout = false;
-      // const self = this;
       let joinOverrideTimeout = 0; //eslint-disable-line
-
 
       const addToNotificationQueue = (msg) => {
         notificationQueue.push(msg);
@@ -37,6 +35,7 @@ angular.module('mean.system')
           setNotification();
         }
       };
+
       const setNotification = () => {
         if (notificationQueue.length === 0) {
           // If notificationQueue is empty, stop

@@ -112,7 +112,7 @@ angular.module('mean.system')
       $scope.currentCzar = $index => $index === game.czar;
 
       $scope.winningColor = ($index) => {
-        if (game.winningCardPlayer !== 1 && $index === game.winningCard) {
+        if (game.winningCardPlayer !== -1 && $index === game.winningCard) {
           return $scope.colors[game.players[game.winningCardPlayer].color];
         }
         return '#f9f9f9';
@@ -138,10 +138,11 @@ angular.module('mean.system')
       $scope.shuffleCards = () => {
         const card = $(`#${event.target.id}`); //eslint-disable-line
         card.addClass('animated flipOutY');
-        setTimeout(() => {
+        const timeout = setTimeout(() => {
           $scope.startNextRound();
           card.removeClass('animated flipOutY');
-          $('#start-modal').modal('hide');
+          $('#draw-card-modal').modal('hide');
+          clearTimeout(timeout);
         }, 500);
       };
 
@@ -195,10 +196,10 @@ angular.module('mean.system')
           $scope.showTable = true;
         }
         if ($scope.isCzar() && game.state === 'czar pick card' && game.table.length === 0) {
-          $('#start-modal').modal('show');
+          $('#draw-card-modal').modal('show');
         }
         if (game.state === 'game dissolved') {
-          $('#start-modal').modal('hide');
+          $('#draw-card-modal').modal('hide');
         }
         if ($scope.isCzar() === false && game.state === 'czar pick card'
           && game.state !== 'game dissolved'
