@@ -1,0 +1,8 @@
+{"_id":{"$oid":"59b8ffd328650f1362ca5940"},"id":2.0,"name":"Kenya"}
+{"_id":{"$oid":"59b8ffde28650f1362ca5941"},"id":3.0,"name":"Uganda"}
+{"_id":{"$oid":"59b90186ad7d37a9fb7d3630"},"id":1.0,"name":"Nigeria"}
+{"_id":{"$oid":"59b91ad4605e234f4555a4dc"},"id":4,"name":"Tanzania"}
+{"_id":{"$oid":"59b91ad4605e234f4555a4dd"},"id":5,"name":"Mali"}
+{"_id":{"$oid":"59b91ad4605e234f4555a4de"},"id":6,"name":"Cameroon"}
+{"_id":{"$oid":"59b91ad4605e234f4555a4df"},"id":7,"name":"Cote d'ivoire"}
+{"_id":{"$oid":"59b91ad4605e234f4555a4e0"},"id":8,"name":"Senegal"}

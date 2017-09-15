@@ -13,10 +13,11 @@ describe('GenerateToken', () => {
     should.exist(token);
   });
 
-  it('should return the payload when token is decoded', () => {
+  it('should return the payload when token is decoded', (done) => {
     const token = generateToken(user);
     jwt.verify(token, jwtSecret, (err, decoded) => {
-      decoded.should.be.eql(user);
+      decoded.data.username.should.be.eql(user.username);
+      done();
     });
   });
 });

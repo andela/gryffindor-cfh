@@ -41,7 +41,7 @@ walk(modelsPath);
 passportConfig(passport);
 
 // express settings
-expressConfig(app, passport, mongoose);
+expressConfig(app, passport);
 
 // Bootstrap routes
 routeConfig(app, passport, auth);
