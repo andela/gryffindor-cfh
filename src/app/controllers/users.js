@@ -322,7 +322,13 @@ export const sendMail = (req, res) => { // eslint-disable-line
 
   transporter.sendMail(mailOptions, (error) => {
     if (error) {
-      console.log(error); // eslint-disable-line
+      res.send({
+        message: 'Error occured'
+      });
+    } else {
+      res.send({
+        message: 'Message sent'
+      });
     }
   });
 };
