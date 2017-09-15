@@ -1,7 +1,9 @@
 /* global introJs, localStorage */
 angular.module('mean.system')
   .controller('GameController', ['$scope', 'game', '$timeout', 'userSearch', '$location', 'MakeAWishFactsService',
-    function GameController($scope, game, $timeout, userSearch, $location, MakeAWishFactsService) {
+    'LocalStorageService',
+    function GameController($scope, game, $timeout, userSearch, $location,
+      MakeAWishFactsService, LocalStorageService) {
       $scope.hasPickedCards = false;
       $scope.winningCardPicked = false;
       $scope.showTable = false;
@@ -10,6 +12,7 @@ angular.module('mean.system')
       $scope.pickedCards = [];
       $scope.searchedUsers = [];
       $scope.invitedUsers = [];
+      $scope.invitedFriends = [];
       $scope.selectedUser = '';
       let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       $scope.makeAWishFact = makeAWishFacts.pop();
@@ -33,7 +36,10 @@ angular.module('mean.system')
         }
       };
 
-      $scope.checkDisable = selectedEmail => $scope.invitedUsers.indexOf(selectedEmail) === -1;
+      $scope.checkDisable = selectedEmail => $scope.invitedUsers.indexOf(selectedEmail) !== -1;
+
+      const email = LocalStorageService.getEmail();
+      const username = LocalStorageService.getUsername();
 
       $scope.selectUser = (selectedEmail) => {
         if ($scope.invitedUsers.length <= 11) {
@@ -43,6 +49,7 @@ angular.module('mean.system')
           };
           userSearch.sendInvite(mailObject)
             .then(() => {
+              game.inviteToGAme(document.URL, username, selectedEmail);
               $scope.invitedUsers.push(selectedEmail);
             })
             .catch(() => {
@@ -54,6 +61,29 @@ angular.module('mean.system')
         }
       };
 
+      $scope.checkFriendDisable = selectedEmail =>
+        $scope.invitedFriends.indexOf(selectedEmail) !== -1;
+
+
+      $scope.alreadyFriends = (usersFriends) => {
+        if (usersFriends) {
+          return usersFriends.indexOf(username) === -1;
+        }
+        return false;
+      };
+
+      $scope.inviteFriend = (selectedEmail) => {
+        $scope.invitedFriends.push(selectedEmail);
+        game.inviteFriend(selectedEmail, email, username);
+      };
+
+      $scope.getFriends = () => {
+        userSearch.getFriends(email).then((data) => {
+          $scope.searchedUsers = data.data;
+        })
+          .catch(err => (err));
+      };
+
       $scope.searchUsers = () => {
         if ($scope.selectedUser !== '') {
           userSearch.search($scope.selectedUser).then((data) => {
@@ -61,6 +91,7 @@ angular.module('mean.system')
           });
         } else {
           $scope.searchedUsers = [];
+          $scope.getFriends();
         }
       };
 
