@@ -18,6 +18,8 @@ const UserSchema = new Schema({
   avatar: String,
   premium: Number, // null or 0 for non-donors, 1 for everyone else (for now)
   donations: [],
+  requests: { type: Array, default: [] },
+  friends: { type: Array, default: [] },
   hashed_password: String,
   facebook: {},
   twitter: {},
