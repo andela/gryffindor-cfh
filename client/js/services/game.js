@@ -227,7 +227,7 @@ angular.module('mean.system')
         mode = mode || 'joinGame';
         room = room || '';
         createPrivate = createPrivate || false;
-      const userID = window.user ? user._id : 'unauthenticated'; //eslint-disable-line
+        const userID = window.user ? user._id : 'unauthenticated'; // eslint-disable-line
         socket.emit(mode, { userID, room, createPrivate });
       };
 
