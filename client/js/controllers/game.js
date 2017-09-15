@@ -284,7 +284,7 @@ angular.module('mean.system')
         }
         ]
       });
-      
+
       $scope.takeTour = () => {
         if (!localStorage.takenTour) {
           const timeout = setTimeout(() => {
