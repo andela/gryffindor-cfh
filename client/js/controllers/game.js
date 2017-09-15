@@ -126,7 +126,7 @@ angular.module('mean.system')
                 .text('Error occured while inviting users');
               myModal.modal('show');
               // remove invited from array;
-              $scope.invitedUsers.pop(selectedEmail);
+              $scope.invitedUsers.splice($scope.invitedUsers.indexOf(selectedEmail), 1);
             });
         }
       };
