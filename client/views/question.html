@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="pull-left">
-          <button type="button" data-toggle="modal" data-target="#invite_player_modal" class="btn btn-primary">Invite Users</button>
+          <button type="button" data-toggle="modal" data-target="#invite_player_modal" class="btn btn-primary" ng-click="getFriends()">Invite Users</button>
       </div>
     </div>
 
@@ -50,9 +50,10 @@
                             </thead>
                             <tbody>
                               <tr ng-repeat="user in searchedUsers">
-                                <td><span>{{user.name}}</span></td>
+                                <td><span>{{user.username}}</span></td>
                                 <td><span>{{user.email}}</span></td>
                                 <td><span><a class="btn btn-primary" ng-disabled="checkDisable(user.email)" ng-click="selectUser(user.email)">Invite</a></span></td>
+                                <td><span><a class="btn btn-primary" ng-show="alreadyFriends(user.friends)" ng-disabled="checkFriendDisable(user.email)" ng-click="inviteFriend(user.email)">Add Friend</a></span></td>    
                               </tr>
                             </tbody>
                           </table>
