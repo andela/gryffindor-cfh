@@ -233,7 +233,7 @@ angular.module('mean.system')
           intro: 'Players in the current game are shown here',
         },
         {
-          element: '#abandon-game-button',
+          element: '#abandon-game-btn',
           intro: 'Played enough? Click this button to quit the game'
         },
         {
@@ -241,7 +241,7 @@ angular.module('mean.system')
           intro: 'You can always take the tour again'
         },
         {
-          element: '#answers-container',
+          element: '#info-container',
           intro: 'These are the rules of the game',
           position: 'top'
         }

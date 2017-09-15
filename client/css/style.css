@@ -1681,3 +1681,312 @@ footer p span {
 .error {
   color: red;
 }
+
+.primary-color {
+  background-color: #3E7293 !important;
+}
+
+.nav-btn {
+  padding-top: 9px;
+  padding-left: 10px;
+}
+
+.timer-container-circle {
+  width: 100%;
+  height:300px;
+  /* background: blue; */
+}
+
+.round-timer-inner {
+  border-radius: 50%;
+  width: 100%;
+  /* padding-bottom: 100%; */
+  background: white;
+}
+
+.timer-tag {
+  color: black;
+  font-size: 23px;
+  text-align: center;
+  margin: auto;
+  padding-top: 20px;
+}
+
+#tweet-widget{
+  padding-top: 17px;
+}
+
+.new-game {
+  padding-top: 45px;
+}
+
+.tweet-btn {
+  padding-top: 15px;
+  padding-left: 10px;
+}
+
+@media (max-width: 425px) {
+  #menu-timeremaining-container {
+    width: 100% !important;
+  }
+
+  #gameplay-container {
+    padding-left: 0 !important;
+  }
+
+  #question-container-outer {
+    width: 100% !important;
+    margin-left: 16px !important;
+    height: 100% !important;
+    margin-top: 45px !important;
+  }
+
+  #finding-players {
+    font-size: 18px !important;
+  }
+
+  #player-count {
+    font-size: 18px !important;
+  }
+
+  #the-word-players {
+    font-size: 18px !important;
+  }
+
+  #startGame {
+    padding-top: 25px !important;
+  }
+
+  #inner-timer-container {
+    width: 104px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .game-end-headline {
+    font-size: 13px !important;
+  }
+
+  #game-end-info {
+    padding-top: 33px !important;
+    /* padding-right: 41px !important; */
+  }
+
+  .game-end-answer-text {
+    font-size: 18px !important;
+  }
+
+  #join-new-game {
+    width: 150px !important;
+    font-size: 16px !important;
+  }
+
+  #exit-match {
+    width: 150px !important;
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 426px) {
+  #finding-players {
+    margin-top: 10px !important;
+  }
+
+  #player-container {
+    min-height: 63px !important;
+  }
+
+  #game-end-info {
+    /* padding-right: 41px !important; */
+    padding-top: 50px !important;
+  }
+
+  .game-end-headline {
+    font-size: 18px !important;
+  }
+
+  #join-new-game {
+    width: 150px !important;
+    font-size: 16px !important;
+  }
+
+  #exit-match {
+    width: 150px !important;
+    font-size: 16px !important;
+  }
+}
+
+@media (max-width: 424px) {
+  #question-container-outer {
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .timer-tag {
+    font-size: 15px;
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 426px) {
+  #question-container-outer {
+    margin-left: -22px !important;
+  }
+
+  #game-end-headline {
+    font-size: 18px !important;
+  }
+}
+
+@media (min-width: 1025px) {
+  #inner-timer-container {
+    width: 157px !important;
+  }
+}
+
+@media (max-width: 425px) and (min-width: 376px) {
+  #game-end-info {
+    /* padding-top: 33px !important; */
+    padding-right: 41px !important;
+  }
+}
+
+@media (max-width: 375px) {
+  #inner-text-container {
+    padding-left: 0 !important;
+  }
+}
+
+.scrollQuestions {
+  padding-top: 70px;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .scrollQuestions {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 426px) {
+  .scrollQuestions {
+    padding-top: 50px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 425px) {
+  #cards-container {
+    margin-top: 203px !important;
+  }
+
+  .scrollQuestions {
+    padding-top: 40px;
+    font-size: 14px;
+    margin-left: 16px;
+  }
+}
+
+.modal-padding {
+  padding-top: 60px;
+}
+
+#close-modal {
+  padding-top: 6px;
+}
+
+@media (min-width: 1025px) {
+  #invite-users-btn {
+    margin-left: 60px;
+    margin-top: 75px;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  #invite-users-btn {
+    margin-left: 45px;
+    margin-top: 45px;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 426px) {
+  #invite-users-btn {
+    margin-left: 10px;
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 425px) {
+  .btn#invite-users-btn {
+    width: 85px !important;
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 375px) {
+  #invite-users-btn {
+    margin-top: 17px;
+  }
+}
+
+@media (max-width: 425px) and (min-width: 378px) {
+  #invite-users-btn {
+    margin-top: 17px;
+    margin-left: -25px;
+  }
+}
+
+#invite-btn {
+  padding: 4px 12px !important;
+}
+
+.table > tbody > tr > td {
+  vertical-align: middle !important;
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  #notifications {
+    margin-bottom: 50px !important;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 426px) {
+  #notifications {
+    margin-bottom: 100px !important;
+  }
+}
+
+@media (max-width: 425px) {
+  #notifications {
+    margin-bottom: 125px !important;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .game-end-headline {
+    font-size: 20px !important;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 426px) {
+  .game-end-headline {
+    font-size: 15px !important;
+  }
+
+  #game-end-info {
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width: 425px) and (min-width: 426px) {
+  .game-end-headline {
+    font-size: 11px !important;
+  }
+
+  #game-end-info {
+    font-size: 9px !important;
+  }
+}

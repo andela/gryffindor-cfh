@@ -7,8 +7,9 @@
     <span ng-show="winnerPicked()"></span>
 
     <div ng-style="{'cursor':'pointer'}" class="card smallest" id='answers' ng-click="pickCard(card)" ng-hide="showTable || isCzar()"
-      ng-repeat="card in game.players[game.playerIndex].hand" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}">
-      <span>{{card.text}}</span>
+      ng-repeat="card in game.players[game.playerIndex].hand" ng-animate="{enter:'animated fadeInUp', leave: 'animated fadeInOut'}"
+      style="background-color: #f9f9f9">
+      <span ng-bind-html="card.text"></span>
       <span id='selection-number' ng-show="showFirst(card)"> 1 </span>
       <span id='selection-number' ng-show="showSecond(card)"> 2 </span>
     </div>
@@ -16,7 +17,7 @@
     <span ng-repeat="answer in game.table">
         <div class="card smallest" ng-style="pointerCursorStyle()" id='table' ng-click="pickWinning(answer)" ng-show="showTable || isCzar()"
         ng-repeat="card in answer.card" ng-animate="{enter:'animated bounceInLeft'}" style="background-color:{{winningColor($parent.$index)}}">
-            <span>{{card.text}}</span>
+            <span ng-bind-html="card.text"></span>
     <span id='selection-number' ng-show="firstAnswer($index)"> 1 </span>
     <span id='selection-number' ng-show="secondAnswer($index)"> 2 </span>
   </div>
@@ -37,6 +38,7 @@
     </ol>
   </div>
 </div>
+
 <div id="game-end-container" ng-show="game.state === 'game ended' || game.state ==='game dissolved'">
   <div id="inner-info-exit">
     <div class="game-end-answer-text" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
@@ -50,12 +52,18 @@
     </div>
     <div id='inner-text-container'>
       <a href='/#!/app'>
-        <div id="join-new-game" ng-click="game.joinGame('joinNewGame')">
+        <div id="join-new-game" class="new-game btn"ng-click="game.joinGame('joinNewGame')">
           Join a New Game
         </div>
       </a>
+      
+      <!-- <a href='/'>
+        <div id="exit-match" class="new-game btn">
+          Return to Lobby
+        </div>
+      </a> -->
       <a href='/'>
-        <div id="exit-match">
+        <div id="exit-match" class="new-game btn">
           Return to Lobby
         </div>
       </a>
@@ -71,6 +79,7 @@
     <!-- <script type="text/javascript" src="https://apisandbox.crowdrise.com/widgets/donate/project/36715/?callback=userDonationCb"></script> -->
   </div>
 </div>
+
 <div id="czar-blank-container" ng-show="isCzar() && game.table.length===0 && game.state !== 'game dissolved' && game.state !== 'awaiting players'">
   <div id="czar-blank-inner">
     You are the Card Czar. <br>
