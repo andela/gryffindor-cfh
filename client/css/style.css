@@ -1999,6 +1999,7 @@ footer p span {
     font-size: 9px !important;
   }
 }
+<<<<<<< HEAD
 
 .header-text {
   font-family: 'Roboto Slab', serif;
@@ -2008,3 +2009,5 @@ footer p span {
   color: red;
 >>>>>>> chore:auth-error-handling (#34)
 }
+=======
+>>>>>>> #150438332 Re-Design UI for the Gaming Screen (#37)
