@@ -1,24 +1,36 @@
-// import async from 'async';
+import {
+  signin, signout, signup,
+  checkAvatar, avatarsChoice, addDonation,
+  show, me, authCallback, user,
+  jwtLogin, session, create, search, sendMail, signupJWT
+} from '../app/controllers/users';
+import { all as allAnswers, show as showAnswers, answer as getAnswer } from '../app/controllers/answers';
+import { all as allQuestions, show as showQuestion, question as getQuestion } from '../app/controllers/questions';
+import { allJSON } from '../app/controllers/avatars';
+import { play, render } from '../app/controllers/index';
+import { startGame } from '../app/controllers/gameLog';
+import fieldValidationMiddleware from './middlewares/fieldValidationMiddleware';
 
-import { questions, question } from '../src/app/controllers/questions';
-import { users, signin, signup, checkAvatar, search,
-  create, avatars, sendMail, addDonation, signout } from '../src/app/controllers/users';
-import { play, render } from '../src/app/controllers/index';
-import { allJSON } from '../src/app/controllers/avatars';
-import { all, show, answer } from '../src/app/controllers/answers';
 
-export default function (app, passport, auth) {// eslint-disable-line
-  // User Routes
+/**
+ * routes for cfh
+ * @param {*} app
+ * @param {*} passport
+ * @param {*} auth
+ * @returns {void}
+ */
+export default function(app, passport, auth) {  // eslint-disable-line
   app.get('/signin', signin);
   app.get('/signup', signup);
   app.get('/chooseavatars', checkAvatar);
   app.get('/signout', signout);
   app.get('/api/search/users/:searchName', search);
+  app.post('/api/users/emailInvite', sendMail);
+  app.post('/api/auth/signup', fieldValidationMiddleware, signupJWT);
 
   // Setting up the users api
   app.post('/users', create);
-  app.post('/users/avatars', avatars);
-  app.post('/api/users/emailInvite', sendMail);
+  app.post('/users/avatars', avatarsChoice);
 
   // Donation Routes
   app.post('/donations', addDonation);
@@ -26,38 +38,38 @@ export default function (app, passport, auth) {// eslint-disable-line
   app.post('/users/session', passport.authenticate('local', {
     failureRedirect: '/signin',
     failureFlash: 'Invalid email or password.'
-  }), users.session);
+  }), session);
 
-  app.get('/users/me', users.me);
-  app.get('/users/:userId', users.show);
+  app.get('/users/me', me);
+  app.get('/users/:userId', show);
 
   // Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
     scope: ['email'],
     failureRedirect: '/signin'
-  }), users.signin);
+  }), signin);
 
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     failureRedirect: '/signin'
-  }), users.authCallback);
+  }), authCallback);
 
   // Setting the github oauth routes
   app.get('/auth/github', passport.authenticate('github', {
     failureRedirect: '/signin'
-  }), users.signin);
+  }), signin);
 
   app.get('/auth/github/callback', passport.authenticate('github', {
     failureRedirect: '/signin'
-  }), users.authCallback);
+  }), authCallback);
 
   // Setting the twitter oauth routes
   app.get('/auth/twitter', passport.authenticate('twitter', {
     failureRedirect: '/signin'
-  }), users.signin);
+  }), signin);
 
   app.get('/auth/twitter/callback', passport.authenticate('twitter', {
     failureRedirect: '/signin'
-  }), users.authCallback);
+  }), authCallback);
 
   // Setting the google oauth routes
   app.get('/auth/google', passport.authenticate('google', {
@@ -66,26 +78,26 @@ export default function (app, passport, auth) {// eslint-disable-line
       'https://www.googleapis.com/auth/userinfo.profile',
       'https://www.googleapis.com/auth/userinfo.email'
     ]
-  }), users.signin);
+  }), signin);
 
   app.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/signin'
-  }), users.authCallback);
+  }), authCallback);
 
   // Finish with setting up the userId param
-  app.param('userId', users.user);
+  app.param('userId', user);
 
   // Answer Routes
-  app.get('/answers', all);
-  app.get('/answers/:answerId', show);
+  app.get('/answers', allAnswers);
+  app.get('/answers/:answerId', showAnswers);
   // Finish with setting up the answerId param
-  app.param('answerId', answer);
+  app.param('answerId', getAnswer);
 
   // Question Routes
-  app.get('/questions', questions.all);
-  app.get('/questions/:questionId', questions.show);
+  app.get('/questions', allQuestions);
+  app.get('/questions/:questionId', showQuestion);
   // Finish with setting up the questionId param
-  app.param('questionId', question);
+  app.param('questionId', getQuestion);
 
   // Avatar Routes
   app.get('/avatars', allJSON);
@@ -93,4 +105,26 @@ export default function (app, passport, auth) {// eslint-disable-line
   // Home route
   app.get('/play', play);
   app.get('/', render);
+
+  // New routes to use jwt authentication
+  app.post('/api/auth/login', fieldValidationMiddleware,
+    (req, res, next) => {
+      passport.authenticate('local', (err, userStatus) => {
+        if (err) {
+          return res.status(500).json({
+            message: 'Please try again'
+          });
+        }
+        if (!userStatus) {
+          return res.status(401).send({
+            message: 'Invalid email or password'
+          });
+        }
+        req.user = userStatus;
+        next();
+      })(req, res, next);
+    },
+    jwtLogin);
+
+  app.post('/api/games/:id/start', startGame);
 }
