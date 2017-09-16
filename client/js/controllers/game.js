@@ -97,7 +97,6 @@ angular.module('mean.system')
 
       $scope.searchUsers = () => {
         if ($scope.selectedUser !== '') {
-          // console.log($scope.selectedUser);
           userSearch.search($scope.selectedUser).then((data) => {
             $scope.searchedUsers = data.data;
             console.log(data.data);// eslint-disable-line

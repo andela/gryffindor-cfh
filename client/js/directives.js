@@ -68,8 +68,8 @@ angular.module('mean.directives', [])
       }
     }
   }))
-  .directive('chat', () => ({
-    restrict: 'EA',
+  .component('chat', {
     templateUrl: '/views/chat.html',
-    link(scope, elem, attr) {}// eslint-disable-line
-  }));
+    controller: 'GameController'
+
+  });
