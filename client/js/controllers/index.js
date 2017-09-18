@@ -49,7 +49,6 @@ angular.module('mean.system')
             .then(({ data: { token, user } }) => {
               AuthService.saveToken(token);
               TokenService.saveUser(user);  // eslint-disable-line
-              TokenService.saveUserId(user._id);  // eslint-disable-line
               $location.path('/#!');
             })
             .catch(({ data: { message } }) => {
