@@ -74,38 +74,6 @@ angular.module('mean.system')
           }
         }
       };
-      $scope.selectUser = (selectedEmail) => {
-        if ($scope.invitedUsers.length <= 11) {
-          // console.log(_.indexOf($scope.invitedUsers, selectedEmail));
-          if (_.indexOf($scope.invitedUsers, selectedEmail) === -1) {// eslint-disable-line
-            $scope.invitedUsers.push(selectedEmail);
-          }
-
-          const mailObject = {
-            To: selectedEmail,
-            Link: document.URL
-          };
-          console.log(mailObject);// eslint-disable-line
-          userSearch.sendInvite(mailObject).then((data) => {
-            console.log(data.data);// eslint-disable-line
-          });
-        } else {
-          const myModal = $('#limit_modal');
-          myModal.modal('show');
-        }
-      };
-
-      $scope.searchUsers = () => {
-        if ($scope.selectedUser !== '') {
-          userSearch.search($scope.selectedUser).then((data) => {
-            $scope.searchedUsers = data.data;
-            console.log(data.data);// eslint-disable-line
-          });
-          console.log(userSearch.search($scope.selectedUser));// eslint-disable-line
-        } else {
-          $scope.searchedUsers = [];
-        }
-      };
 
       $scope.checkDisable = selectedEmail => $scope.invitedUsers.indexOf(selectedEmail) !== -1;
 
