@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-const jwtSecret = process.env.JWT_SECRET;
+const jwtSecret = process.env.JWT_SECRET || 'SECRET';
 
 
 /**
@@ -10,10 +10,13 @@ const jwtSecret = process.env.JWT_SECRET;
  * @param {Function} next
  */
 export default function authenticationMiddleware(req, res, next) {
-  const token = req.token;
+  const token = req.headers.token;
+  if (!token) {
+    res.status(403).send('Not allowed');
+  }
   jwt.verify(token, jwtSecret, (error) => {
     if (error) {
-      res.status(401).send('you are not signed in');
+      return res.status(401).send('token has expired');
     }
     next();
   });

@@ -2,7 +2,8 @@
 angular.module('mean.system')
   .controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', 'AuthService',
     'LocalStorageService',
-    ($scope, Global, $location, socket, game, AvatarService, AuthService, TokenService) => {
+    ($scope, Global, $location, socket, game, AvatarService, AuthService,
+      TokenService) => {
       $scope.global = Global;
       $scope.email = '';
       $scope.username = '';
@@ -49,7 +50,7 @@ angular.module('mean.system')
             .then(({ data: { token, user } }) => {
               AuthService.saveToken(token);
               TokenService.saveUser(user);
-              TokenService.saveUserId(user._id);   // eslint-disable-line
+              TokenService.saveUserId(user._id);  // eslint-disable-line
               $location.path('/#!');
             })
             .catch(({ data: { message } }) => {
