@@ -177,12 +177,6 @@ Game.prototype.stateChoosing = function (self) {
   }
   self.round += 1;
   self.dealAnswers();
-  // Rotate card czar
-  if (self.czar >= self.players.length - 1) {
-    self.czar = 0;
-  } else {
-    self.czar += 1;
-  }
   self.sendUpdate();
 
   self.choosingTimeout = setTimeout(() => {

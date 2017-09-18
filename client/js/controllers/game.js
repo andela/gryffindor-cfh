@@ -169,6 +169,8 @@ angular.module('mean.system')
 
 
       $scope.startGame = () => {
+        $('#retake-tour').hide();
+        $('#invite-users').hide();
         game.startGame();
       };
 
@@ -205,6 +207,8 @@ angular.module('mean.system')
           && game.state !== 'game dissolved'
           && game.state !== 'awaiting players' && game.table.length === 0) {
           $scope.czarHasDrawn = 'Wait! Czar is drawing Card';
+          $('#retake-tour').hide();
+          $('#invite-users').hide();
         }
         if (game.state !== 'czar pick card'
           && game.state !== 'awaiting players'
