@@ -2053,3 +2053,12 @@ h3.panel-title {
   cursor: pointer;
   font-size: 25px;
 }
+.notification-header {
+  position: relative;
+}
+
+.notification-header .badge {
+  position: absolute;
+  top: 0;
+  background: #a80a0a
+}
