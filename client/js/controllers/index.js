@@ -32,7 +32,12 @@ angular.module('mean.system')
           AuthService.login($scope.email, $scope.password)
             .then(({ data: { token, user } }) => {
               AuthService.saveToken(token);
+<<<<<<< HEAD
               TokenService.saveUser(user);  // eslint-disable-line
+=======
+              TokenService.saveUser(user);
+              TokenService.saveUserId(user._id);  // eslint-disable-line
+>>>>>>> bug/fix-authenticated
               $location.path('/#!');
             })
             .catch(({ data: { message } }) => {
@@ -48,7 +53,12 @@ angular.module('mean.system')
           AuthService.signUp($scope.username, $scope.email, $scope.password)
             .then(({ data: { token, user } }) => {
               AuthService.saveToken(token);
+<<<<<<< HEAD
               TokenService.saveUser(user);  // eslint-disable-line
+=======
+              TokenService.saveUser(user);
+              TokenService.saveUserId(user._id);   // eslint-disable-line
+>>>>>>> bug/fix-authenticated
               $location.path('/#!');
             })
             .catch(({ data: { message } }) => {

@@ -217,9 +217,13 @@ angular.module('mean.system')
         mode = mode || 'joinGame';
         room = room || '';
         createPrivate = createPrivate || false;
+<<<<<<< HEAD
         const user = LocalStorageService.getUser();
         const userObject = JSON.parse(user);
         const userID = userObject._id || 'unauthenticated'; //eslint-disable-line
+=======
+      const userID = LocalStorageService.getUserId() || 'unauthenticated'; //eslint-disable-line
+>>>>>>> bug/fix-authenticated
         socket.emit(mode, { userID, room, createPrivate });
       };
 
