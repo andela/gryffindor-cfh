@@ -1,8 +1,7 @@
 /* global introJs, localStorage */
 angular.module('mean.system')
-  .controller('GameController', ['$scope', 'game', '$timeout', 'userSearch', '$firebaseArray', '$location', 'MakeAWishFactsService', '$dialog',
-    function GameController($scope, game, $timeout, userSearch, $firebaseArray, $location, MakeAWishFactsService) {// eslint-disable-line
-      // eslint-disable-line
+  .controller('GameController', ['$scope', 'game', '$timeout', 'userSearch', '$location', 'MakeAWishFactsService',
+    function GameController($scope, game, $timeout, userSearch, $location, MakeAWishFactsService) {
       $scope.hasPickedCards = false;
       $scope.winningCardPicked = false;
       $scope.showTable = false;
@@ -13,48 +12,8 @@ angular.module('mean.system')
       $scope.invitedUsers = [];
       $scope.selectedUser = '';
       $scope.notificationCount = 0;
-      $scope.groupChat = '';
       let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       $scope.makeAWishFact = makeAWishFacts.pop();
-
-      $scope.$watch('game.gameID', () => {
-        if (game.gameID !== null) {
-          const chatRef = new Firebase(`https://cfhchat-3be15.firebaseio.com/messages/${game.gameID}`);// eslint-disable-line
-          $scope.groupChats = $firebaseArray(chatRef);
-          $scope.groupChats.$watch((event) => {
-            const insertedRecord = $scope.groupChats.$getRecord(event.key);
-            if (insertedRecord !== null) {
-              if (insertedRecord.postedBy !== game.players[game.playerIndex].username) {
-                $scope.notificationCount = 1;
-              }
-            }
-            $scope.scrollChats();
-          });
-        }
-      });
-
-      $scope.scrollChats = () => {
-        const element = document.getElementById('message-cont');
-        if (element) {
-          setTimeout(() => {
-            element.scrollTop = element.scrollHeight;
-          }, 150);
-        }
-      };
-      $scope.scrollChats();
-
-
-      $scope.addChat = () => {
-        const timestamp = (new Date()).toLocaleString('en-GB');
-        if (game.gameID !== null) {
-          $scope.groupChats.$add({
-            postedOn: timestamp,
-            message: $scope.groupChat,
-            postedBy: game.players[game.playerIndex].username
-          });
-          $scope.groupChat = '';
-        }
-      };
 
       $scope.pickCard = (card) => {
         if (!$scope.hasPickedCards) {
@@ -64,8 +23,8 @@ angular.module('mean.system')
               $scope.sendPickedCards();
               $scope.hasPickedCards = true;
             } else if (game.curQuestion.numAnswers === 2 &&
-            $scope.pickedCards.length === 2) {
-            // delay and send
+              $scope.pickedCards.length === 2) {
+              // delay and send
               $scope.hasPickedCards = true;
               $timeout($scope.sendPickedCards, 300);
             }
@@ -74,34 +33,12 @@ angular.module('mean.system')
           }
         }
       };
-      $scope.selectUser = (selectedEmail) => {
-        if ($scope.invitedUsers.length <= 11) {
-          // console.log(_.indexOf($scope.invitedUsers, selectedEmail));
-          if (_.indexOf($scope.invitedUsers, selectedEmail) === -1) {// eslint-disable-line
-            $scope.invitedUsers.push(selectedEmail);
-          }
-
-          const mailObject = {
-            To: selectedEmail,
-            Link: document.URL
-          };
-          console.log(mailObject);// eslint-disable-line
-          userSearch.sendInvite(mailObject).then((data) => {
-            console.log(data.data);// eslint-disable-line
-          });
-        } else {
-          const myModal = $('#limit_modal');
-          myModal.modal('show');
-        }
-      };
 
       $scope.searchUsers = () => {
         if ($scope.selectedUser !== '') {
           userSearch.search($scope.selectedUser).then((data) => {
             $scope.searchedUsers = data.data;
-            console.log(data.data);// eslint-disable-line
           });
-          console.log(userSearch.search($scope.selectedUser));// eslint-disable-line
         } else {
           $scope.searchedUsers = [];
         }
@@ -117,26 +54,13 @@ angular.module('mean.system')
           };
           $scope.invitedUsers.push(selectedEmail);
           userSearch.sendInvite(mailObject)
-            .then(() => {
-            })
             .catch(() => {
               const myModal = $('#limit_modal');
               myModal.find('.modal-body')
                 .text('Error occured while inviting users');
               myModal.modal('show');
-              // remove invited from array;
               $scope.invitedUsers.splice($scope.invitedUsers.indexOf(selectedEmail), 1);
             });
-        }
-      };
-
-      $scope.searchUsers = () => {
-        if ($scope.selectedUser !== '') {
-          userSearch.search($scope.selectedUser).then((data) => {
-            $scope.searchedUsers = data.data;
-          });
-        } else {
-          $scope.searchedUsers = [];
         }
       };
 
@@ -171,17 +95,17 @@ angular.module('mean.system')
       $scope.secondAnswer = $index => ($index % 2 === 1 && game.curQuestion.numAnswers > 1);
 
       $scope.showFirst = card => game.curQuestion.numAnswers > 1
-      && $scope.pickedCards[0] === card.id;
+        && $scope.pickedCards[0] === card.id;
 
       $scope.showSecond = card => game.curQuestion.numAnswers > 1
-      && $scope.pickedCards[1] === card.id;
+        && $scope.pickedCards[1] === card.id;
 
       $scope.isCzar = () => game.czar === game.playerIndex;
 
       $scope.isPlayer = $index => $index === game.playerIndex;
 
       $scope.isCustomGame = () => !(/^\d+$/).test(game.gameID)
-      && game.state === 'awaiting players';
+        && game.state === 'awaiting players';
 
       $scope.isPremium = $index => game.players[$index].premium;
 
@@ -235,12 +159,12 @@ angular.module('mean.system')
       $scope.$watch('game.gameID', () => {
         if (game.gameID && game.state === 'awaiting players') {
           if (!$scope.isCustomGame() && $location.search().game) {
-          // If the player didn't successfully enter the request room,
-          // reset the URL so they don't think they're in the requested room.
+            // If the player didn't successfully enter the request room,
+            // reset the URL so they don't think they're in the requested room.
             $location.search({});
           } else if ($scope.isCustomGame() && !$location.search().game) {
-          // Once the game ID is set, update the URL if this is a game with friends,
-          // where the link is meant to be shared.
+            // Once the game ID is set, update the URL if this is a game with friends,
+            // where the link is meant to be shared.
             $location.search({ game: game.gameID });
             if (!$scope.modalShown) {
               setTimeout(() => {

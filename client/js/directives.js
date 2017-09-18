@@ -21,8 +21,8 @@ angular.module('mean.directives', [])
             if (cardText.indexOf('.', cardText.length - 2) === cardText.length - 1) {
               cardText = cardText.slice(0, cardText.length - 1);
             } else if ((cardText.indexOf('!', cardText.length - 2) === cardText.length - 1 ||
-                cardText.indexOf('?', cardText.length - 2) === cardText.length - 1) &&
-                cardIndex === curQ.numAnswers - 1) {
+              cardText.indexOf('?', cardText.length - 2) === cardText.length - 1) &&
+              cardIndex === curQ.numAnswers - 1) {
               shouldRemoveQuestionPunctuation = true;
             }
             return cardText;
@@ -35,7 +35,7 @@ angular.module('mean.directives', [])
               curQuestionArr.splice(3, 0, startStyle + cardText + endStyle);
             }
             curQ.text = curQuestionArr.join('');
-            // Clean up the last punctuation mark in the question 
+            // Clean up the last punctuation mark in the question
             // if there already is one in the answer
             if (shouldRemoveQuestionPunctuation) {
               if (curQ.text.indexOf('.', curQ.text.length - 2) === curQ.text.length - 1) {
@@ -50,26 +50,18 @@ angular.module('mean.directives', [])
     }
   })).directive('question', () => ({
     restrict: 'EA',
-    templateUrl: '/views/question.html',
-    link(scope, elem, attr) {}// eslint-disable-line
+    templateUrl: '/views/question.html'
   }))
   .directive('timer', () => ({
     restrict: 'EA',
-    templateUrl: '/views/timer.html',
-    link(scope, elem, attr) {}// eslint-disable-line
+    templateUrl: '/views/timer.html'
   }))
   .directive('landing', () => ({
     restrict: 'EA',
     link(scope, elem, attr) {// eslint-disable-line
       scope.showOptions = true;
-
       if (scope.$$childHead.global.authenticated === true) {
         scope.showOptions = false;
       }
     }
-  }))
-  .component('chat', {
-    templateUrl: '/views/chat.html',
-    controller: 'GameController'
-
-  });
+  }));
