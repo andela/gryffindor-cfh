@@ -4,12 +4,13 @@
         	<div class="panel panel-default chat-wrapper">
                 <div class="panel-heading top-bar chat-header">
                 
-                    <div class="col-md-12 col-xs-12">
+                    <div class="col-md-12 col-xs-12 notification-header" ng-mouseover="reduceNotificationCount()">
                         
                                 <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> CFH Chat </h3>
-                            <notification-icon count="notificationCount" animation="bounce" clear-trigger="mouseover">
+                     
                                 <span aria-hidden="true" id="close-chat">&times;</span>
-                        </notification-icon>
+                                <span class="badge animated bounce" ng-show="showNotification()">{{notificationCount}}</span>
+                 
                     </div>
                
                 </div>
@@ -33,7 +34,7 @@
 
                     <form ng-submit="addChat()">
                         <div class="form-group" id="chat-form">
-                        <input type="text" ng-model="groupChat" class="form-control" id="chatMessage" placeholder="Enter your message">
+                        <input type="text" ng-model="groupChat" class="form-control" id="emojionearea1" placeholder="Enter your message">
                         </div>
                     </form> 
                 </div>
@@ -41,3 +42,35 @@
     		</div>
         </div>
     </div>
+
+<script>
+    $(document).ready(() => {
+        $('#emojionearea1').emojioneArea({
+            hideSource: true,
+            pickerPosition: 'top',
+            tonesStyle: 'bullet',
+            events: {
+            keyup (editor, event) {
+                if (event.which === 13) {
+                    console.log(this.getText())
+                angular.element('#app-container').scope().addChat(this.getText());
+                this.setText('');
+                }
+            }
+        }
+    });
+
+    const element = document.getElementById('message-cont');
+    if (element) {
+      setTimeout(() => {
+        element.scrollTop = element.scrollHeight;
+      }, 100);
+    }
+
+    $('body').on('click', '#close-chat', () => {
+    $('.chat-body').slideToggle();
+  });
+
+});
+
+</script>
