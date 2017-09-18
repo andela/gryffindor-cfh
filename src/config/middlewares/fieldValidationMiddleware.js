@@ -4,7 +4,7 @@ import { BAD_FIELD_AUTHENTICATION } from '../statusCodeConstants';
 
 const fieldMap = {
   '/api/auth/login': ['email', 'password'],
-  '/api/auth/signup': ['email', 'password', 'username']
+  '/api/auth/signup': ['email', 'password', 'name']
 };
 
 /**
