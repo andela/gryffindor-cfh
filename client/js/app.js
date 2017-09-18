@@ -31,7 +31,9 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ngRoute', 'n
     ($locationProvider) => {
       $locationProvider.hashPrefix('!');
     }
-  ])
+  ]).config(['$httpProvider', ($httpProvider) => {
+    $httpProvider.interceptors.push('tokenInjector');
+  }])
   .run(['$rootScope', ($rootScope) => {
     $rootScope.safeApply = function safeApply(fn) {
       const phase = this.$root.$$phase;

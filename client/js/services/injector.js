@@ -10,7 +10,7 @@ angular.module('mean.system')
       return tokenInjector;
     }]);
 
-angular.module('mean.system')
-  .config(['$httpProvider', ($httpProvider) => {
-    $httpProvider.interceptors.push('tokenInjector');
-  }]);
+// angular.module('mean.system')
+//   .config(['$httpProvider', ($httpProvider) => {
+//     $httpProvider.interceptors.push('tokenInjector');
+//   }]);

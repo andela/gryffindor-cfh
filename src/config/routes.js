@@ -10,6 +10,7 @@ import { allJSON } from '../app/controllers/avatars';
 import { play, render } from '../app/controllers/index';
 import { startGame } from '../app/controllers/gameLog';
 import fieldValidationMiddleware from './middlewares/fieldValidationMiddleware';
+import authMiddleware from './middlewares/authentication';
 
 
 /**
@@ -24,7 +25,7 @@ export default function(app, passport, auth) {  // eslint-disable-line
   app.get('/signup', signup);
   app.get('/chooseavatars', checkAvatar);
   app.get('/signout', signout);
-  app.get('/api/search/users/:searchName', search);
+  app.get('/api/search/users/:searchName', authMiddleware, search);
   app.post('/api/users/emailInvite', sendMail);
   app.post('/api/auth/signup', fieldValidationMiddleware, signupJWT);
 
