@@ -2,7 +2,8 @@
 angular.module('mean.system')
   .controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', 'AuthService',
     'LocalStorageService',
-    ($scope, Global, $location, socket, game, AvatarService, AuthService, TokenService) => {
+    ($scope, Global, $location, socket, game, AvatarService, AuthService,
+      TokenService) => {
       $scope.global = Global;
       $scope.email = '';
       $scope.username = '';
@@ -22,6 +23,7 @@ angular.module('mean.system')
       $scope.signOut = () => {
         TokenService.clearToken();
         TokenService.clearUser();
+        TokenService.clearUserId();
         $location.path('#!/');
       };
 
@@ -30,7 +32,7 @@ angular.module('mean.system')
           AuthService.login($scope.email, $scope.password)
             .then(({ data: { token, user } }) => {
               AuthService.saveToken(token);
-              TokenService.saveUser(user);
+              TokenService.saveUser(user);  // eslint-disable-line
               $location.path('/#!');
             })
             .catch(({ data: { message } }) => {
@@ -46,7 +48,7 @@ angular.module('mean.system')
           AuthService.signUp($scope.username, $scope.email, $scope.password)
             .then(({ data: { token, user } }) => {
               AuthService.saveToken(token);
-              TokenService.saveUser(user);
+              TokenService.saveUser(user);  // eslint-disable-line
               $location.path('/#!');
             })
             .catch(({ data: { message } }) => {
