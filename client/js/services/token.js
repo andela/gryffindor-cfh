@@ -11,6 +11,34 @@ angular
     clearToken: () => (
       $window.localStorage.removeItem('token')
     ),
+<<<<<<< HEAD
+    saveUser: user => (
+      $window.localStorage.setItem('user', JSON.stringify(user))
+=======
+<<<<<<< HEAD
+    saveEmail: email => (
+      $window.localStorage.setItem('email', email)
+>>>>>>> Chore/151116421/add auth middleware (#46)
+    ),
+    getUser: () => (
+      $window.localStorage.getItem('user')
+    ),
+<<<<<<< HEAD
+    clearUser: () => {
+      $window.localStorage.removeItem('user');
+=======
+    getEmail: () => (
+      $window.localStorage.getItem('email')
+    ),
+    getUsername: () => (
+      $window.localStorage.getItem('username')
+    ),
+    clearEmail: () => (
+      $window.localStorage.removeItem('email')
+    ),
+    clearUsername: () => {
+      $window.localStorage.removeItem('username');
+=======
     saveUser: user => (
       $window.localStorage.setItem('user', JSON.stringify(user))
     ),
@@ -19,6 +47,8 @@ angular
     ),
     clearUser: () => {
       $window.localStorage.removeItem('user');
+>>>>>>> Chore/151116421/add auth middleware (#46)
+>>>>>>> Chore/151116421/add auth middleware (#46)
     }
   })
   ]);
