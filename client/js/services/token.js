@@ -11,23 +11,14 @@ angular
     clearToken: () => (
       $window.localStorage.removeItem('token')
     ),
-    saveEmail: email => (
-      $window.localStorage.setItem('email', email)
+    saveUser: user => (
+      $window.localStorage.setItem('user', JSON.stringify(user))
     ),
-    saveUsername: username => (
-      $window.localStorage.setItem('username', username)
+    getUser: () => (
+      $window.localStorage.getItem('user')
     ),
-    getEmail: () => (
-      $window.localStorage.getItem('email')
-    ),
-    getUsername: () => (
-      $window.localStorage.getItem('username')
-    ),
-    clearEmail: () => (
-      $window.localStorage.removeItem('email')
-    ),
-    clearUsername: () => {
-      $window.localStorage.removeItem('username');
+    clearUser: () => {
+      $window.localStorage.removeItem('user');
     }
   })
   ]);
