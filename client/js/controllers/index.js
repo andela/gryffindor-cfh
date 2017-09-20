@@ -23,7 +23,6 @@ angular.module('mean.system')
       $scope.signOut = () => {
         TokenService.clearToken();
         TokenService.clearUser();
-        TokenService.clearUserId();
         $location.path('#!/');
       };
 

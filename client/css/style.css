@@ -2046,4 +2046,18 @@ footer p span {
   right: -0.357em;
   display: inline-block;
   content: '.';
+.dashboard-body {
+  padding-top: 30px;
+}
+
+.dashboard-body nav>a {
+  color: red;
+}
+
+ul.nav.nav-tabs li a {
+  color: #428bca;
+}
+
+ul.nav.nav-tabs li.active a {
+  color: orange;
 }

@@ -2,13 +2,13 @@ angular.module('mean.directives', [])
   .directive('player', () => ({
     restrict: 'EA',
     templateUrl: '/views/player.html',
-    link(scope, elem, attr) {
+    link(scope) {
       scope.colors = ['#7CE4E8', '#FFFFa5', '#FC575E', '#F2ADFF', '#398EC4', '#8CFF95'];
     }
   })).directive('answers', () => ({
     restrict: 'EA',
     templateUrl: '/views/answers.html',
-    link(scope, elem, attr) {
+    link(scope) {
       scope.$watch('game.state', () => {
         if (scope.game.state === 'winner has been chosen') {
           const curQ = scope.game.curQuestion;
@@ -35,7 +35,8 @@ angular.module('mean.directives', [])
               curQuestionArr.splice(3, 0, startStyle + cardText + endStyle);
             }
             curQ.text = curQuestionArr.join('');
-            // Clean up the last punctuation mark in the question if there already is one in the answer
+            // Clean up the last punctuation mark in the question if there
+            // already is one in the answer
             if (shouldRemoveQuestionPunctuation) {
               if (curQ.text.indexOf('.', curQ.text.length - 2) === curQ.text.length - 1) {
                 curQ.text = curQ.text.slice(0, curQ.text.length - 2);
@@ -49,16 +50,15 @@ angular.module('mean.directives', [])
     }
   })).directive('question', () => ({
     restrict: 'EA',
-    templateUrl: '/views/question.html',
-    link(scope, elem, attr) {}
+    templateUrl: '/views/question.html'
   }))
   .directive('timer', () => ({
     restrict: 'EA',
-    templateUrl: '/views/timer.html',
-    link(scope, elem, attr) {}
-  })).directive('landing', () => ({
+    templateUrl: '/views/timer.html'
+  }))
+  .directive('landing', () => ({
     restrict: 'EA',
-    link(scope, elem, attr) {
+    link(scope) {
       scope.showOptions = true;
 
       if (scope.$$childHead.global.authenticated === true) {
