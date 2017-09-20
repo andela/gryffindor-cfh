@@ -2062,3 +2062,14 @@ h3.panel-title {
   top: 0;
   background: #a80a0a
 }
+.message-header {
+  font-weight: bold; 
+  color:rgba(25, 176, 221, 0.8);
+}
+.message-time {
+  font-size:0.7em; 
+  color:rgba(25, 176, 221, 0.8);
+}
+.message-position{
+  margin-left:15%;
+}

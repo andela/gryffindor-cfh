@@ -43,6 +43,13 @@ function ChatController($scope, game, $firebaseArray) {
     }
   };
 
+  vm.showNotification = () => {
+    if (vm.notificationCount <= 0) {
+      return false;
+    }
+    return true;
+  };
+
   vm.reduceNotificationCount = () => {
     vm.notificationCount = 0;
   };
@@ -65,6 +72,7 @@ function ChatController($scope, game, $firebaseArray) {
       vm.groupChats.$add({
         postedOn: timestamp,
         message,
+        avatar: game.players[game.playerIndex].avatar,
         postedBy: game.players[game.playerIndex].username
       });
       vm.groupChat = '';
