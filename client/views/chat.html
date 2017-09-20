@@ -1,10 +1,10 @@
-<div class="chat-container" >
+<div class="chat-container" id="chat-container" >
     <div class="row chat-window col-xs-5 col-md-3" id="chat_window_1">
         <div class="col-xs-12 col-md-12">
         	<div class="panel panel-default chat-wrapper">
                 <div class="panel-heading top-bar chat-header">
                 
-                    <div class="col-md-12 col-xs-12 notification-header" ng-mouseover="reduceNotificationCount()">
+                    <div class="col-md-12 col-xs-12 notification-header" ng-mouseover="$chatCtrl.reduceNotificationCount()">
                         
                                 <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> CFH Chat </h3>
                      
@@ -42,6 +42,7 @@
     		</div>
         </div>
     </div>
+    </div>
 
 <script>
     $(document).ready(() => {
@@ -52,8 +53,8 @@
             events: {
             keyup (editor, event) {
                 if (event.which === 13) {
-                    console.log(this.getText())
-                angular.element('#app-container').scope().addChat(this.getText());
+                console.log(angular.element('#chat-container').scope());
+                angular.element('#chat-container').scope().addChat(this.getText());
                 this.setText('');
                 }
             }
