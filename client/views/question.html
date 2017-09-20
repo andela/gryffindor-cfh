@@ -16,7 +16,7 @@
       </div>
       <div id="start-game-container">
         <div class="row start-game-row">
-          <div class="pull-left">
+          <div class="pull-left"  ng-show="game.playerIndex === 0">
             <button id="start-game-btn" type="button" data-toggle="modal" data-target="#start_game_modal" class="btn btn-primary">Start Game</button>
           </div>
 
@@ -85,7 +85,8 @@
           </div>
         </div>
       </div>
-      
+      </div>
+
     <!-- Game Over Stuff -->
     <div id="game-end-info">
       <div id="people-left-game-top" ng-show="game.state ==='game dissolved' && game.gameWinner === -1">
@@ -104,6 +105,7 @@
     </div>
   </div>
 </div>
+
 
 <!-- Start Game modal -->
 <div class="modal fade modal-padding" id="draw-card-modal" tabindex="-1" role="document" aria-labelledby="myModalLabel" aria-hidden="true" style="overflow-y:hidden;">
