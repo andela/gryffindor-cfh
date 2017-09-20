@@ -1,4 +1,4 @@
-angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ngRoute', 'ngSanitize', 'mean.system', 'mean.directives'])
+angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'firebase', 'ngSanitize', 'ngRoute', 'mean.system', 'mean.directives', 'mean.components'])
   .config(['$routeProvider',
     ($routeProvider) => {
       $routeProvider
@@ -20,6 +20,9 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ngRoute', 'n
         .when('/signup', {
           templateUrl: '/views/signup.html'
         })
+        .when('/dashboard', {
+          templateUrl: '/views/dashboard.html'
+        })
         .when('/choose-avatar', {
           templateUrl: '/views/choose-avatar.html'
         })
@@ -31,7 +34,10 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ngRoute', 'n
     ($locationProvider) => {
       $locationProvider.hashPrefix('!');
     }
-  ]).run(['$rootScope', ($rootScope) => {
+  ]).config(['$httpProvider', ($httpProvider) => {
+    $httpProvider.interceptors.push('tokenInjector');
+  }])
+  .run(['$rootScope', ($rootScope) => {
     $rootScope.safeApply = function safeApply(fn) {
       const phase = this.$root.$$phase;
       if (phase === '$apply' || phase === '$digest') {
@@ -51,3 +57,4 @@ angular.module('mean', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ngRoute', 'n
 
 angular.module('mean.system', []);
 angular.module('mean.directives', []);
+angular.module('mean.components', []);

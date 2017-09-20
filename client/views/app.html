@@ -1,6 +1,5 @@
 </script>
 <div id="app-container" ng-controller="GameController">
-
   <!-- Header: Start -->
   <nav class="navbar navbar-default navbar-fixed-top primary-color">
     <div class="container">
@@ -18,12 +17,17 @@
       <!-- Collection of nav links and other content for toggling -->
       <div id="navbarCollapse" class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
+          <li class="nav-btn" id="donate-btn">
+            <div id="float-donate-btn" ng-show="display">
+              <a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity"  type="button" class="btn btn-success btn-lg">DONATE NOW</a>
+            </div>
+          </li>
           <li class="nav-btn">
-            <div>
+            <div id="invite-users">
               <button type="button" data-toggle="modal" data-target="#invite_player_modal"
                 class="btn btn-success">Invite Users</button>
             </div>
-          </li>  
+          </li>
           <li id="retake-tour" class="nav-btn">
             <div ng-click="retakeTour()">
               <a type="button" class="btn btn-warning">Retake Tour</a>
@@ -63,6 +67,7 @@
       </div>
     </div>
     <answers></answers>
+      <chat-box game="game.gameID"></chat-box>
   </div>
   <!-- Game play container: Start -->
 </div>

@@ -8,12 +8,15 @@ angular
     getToken: () => (
       $window.localStorage.getItem('token')
     ),
-    clearToken: () => {
-      $window.localStorage.removeItem('token');
-    },
-    saveUser: (user) => {
-      $window.localStorage.setItem('user', user);
-    },
+    clearToken: () => (
+      $window.localStorage.removeItem('token')
+    ),
+    saveUser: user => (
+      $window.localStorage.setItem('user', JSON.stringify(user))
+    ),
+    getUser: () => (
+      $window.localStorage.getItem('user')
+    ),
     clearUser: () => {
       $window.localStorage.removeItem('user');
     }
