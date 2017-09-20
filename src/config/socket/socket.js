@@ -9,6 +9,12 @@ const avatars = require(`${__dirname}/../../app/controllers/avatars.js`).all();
 // Valid characters to use to generate random private game IDs
 const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
 
+const updateUser = (queryParam, payload, callback) => (
+  User.update(queryParam,
+    { $addToSet: payload }, callback
+  )
+);
+
 export default (io) => {
   let game; // eslint-disable-line
   const allGames = {};
@@ -44,29 +50,21 @@ export default (io) => {
     });
 
     socket.on('inviteFriend', ({ username, friendEmail, email }) => {
-      User.update({ email: friendEmail },
-        { $addToSet: { requests: { email, username } } },
-        (err, response) => {
-          if (err) return err;
-          socket.broadcast
-            .emit(`invite${friendEmail}`, { username, email });
-          return response;
-        }
-      );
+      updateUser({ email: friendEmail }, { requests: { email, username } }, (err) => {
+        if (err) return err;
+        return socket.broadcast
+          .emit(`invite${friendEmail}`, { username, email });
+      });
     });
 
     socket.on('resolveFriendRequest', ({ email, username, invitedEmail, invitedUsername, status }) => {
       if (status) {
-        User.update({ email: invitedEmail },
-          { $addToSet: { friends: { email, username } } },
-          (err) => {
-            if (err) return err;
-          });
-        User.update({ email },
-          { $addToSet: { friends: { email: invitedEmail, username: invitedUsername } } },
-          (err) => {
-            if (err) return err;
-          });
+        updateUser({ email: invitedEmail }, { friends: { email, username } }, (err) => {
+          if (err) return socket.emit('failedRequestResolve', { email });
+        });
+        updateUser({ email }, { email: invitedEmail, username: invitedUsername }, (err) => {
+          if (err) return socket.emit('failedRequestResolve', { email });
+        });
       }
       User.update({ email: invitedEmail },
         { $pull: { requests: { email } } },
