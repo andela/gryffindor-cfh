@@ -43,6 +43,10 @@ export default (io) => {
       }
     });
 
+    socket.on('czarCardSelected', () => {
+      allGames[socket.gameID].startNextRound(allGames[socket.gameID]);
+    });
+
     socket.on('joinNewGame', (data) => {
       exitGame(socket);
       joinGame(socket, data);
