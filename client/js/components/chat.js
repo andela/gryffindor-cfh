@@ -42,7 +42,13 @@ function ChatController($scope, game, $firebaseArray) {
     }
   };
 
-  vm.showNotification = () => !vm.notificationCount <= 0;
+
+  vm.showNotification = () => {
+    if (vm.notificationCount <= 0) {
+      return false;
+    }
+    return true;
+  };
 
   vm.reduceNotificationCount = () => {
     vm.notificationCount = 0;
