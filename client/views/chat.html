@@ -3,46 +3,46 @@
         <div class="col-xs-12 col-md-12">
         	<div class="panel panel-default chat-wrapper">
                 <div class="panel-heading top-bar chat-header">
-                
+
                     <div class="col-md-12 col-xs-12 notification-header" ng-mouseover="$chatCtrl.reduceNotificationCount()">
-                        
+
                                 <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> CFH Chat </h3>
-                     
+
                                 <span aria-hidden="true" id="close-chat">&times;</span>
-                                <span class="badge animated bounce" ng-show="showNotification()">{{notificationCount}}</span>
-                 
+                                <span class="badge animated bounce" ng-show="$chatCtrl.showNotification()">{{notificationCount}}</span>
+
                     </div>
-               
+
                 </div>
-                
+
                 <div class="chat-body">
                     <div id="message-cont">
-                        <div ng-repeat="message in groupChats" class="row msg_container base_receive">
+                        <div ng-repeat="message in $chatCtrl.groupChats" class="row msg_container base_receive">
                             <div class="col-md-10 col-xs-10">
                                 <div class="messages msg_receive">
                                     <div>
                                         <p>
                                             <span style="font-weight: bold; color:blue;">{{message.postedBy}}:</span>
                                             {{message.message}}
-                                        </p>               
+                                        </p>
                                         <time>{{message.postedOn}}</time>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>    
+                    </div>
 
-                    <form ng-submit="addChat()">
+                    <form ng-submit="$chatCtrl.addChat()">
                         <div class="form-group" id="chat-form">
                         <input type="text" ng-model="groupChat" class="form-control" id="emojionearea1" placeholder="Enter your message">
                         </div>
-                    </form> 
+                    </form>
                 </div>
 
     		</div>
         </div>
     </div>
-    </div>
+</div>
 
 <script>
     $(document).ready(() => {
@@ -53,7 +53,6 @@
             events: {
             keyup (editor, event) {
                 if (event.which === 13) {
-                console.log(angular.element('#chat-container').scope());
                 angular.element('#chat-container').scope().addChat(this.getText());
                 this.setText('');
                 }
