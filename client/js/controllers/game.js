@@ -40,8 +40,11 @@ angular.module('mean.system')
 
       $scope.checkDisable = selectedEmail => $scope.invitedUsers.indexOf(selectedEmail) !== -1;
 
-      const email = LocalStorageService.getEmail();
-      const username = LocalStorageService.getUsername();
+      const user = LocalStorageService.getUser();
+      const userObject = JSON.parse(user);
+
+      const { email, name, _id } = userObject;
+
 
       $scope.selectUser = (selectedEmail) => {
         if ($scope.invitedUsers.length <= 11) {
@@ -51,7 +54,7 @@ angular.module('mean.system')
           };
           userSearch.sendInvite(mailObject)
             .then(() => {
-              game.inviteToGAme(document.URL, username, selectedEmail);
+              game.inviteToGAme(document.URL, name, selectedEmail);
               $scope.invitedUsers.push(selectedEmail);
             })
             .catch(() => {
@@ -69,18 +72,18 @@ angular.module('mean.system')
 
       $scope.alreadyFriends = (usersFriends) => {
         if (usersFriends) {
-          return usersFriends.indexOf(username) === -1;
+          return usersFriends.indexOf(name) === -1;
         }
         return false;
       };
 
       $scope.inviteFriend = (selectedEmail) => {
         $scope.invitedFriends.push(selectedEmail);
-        game.inviteFriend(selectedEmail, email, username);
+        game.inviteFriend(selectedEmail, email, name);
       };
 
       $scope.getFriends = () => {
-        userSearch.getFriends(email).then((data) => {
+        userSearch.getFriends(_id).then((data) => {
           $scope.searchedUsers = data.data;
         })
           .catch(err => (err));
