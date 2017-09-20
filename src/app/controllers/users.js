@@ -289,7 +289,7 @@ export const jwtLogin = (req, res) => {
    */
 export const search = (req, res) => {
   const name = req.params.searchName;
-  User.find({ username: new RegExp(name, 'i') }).exec((error, result) => {
+  User.find({ name: new RegExp(name, 'i') }).exec((error, result) => {
     if (error) {
       return res.json(error);
     }
@@ -298,8 +298,8 @@ export const search = (req, res) => {
 };
 
 export const getRequests = (req, res) => {
-  const userEmail = req.body.email;
-  User.findOne({ email: userEmail }, 'requests',
+  const userId = req.params.id;
+  User.findOne({ _id: userId }, 'requests',
     (error, response) => {
       if (error) return error;
       if (response) {
@@ -311,8 +311,8 @@ export const getRequests = (req, res) => {
 };
 
 export const getFriends = (req, res) => {
-  const userEmail = req.body.email;
-  User.findOne({ email: userEmail },
+  const userId = req.params.id;
+  User.findOne({ _id: userId },
     (error, response) => {
       if (error) return res.json(error);
       if (response) {
