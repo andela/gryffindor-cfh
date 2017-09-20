@@ -1,9 +1,8 @@
 /* global introJs, localStorage */
 angular.module('mean.system')
-  .controller('GameController', ['$scope', 'game', '$timeout', 'userSearch', '$firebaseArray', '$location', 'MakeAWishFactsService',
-    function GameController($scope, game, $timeout, userSearch, $firebaseArray, $location, MakeAWishFactsService) {// eslint-disable-line
-      const chatRef = new Firebase(`https://cfhchat-3be15.firebaseio.com/messages/${game.gameID}`);// eslint-disable-line
-
+  .controller('GameController', ['$scope', 'game', '$timeout', 'socket', 'userSearch', '$firebaseArray', '$location', 'MakeAWishFactsService', '$dialog',
+    function GameController($scope, game, $timeout, socket, userSearch, $firebaseArray, $location, MakeAWishFactsService) {// eslint-disable-line
+      // eslint-disable-line
       $scope.hasPickedCards = false;
       $scope.winningCardPicked = false;
       $scope.showTable = false;
@@ -13,21 +12,48 @@ angular.module('mean.system')
       $scope.searchedUsers = [];
       $scope.invitedUsers = [];
       $scope.selectedUser = '';
+      $scope.notificationCount = 0;
       $scope.groupChat = '';
-      $scope.groupChats = $firebaseArray(chatRef);
       let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       $scope.makeAWishFact = makeAWishFacts.pop();
 
+      $scope.$watch('game.gameID', () => {
+        if (game.gameID !== null) {
+          const chatRef = new Firebase(`https://cfhchat-3be15.firebaseio.com/messages/${game.gameID}`);// eslint-disable-line
+          $scope.groupChats = $firebaseArray(chatRef);
+          $scope.groupChats.$watch((event) => {
+            const insertedRecord = $scope.groupChats.$getRecord(event.key);
+            if (insertedRecord !== null) {
+              if (insertedRecord.postedBy !== game.players[game.playerIndex].username) {
+                $scope.notificationCount = 1;
+              }
+            }
+            $scope.scrollChats();
+          });
+        }
+      });
+
+      $scope.scrollChats = () => {
+        const element = document.getElementById('message-cont');
+        if (element) {
+          setTimeout(() => {
+            element.scrollTop = element.scrollHeight;
+          }, 150);
+        }
+      };
+      $scope.scrollChats();
+
+
       $scope.addChat = () => {
-        // CREATE A UNIQUE ID
-        const timestamp = new Date().valueOf();
-
-        $scope.groupChats.$add({
-          postedOn: timestamp,
-          message: $scope.groupChat
-        });
-
-        $scope.groupChat = '';
+        const timestamp = (new Date()).toLocaleString('en-GB');
+        if (game.gameID !== null) {
+          $scope.groupChats.$add({
+            postedOn: timestamp,
+            message: $scope.groupChat,
+            postedBy: game.players[game.playerIndex].username
+          });
+          $scope.groupChat = '';
+        }
       };
 
       $scope.pickCard = (card) => {
