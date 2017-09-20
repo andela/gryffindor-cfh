@@ -234,7 +234,7 @@ angular.module('mean.system')
             if (!$scope.modalShown) {
               setTimeout(() => {
                 const link = document.URL;
-                const txt = `Give the following link to 
+                const txt = `Give the following link to
                 your friends so they can join your game: `;
                 $('#lobby-how-to-play').text(txt);
                 $('#oh-el').css(
