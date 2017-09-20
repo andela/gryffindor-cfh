@@ -1,7 +1,9 @@
 /* global introJs, localStorage */
 angular.module('mean.system')
-  .controller('GameController', ['$scope', 'game', '$timeout', 'userSearch', '$location', 'MakeAWishFactsService',
-    function GameController($scope, game, $timeout, userSearch, $location, MakeAWishFactsService) {
+  .controller('GameController', ['$scope', 'game', '$timeout', 'userSearch', '$firebaseArray', '$location', 'MakeAWishFactsService',
+    function GameController($scope, game, $timeout, userSearch, $firebaseArray, $location, MakeAWishFactsService) {// eslint-disable-line
+      const chatRef = new Firebase(`https://cfhchat-3be15.firebaseio.com/messages/${game.gameID}`);// eslint-disable-line
+
       $scope.hasPickedCards = false;
       $scope.winningCardPicked = false;
       $scope.showTable = false;
@@ -11,8 +13,22 @@ angular.module('mean.system')
       $scope.searchedUsers = [];
       $scope.invitedUsers = [];
       $scope.selectedUser = '';
+      $scope.groupChat = '';
+      $scope.groupChats = $firebaseArray(chatRef);
       let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       $scope.makeAWishFact = makeAWishFacts.pop();
+
+      $scope.addChat = () => {
+        // CREATE A UNIQUE ID
+        const timestamp = new Date().valueOf();
+
+        $scope.groupChats.$add({
+          postedOn: timestamp,
+          message: $scope.groupChat
+        });
+
+        $scope.groupChat = '';
+      };
 
       $scope.pickCard = (card) => {
         if (!$scope.hasPickedCards) {
