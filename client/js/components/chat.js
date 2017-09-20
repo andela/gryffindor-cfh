@@ -1,36 +1,35 @@
 /* global Firebase */
-angular.module('mean.components', [])
+angular.module('mean.components')
   .component('chatBox', {
     controllerAs: '$chatCtrl',
     templateUrl: '/views/chat.html',
     bindings: {
-      gameID: '<'
+      game: '<'
     },
     controller: ChatController
   });
-ChatController.$inject = ['game', '$firebaseArray'];
+ChatController.$inject = ['$scope', 'game', '$firebaseArray'];
 
 /**
  *
  *
- * @param {any} game 
- * @param {any} $firebaseArray 
+ * @param {any} $scope
+ * @param {any} game
+ * @param {any} $firebaseArray
  * @returns {void} returns void
  */
-function ChatController(game, $firebaseArray) {
+function ChatController($scope, game, $firebaseArray) {
   const vm = this;
   vm.$onInit = () => {
     vm.groupChat = '';
-    vm.game = game;
     vm.notificationCount = 0;
-    vm.gameID = '';
   };
 
   let chatRef;
 
-  this.$onChanges = (chatBoxAttr) => {
-    if (chatBoxAttr.gameID && chatBoxAttr.gameID.currentValue !== vm.gameID) {
-      chatRef = new Firebase(`https://cfhchat-3be15.firebaseio.com/messages/${vm.gameID}`);
+  vm.$onChanges = (chatBoxAttr) => {
+    if (chatBoxAttr.game && chatBoxAttr.game.currentValue !== chatBoxAttr.game.previousValue) {
+      chatRef = new Firebase(`https://cfhchat-3be15.firebaseio.com/messages/${vm.game}`);
       vm.groupChats = $firebaseArray(chatRef);
       vm.groupChats.$watch((event) => {
         const insertedRecord = vm.groupChats.$getRecord(event.key);
@@ -62,7 +61,7 @@ function ChatController(game, $firebaseArray) {
 
   vm.addChat = (message) => {
     const timestamp = (new Date()).toLocaleString('en-GB');
-    if (vm.game.gameID && vm.groupChats.$add) {
+    if (vm.game && vm.groupChats && vm.groupChats.$add) {
       vm.groupChats.$add({
         postedOn: timestamp,
         message,
@@ -71,4 +70,6 @@ function ChatController(game, $firebaseArray) {
       vm.groupChat = '';
     }
   };
+
+  $scope.addChat = vm.addChat;
 }
