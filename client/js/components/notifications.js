@@ -23,7 +23,6 @@ angular.module('mean.components')
         };
 
         $scope.resolveFriendRequest = (inviterEmail, username, status) => {
-          console.log(status, 'resolve started');
           $scope.resolvedFriendRequests.push(inviterEmail);
           $scope.game
             .resolveFriendRequest(inviterEmail, username, email, name, status, friendRequestError);
