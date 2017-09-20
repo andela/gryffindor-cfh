@@ -1313,6 +1313,14 @@ body,html{
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
   }
 
+  @font-face {
+    font-family: 'Roboto Slab';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Roboto Slab Regular'), local('RobotoSlab-Regular'), url(https://fonts.gstatic.com/s/robotoslab/v6/y7lebkjgREBJK96VQi37ZvZraR2Tg8w2lzm7kLNL0-w.woff2) format('woff2');
+    unicode-range: U+0460-052F, U+20B4, U+2DE0-2DFF, U+A640-A69F;
+  }  
+
   body {
     font-family: 'Arima Madurai', cursive;
   }
@@ -1678,6 +1686,11 @@ body,html{
       display: block;
     }
   }
+
+  .header-text {
+    font-family: 'Roboto Slab', serif;
+  } 
+
   .error {
     color: red;
   }
@@ -1899,41 +1912,41 @@ body,html{
   }
 
   @media (min-width: 1025px) {
-    #invite-users-btn {
+    #start-game-btn {
       margin-left: 60px;
       margin-top: 75px;
     }
   }
 
   @media (max-width: 1024px) and (min-width: 769px) {
-    #invite-users-btn {
+    #start-game-btn {
       margin-left: 45px;
       margin-top: 45px;
     }
   }
 
   @media (max-width: 768px) and (min-width: 426px) {
-    #invite-users-btn {
+    #start-game-btn {
       margin-left: 10px;
       margin-top: 16px;
     }
   }
 
   @media (max-width: 425px) {
-    .btn#invite-users-btn {
+    .btn#start-game-btn {
       width: 85px !important;
       font-size: 12px !important;
     }
   }
 
   @media (max-width: 375px) {
-    #invite-users-btn {
+    #start-game-btn {
       margin-top: 17px;
     }
   }
 
   @media (max-width: 425px) and (min-width: 378px) {
-    #invite-users-btn {
+    #start-game-btn {
       margin-top: 17px;
       margin-left: -25px;
     }
@@ -2007,3 +2020,6 @@ body,html{
   ul.nav.nav-tabs li.active a {
     color: orange;
   }
+#donate-btn {
+  margin-top: -6px;
+}
