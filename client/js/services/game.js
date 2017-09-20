@@ -250,8 +250,10 @@ angular.module('mean.system')
         socket.on(`invite${email}`, callback);
       };
 
-      game.resolveFriendRequest = (email, username, invitedEmail, invitedUsername, status) => {
+      game.resolveFriendRequest =
+      (email, username, invitedEmail, invitedUsername, status, errorCallback) => {
         socket.emit('resolveFriendRequest', { email, username, invitedEmail, invitedUsername, status });
+        socket.on('failedRequestResolve', errorCallback);
       };
 
       decrementTime();
