@@ -129,7 +129,7 @@ export default function(app, passport, auth) {  // eslint-disable-line
       })(req, res, next);
     },
     jwtLogin);
-  app.post('/api/auth/friends', getFriends);
-  app.post('/api/auth/requests', getRequests);
+  app.get('/api/auth/friends/:id', getFriends);
+  app.get('/api/auth/requests/:id', getRequests);
   app.post('/api/games/:id/start', startGame);
 }

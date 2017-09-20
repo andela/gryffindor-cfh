@@ -11,9 +11,6 @@ angular.module('mean.components')
         $scope.testNumber = 4;
         $scope.notifications = $scope.friendNotifications + $scope.gameNotifications;
 
-        const user = TokenService.getUser();
-        const userObject = JSON.parse(user);
-        const { email, name, _id } = userObject;
         $scope.game = game;
 
         const friendRequestError = (payload) => {
@@ -23,6 +20,9 @@ angular.module('mean.components')
         };
 
         $scope.resolveFriendRequest = (inviterEmail, username, status) => {
+          const user = TokenService.getUser();
+          const userObject = JSON.parse(user);
+          const { email, name } = userObject;
           $scope.resolvedFriendRequests.push(inviterEmail);
           $scope.game
             .resolveFriendRequest(inviterEmail, username, email, name, status, friendRequestError);
@@ -44,6 +44,9 @@ angular.module('mean.components')
         };
 
         $scope.getRequests = () => {
+          const user = TokenService.getUser();
+          const userObject = JSON.parse(user);
+          const { _id } = userObject;
           userSearch.getRequests(_id)
             .then((data) => {
               $scope.friendRequests = data.data;
@@ -52,9 +55,15 @@ angular.module('mean.components')
             .catch(error => (error));
         };
 
-        $scope.getRequests();
-
-        $scope.game.getRequests(email, incrementNotifications);
-        $scope.game.getGameRequests(email, incrementGameRequests);
+        if (TokenService.getUser()) {
+          $scope.getRequests();
+        }
+        if (TokenService.getUser()) {
+          const user = TokenService.getUser();
+          const userObject = JSON.parse(user);
+          const { email } = userObject;
+          $scope.game.getRequests(email, incrementNotifications);
+          $scope.game.getGameRequests(email, incrementGameRequests);
+        }
       }]
   });

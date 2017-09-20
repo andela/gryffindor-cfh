@@ -58,29 +58,10 @@ angular.module('mean.system')
           }
         };
 
-        const email = TokenService.getEmail();
-        const myUsername = TokenService.getUsername();
-
-        $scope.resolveFriendRequest = (inviterEmail, username, status) => {
-          $scope.resolvedFriendRequests.push(inviterEmail);
-          game.resolveFriendRequest(inviterEmail, username, email, myUsername, status);
-        };
-
-        $scope.checkRequestResolved = requestEmail => (
-          $scope.resolvedFriendRequests.indexOf(requestEmail) !== -1
-        );
-
-        const incrementNotifications = ({ inviter, inviterEmail }) => {
-          $scope.friendNotifications += 1;
-          $scope.friendRequests.push({ username: inviter, email: inviterEmail });
-        };
-
-        const incrementGameRequests = ({ username, link }) => {
-          $scope.friendNotifications += 1;
-          $scope.gameRequests.push({ username, link });
-        };
-
         $scope.getRequests = () => {
+          const user = TokenService.getUser();
+          const userObject = JSON.parse(user);
+          const { email } = userObject;
           userSearch.getRequests(email)
             .then((data) => {
               $scope.friendRequests = data.data;
@@ -88,9 +69,6 @@ angular.module('mean.system')
             })
             .catch(error => (error));
         };
-
-        game.getRequests(email, incrementNotifications);
-        game.getGameRequests(email, incrementGameRequests);
 
         $scope.showError = () => $scope.errorMessage !== '';
         $scope.avatars = [];

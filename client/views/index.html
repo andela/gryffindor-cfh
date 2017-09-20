@@ -86,53 +86,7 @@
           <div class="landing-btn-div" ng-hide="showOptions()">
             <a href="/play" type="button" class="btn signup-btn">Play with Friends</a>
             <a href="/play?custom" type="button" class="btn guest-btn">Play with Strangers</a>
-<<<<<<< HEAD
-            <div class="modal fade" id="friend-request-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" style="color:black; font-size: 15px;">Search by username</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    <p style="color:black; font-size: 15px; ">You have {{friendNotifications}} invites</p>
-                      <hr/>
-                      <div>
-                              <table class="table table-hover table-inverse" style="color:black; font-size: 12px; ">
-                                      <thead>
-                                        <tr>
-                                          <th><span>Invites</span></th>
-                                          <th></th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-                                        <tr ng-repeat="game in gameRequests">
-                                          <td><span>{{game.username}} wants to play with you</span></td>
-                                          <td><span></span></td>
-                                          <td><span><a ng-href="/{{game.link}}" class="btn btn-primary" ng-disabled="checkRequestResolved(request.email)">Join</a></span></td>
-                                        </tr>
-                                        <tr ng-repeat="request in friendRequests">
-                                          <td><span>{{request.username}} wants to be your friend</span></td>
-                                          <td><span></span></td>
-                                          <td><span><a class="btn btn-primary" ng-disabled="checkRequestResolved(request.email)" ng-click="resolveFriendRequest(request.email, request.username, true)">Accept</a></span></td>
-                                          <td><span><a class="btn btn-primary" ng-disabled="checkRequestResolved(request.email)" ng-click="resolveFriendRequest(request.email, request.username, false)">Reject</a></span></td>    
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                      </div>
-                  </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-    </div>
-    </div>
-          </span>
-=======
           </div>
->>>>>>> add more regions
         </div>
       </div>
     </div>
