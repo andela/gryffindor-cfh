@@ -1,4 +1,4 @@
-angular.module('mean.components', [])
+angular.module('mean.components')
   .component('notificationBox', {
     templateUrl: '/views/notifications.html',
     controller: ['$scope', 'game', 'LocalStorageService', 'userSearch',
