@@ -313,4 +313,8 @@ angular.module('mean.system')
       } else {
         game.joinGame();
       }
+      $scope.display = false;
+      $timeout(() => {
+        $scope.display = true;
+      }, 10000);
     }]);
