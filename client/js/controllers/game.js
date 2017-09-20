@@ -16,6 +16,18 @@ angular.module('mean.system')
       let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
       $scope.makeAWishFact = makeAWishFacts.pop();
 
+      $scope.addChat = () => {
+        // CREATE A UNIQUE ID
+        const timestamp = new Date().valueOf();
+
+        $scope.groupChats.$add({
+          postedOn: timestamp,
+          message: $scope.groupChat
+        });
+
+        $scope.groupChat = '';
+      };
+
       $scope.pickCard = (card) => {
         if (!$scope.hasPickedCards) {
           if ($scope.pickedCards.indexOf(card.id) < 0) {
