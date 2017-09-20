@@ -33,15 +33,15 @@ function ChatController($scope, game, $firebaseArray) {
       vm.groupChats = $firebaseArray(chatRef);
       vm.groupChats.$watch((event) => {
         const insertedRecord = vm.groupChats.$getRecord(event.key);
-        if (insertedRecord !== null) {
-          if (insertedRecord.postedBy !== game.players[game.playerIndex].username) {
-            vm.notificationCount = 1;
-          }
+        if (insertedRecord !== null &&
+          insertedRecord.postedBy !== game.players[game.playerIndex].username) {
+          vm.notificationCount = 1;
         }
         vm.scrollChats();
       });
     }
   };
+
 
   vm.showNotification = () => {
     if (vm.notificationCount <= 0) {
