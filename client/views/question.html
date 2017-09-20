@@ -1,6 +1,6 @@
 <div id="question-container-inner">
   <div class="card longBlack">
-    <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
+    <span ng-bind-html="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
 
     <div id="notifications" ng-if="game.notification" ng-animate="{enter:'animated fadeInLeft', leave:'animated fadeOut'}">{{game.notification}}</div>
 
@@ -60,7 +60,7 @@
             </div>
           </div>
         </div>
-      
+
         </div>
       </div>
     <!-- Game Over Stuff -->
@@ -82,14 +82,14 @@
 
 <!-- Start Game modal -->
 <div class="modal fade" id="draw-card-modal" tabindex="-1" role="document" aria-labelledby="myModalLabel"
-aria-hidden="true" style="overflow-y:hidden;"> 
-    <div class="modal-dialog panel"> 
-        <div class="modal-content"> 
-            <div class="modal-header popUpHeader"> 
-              <h3 class="modal-title">Pick a Question</h3> 
-            </div> 
+aria-hidden="true" style="overflow-y:hidden;">
+    <div class="modal-dialog panel">
+        <div class="modal-content">
+            <div class="modal-header popUpHeader">
+              <h3 class="modal-title">Pick a Question</h3>
+            </div>
             <div class="modal-body">
-             
+
              <h4 id="shuffleText">You are the Czar - Click card to pick the next question</h4>
               <div class="center">
                   <div ng-click="shuffleCards()" ng-style="{'cursor':'pointer'}" style='margin: auto;'>
@@ -100,8 +100,8 @@ aria-hidden="true" style="overflow-y:hidden;">
                   <img src='../img/card.jpg' style='width: 100px;' class='animated flipInX' id='shufflecard5' />
                 </div>
               </div>
-            <div class="modal-footer">Cards for Humanity</div> 
-        </div> 
-    </div> 
-</div> 
+            <div class="modal-footer">Cards for Humanity</div>
+        </div>
+    </div>
+</div>
 </div>
