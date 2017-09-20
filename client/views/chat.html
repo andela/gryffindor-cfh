@@ -9,7 +9,7 @@
                                 <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> CFH Chat </h3>
 
                                 <span aria-hidden="true" id="close-chat">&times;</span>
-                                <span class="badge animated bounce" ng-show="$chatCtrl.showNotification()">{{notificationCount}}</span>
+                                <span class="badge animated bounce" ng-show="$chatCtrl.showNotification()">{{$chatCtrl.notificationCount}}</span>
 
                     </div>
 
@@ -18,17 +18,25 @@
                 <div class="chat-body">
                     <div id="message-cont">
                         <div ng-repeat="message in $chatCtrl.groupChats" class="row msg_container base_receive">
-                            <div class="col-md-10 col-xs-10">
+                         
+                                <div class=" col-md-12 ">
                                 <div class="messages msg_receive">
-                                    <div>
-                                        <p>
-                                            <span style="font-weight: bold; color:blue;">{{message.postedBy}}:</span>
-                                            {{message.message}}
-                                        </p>
-                                        <time>{{message.postedOn}}</time>
+                                        <div class=" col-md-2 ">
+                                                <img ng-src="{{message.avatar}}" width="30px">
+                                            </div>
+                                        <div>
+                                            <p>
+                                                <span class="message-header">{{message.postedBy}}:</span>
+                                                <span><time class="message-time">{{message.postedOn}}</time></span>
+                                                
+                                            </p>
+                                            <div class="message-position">{{message.message}}</div>
+                                        </div>
                                     </div>
+
                                 </div>
-                            </div>
+                                
+                           
                         </div>
                     </div>
 
