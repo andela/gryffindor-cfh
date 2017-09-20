@@ -1,53 +1,74 @@
 /* global Firebase */
 angular.module('mean.components', [])
   .component('chatBox', {
+    controllerAs: '$chatCtrl',
     templateUrl: '/views/chat.html',
-    controller: ['$scope', 'game', '$firebaseArray',
-      function ChatController($scope, game, $firebaseArray) {
-        $scope.groupChat = '';
-        $scope.game = game;
-        $scope.notificationCount = 0;
-        let chatRef;
-
-        $scope.$watch('game.gameID', () => {
-          if (game.gameID !== null) {
-            chatRef = new Firebase(`https://cfhchat-3be15.firebaseio.com/messages/${game.gameID}`);
-            $scope.groupChats = $firebaseArray(chatRef);
-
-            $scope.groupChats.$watch((event) => {
-              const insertedRecord = $scope.groupChats.$getRecord(event.key);
-              if (insertedRecord !== null) {
-                if (insertedRecord.postedBy !== game.players[game.playerIndex].username) {
-                  $scope.notificationCount = 1;
-                }
-              }
-              $scope.scrollChats();
-            });
-          }
-        });
-
-        $scope.scrollChats = () => {
-          const element = document.getElementById('message-cont');
-          if (element) {
-            const timeout = setTimeout(() => {
-              element.scrollTop = element.scrollHeight;
-              clearTimeout(timeout);
-            }, 150);
-          }
-        };
-        $scope.scrollChats();
-
-
-        $scope.addChat = () => {
-          const timestamp = (new Date()).toLocaleString('en-GB');
-          if (game.gameID !== null) {
-            $scope.groupChats.$add({
-              postedOn: timestamp,
-              message: $scope.groupChat,
-              postedBy: game.players[game.playerIndex].username
-            });
-            $scope.groupChat = '';
-          }
-        };
-      }]
+    bindings: {
+      gameID: '<'
+    },
+    controller: ChatController
   });
+ChatController.$inject = ['game', '$firebaseArray'];
+
+/**
+ *
+ *
+ * @param {any} game 
+ * @param {any} $firebaseArray 
+ * @returns {void} returns void
+ */
+function ChatController(game, $firebaseArray) {
+  const vm = this;
+  vm.$onInit = () => {
+    vm.groupChat = '';
+    vm.game = game;
+    vm.notificationCount = 0;
+    vm.gameID = '';
+  };
+
+  let chatRef;
+
+  this.$onChanges = (chatBoxAttr) => {
+    if (chatBoxAttr.gameID && chatBoxAttr.gameID.currentValue !== vm.gameID) {
+      chatRef = new Firebase(`https://cfhchat-3be15.firebaseio.com/messages/${vm.gameID}`);
+      vm.groupChats = $firebaseArray(chatRef);
+      vm.groupChats.$watch((event) => {
+        const insertedRecord = vm.groupChats.$getRecord(event.key);
+        if (insertedRecord !== null) {
+          if (insertedRecord.postedBy !== game.players[game.playerIndex].username) {
+            vm.notificationCount = 1;
+          }
+        }
+        vm.scrollChats();
+      });
+    }
+  };
+
+  vm.reduceNotificationCount = () => {
+    vm.notificationCount = 0;
+  };
+
+  vm.scrollChats = () => {
+    const element = document.getElementById('message-cont');
+    if (element) {
+      const timeout = setTimeout(() => {
+        element.scrollTop = element.scrollHeight;
+        clearTimeout(timeout);
+      }, 150);
+    }
+  };
+  vm.scrollChats();
+
+
+  vm.addChat = (message) => {
+    const timestamp = (new Date()).toLocaleString('en-GB');
+    if (vm.game.gameID && vm.groupChats.$add) {
+      vm.groupChats.$add({
+        postedOn: timestamp,
+        message,
+        postedBy: game.players[game.playerIndex].username
+      });
+      vm.groupChat = '';
+    }
+  };
+}

@@ -67,9 +67,4 @@ angular.module('mean.directives', [])
         scope.showOptions = false;
       }
     }
-  }))
-  .component('chat', {
-    templateUrl: '/views/chat.html',
-    controller: 'GameController'
-
-  });
+  }));
