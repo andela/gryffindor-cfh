@@ -11,16 +11,12 @@ angular.module('mean.system')
       });
     },
 
-    getFriends(email) {
-      return $http.post('/api/auth/friends', {
-        email
-      });
+    getFriends(id) {
+      return $http.get(`/api/auth/friends/${id}`);
     },
 
-    getRequests(email) {
-      return $http.post('/api/auth/requests', {
-        email
-      });
+    getRequests(id) {
+      return $http.get(`/api/auth/requests/${id}`);
     }
   }
   )]);
