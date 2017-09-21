@@ -48,20 +48,20 @@ angular.module('mean.system')
 
       $scope.selectUser = (selectedEmail) => {
         if ($scope.invitedUsers.length <= 11) {
-          // const mailObject = {
-          //   To: selectedEmail,
-          //   Link: document.URL
-          // };
-          // userSearch.sendInvite(mailObject)
-          //   .then(() => {
-          //     $scope.invitedUsers.push(selectedEmail);
-          //   })
-          //   .catch(() => {
-          //     const myModal = $('#limit_modal');
-          //     myModal.find('.modal-body')
-          //       .text('Error occured while inviting users');
-          //     myModal.modal('show');
-          //   });
+          const mailObject = {
+            To: selectedEmail,
+            Link: document.URL
+          };
+          userSearch.sendInvite(mailObject)
+            .then(() => {
+              $scope.invitedUsers.push(selectedEmail);
+            })
+            .catch(() => {
+              const myModal = $('#limit_modal');
+              myModal.find('.modal-body')
+                .text('Error occured while inviting users');
+              myModal.modal('show');
+            });
           game.inviteToGame(document.URL, name, selectedEmail);
         }
       };

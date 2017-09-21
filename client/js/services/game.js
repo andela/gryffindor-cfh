@@ -254,7 +254,6 @@ angular.module('mean.system')
       };
 
       game.inviteToGame = (inviteLink, inviter, selectedEmail) => {
-        console.log('emits right here');
         socket.emit('inviteToGame', { inviteLink, inviter, selectedEmail });
       };
 

@@ -76,7 +76,6 @@ export default (io) => {
     });
 
     socket.on('inviteToGame', ({ inviteLink, inviter, selectedEmail }) => {
-      console.log('reaches invite to game');
       socket.broadcast.emit(`gameInvite${selectedEmail}`, { inviter, inviteLink });
     });
 
