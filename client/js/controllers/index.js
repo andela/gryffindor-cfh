@@ -1,16 +1,19 @@
 /* global angular */
 angular.module('mean.system')
   .controller('IndexController', ['$scope', 'Global', '$location', 'socket', 'game', 'AvatarService', 'AuthService',
-    'LocalStorageService',
+    'LocalStorageService', 'userSearch',
     ($scope, Global, $location, socket, game, AvatarService, AuthService,
-      TokenService) => {
+      TokenService, userSearch) => {
       $scope.global = Global;
       $scope.email = '';
       $scope.username = '';
       $scope.password = '';
       $scope.errorMessage = '';
+      $scope.dashboardNotifications = 0;
 
       $scope.showOptions = () => !AuthService.isAuthenticated();
+
+      $scope.showNotification = () => $scope.dashboardNotifications > 0;
 
       $scope.signOut = () => {
         TokenService.clearToken();
@@ -57,6 +60,22 @@ angular.module('mean.system')
           $scope.errorMessage = 'Please fill all fields appropriately';
         }
       };
+
+      const incrementNotifications = () => {
+        $scope.dashboardNotifications += 1;
+      };
+
+      const user = TokenService.getUser();
+      if (user) {
+        const userObject = JSON.parse(user);
+        const { email, _id } = userObject;
+        userSearch.getRequests(_id)
+          .then((data) => {
+            $scope.dashboardNotifications += data.data.length;
+          })
+          .catch(error => (error));
+        game.getRequests(email, incrementNotifications);
+      }
 
       $scope.showError = () => $scope.errorMessage !== '';
       $scope.avatars = [];
