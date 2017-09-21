@@ -21,14 +21,6 @@ angular.module('mean.system')
         $location.path('#!/');
       };
 
-      $scope.showOptions = () => !AuthService.isAuthenticated();
-
-      $scope.signOut = () => {
-        TokenService.clearToken();
-        TokenService.clearUser();
-        $location.path('#!/');
-      };
-
       $scope.login = (isValid) => {
         if (isValid) {
           AuthService.login($scope.email, $scope.password)
