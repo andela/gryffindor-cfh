@@ -1,4 +1,4 @@
-<div class="container" style="padding-top: 100px;">
+<div class="container" style="padding-top: 100px;" ng-controller="IndexController">
   <div class="row">
     <div class="col-md-12">
       <h3 class="text-center"> Dashboard </h3>
@@ -30,7 +30,7 @@
       <div class="dashboard-body">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">
-          <li role="presentation" class="active"><a  data-target="#games" role="tab" data-toggle="tab">Games</a></li>
+          <li role="presentation" class="active"><a  data-target="#games" role="tab" data-toggle="tab">Game History</a></li>
           <li role="presentation"><a data-target="#leaderboard" role="tab" data-toggle="tab">Leader Board</a></li>
           <li role="presentation"><a data-target="#donation" role="tab" data-toggle="tab">Donations</a></li>
           <li role="presentation"><a data-target="#notifications" role="tab" data-toggle="tab">Notifications</a></li>
@@ -42,13 +42,13 @@
             <game-log></game-log>
           </div>
           <div role="tabpanel" class="tab-pane" id="leaderboard">
-            <leader-board test="test"></leader-board>
+            <leader-board></leader-board>
           </div>
           <div role="tabpanel" class="tab-pane" id="donation">
             <donations></donations>
           </div>
           <div role="tabpanel" class="tab-pane" id="notifications">
-            <notifications></notifications>
+            <notification-box></notification-box>
           </div>
         </div>
       </div>

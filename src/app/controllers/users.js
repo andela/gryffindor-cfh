@@ -297,6 +297,31 @@ export const search = (req, res) => {
   });
 };
 
+export const getRequests = (req, res) => {
+  const userId = req.params.id;
+  User.findOne({ _id: userId }, 'requests',
+    (error, response) => {
+      if (error) return error;
+      if (response) {
+        const requests = response.requests;
+        return res.json(requests);
+      }
+      return res.status(404).send('user not found');
+    });
+};
+
+export const getFriends = (req, res) => {
+  const userId = req.params.id;
+  User.findOne({ _id: userId },
+    (error, response) => {
+      if (error) return res.json(error);
+      if (response) {
+        return res.json(response.friends);
+      }
+      return res.status(404).send('user not found');
+    });
+};
+
 
 /**
    * Send email

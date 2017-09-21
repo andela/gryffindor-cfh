@@ -12,6 +12,12 @@ const avatars = require(`${__dirname}/../../app/controllers/avatars.js`).all();
 // Valid characters to use to generate random private game IDs
 const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
 
+const updateUser = (queryParam, payload, callback) => (
+  User.update(queryParam,
+    { $addToSet: payload }, callback
+  )
+);
+
 export default (io) => {
   let game; // eslint-disable-line
   const allGames = {};
@@ -44,6 +50,36 @@ export default (io) => {
       if (!allPlayers[socket.id]) {
         joinGame(socket, data);
       }
+    });
+
+    socket.on('inviteFriend', ({ username, friendEmail, email }) => {
+      updateUser({ email: friendEmail }, { requests: { email, username } }, (err) => {
+        if (err) return err;
+        return socket.broadcast
+          .emit(`invite${friendEmail}`, { username, email });
+      });
+    });
+
+    socket.on('resolveFriendRequest', ({ email, username, invitedEmail, invitedUsername, status }) => {
+      if (status) {
+        updateUser({ email: invitedEmail }, { friends: { email, username } }, (err) => {
+          if (err) return socket.emit('failedRequestResolve', { email });
+          updateUser({ email },
+            { friends: { email: invitedEmail, username: invitedUsername } }, (err) => {
+              if (err) return socket.emit('failedRequestResolve', { email });
+            });
+        });
+      }
+      User.update({ email: invitedEmail },
+        { $pull: { requests: { email } } },
+        (err, res) => {
+          if (err) return err;
+          return res;
+        });
+    });
+
+    socket.on('inviteToGame', ({ inviteLink, inviter, selectedEmail }) => {
+      socket.broadcast.emit(`gameInvite${selectedEmail}`, { inviter, inviteLink });
     });
 
     socket.on('czarCardSelected', () => {
