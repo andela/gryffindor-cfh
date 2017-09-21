@@ -61,9 +61,10 @@ export default (io) => {
       if (status) {
         updateUser({ email: invitedEmail }, { friends: { email, username } }, (err) => {
           if (err) return socket.emit('failedRequestResolve', { email });
-        });
-        updateUser({ email }, { email: invitedEmail, username: invitedUsername }, (err) => {
-          if (err) return socket.emit('failedRequestResolve', { email });
+          updateUser({ email },
+            { friends: { email: invitedEmail, username: invitedUsername } }, (err) => {
+              if (err) return socket.emit('failedRequestResolve', { email });
+            });
         });
       }
       User.update({ email: invitedEmail },
@@ -75,7 +76,12 @@ export default (io) => {
     });
 
     socket.on('inviteToGame', ({ inviteLink, inviter, selectedEmail }) => {
+      console.log('reaches invite to game');
       socket.broadcast.emit(`gameInvite${selectedEmail}`, { inviter, inviteLink });
+    });
+
+    socket.on('czarCardSelected', () => {
+      allGames[socket.gameID].startNextRound(allGames[socket.gameID]);
     });
 
     socket.on('joinNewGame', (data) => {

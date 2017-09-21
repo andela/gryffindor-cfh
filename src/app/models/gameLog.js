@@ -7,9 +7,8 @@ import mongoose, { Schema } from 'mongoose';
  * Games Schema
  */
 const GameLog = new Schema({
-  id: {
-    type: Number,
-
+  playerId: {
+    type: String,
   },
   players: {
     type: Array,

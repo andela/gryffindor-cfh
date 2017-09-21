@@ -1,3 +1,4 @@
+/* global _ */
 angular.module('mean.system')
   .factory('game', ['socket', '$timeout', '$http', 'LocalStorageService',
     (socket, $timeout, $http, LocalStorageService) => {
@@ -25,26 +26,24 @@ angular.module('mean.system')
 
       const notificationQueue = [];
       let timeout = false;
-      // const self = this;
-
       let joinOverrideTimeout = 0; //eslint-disable-line
-
 
       const addToNotificationQueue = (msg) => {
         notificationQueue.push(msg);
         if (!timeout) {
-        // Start a cycle if there isn't one
+          // Start a cycle if there isn't one
           setNotification();
         }
       };
+
       const setNotification = () => {
         if (notificationQueue.length === 0) {
-        // If notificationQueue is empty, stop
+          // If notificationQueue is empty, stop
           clearInterval(timeout);
           timeout = false;
           game.notification = '';
         } else {
-        // Show a notification and check again in a bit
+          // Show a notification and check again in a bit
           game.notification = notificationQueue.shift();
           timeout = $timeout(setNotification, 1300);
         }
@@ -59,7 +58,6 @@ angular.module('mean.system')
         }
         $timeout(decrementTime, 950);
       };
-
 
       socket.on('id', (data) => {
         game.id = data.id;
@@ -93,8 +91,8 @@ angular.module('mean.system')
         const newState = (data.state !== game.state);
 
         // Handle updating game.time
-        if (data.round !== game.round && data.state !== 'awaiting players' &&
-      data.state !== 'game ended' && data.state !== 'game dissolved') {
+        if (data.round !== game.round && data.state !== 'awaiting players'
+          && data.state !== 'game ended' && data.state !== 'game dissolved') {
           game.time = game.timeLimits.stateChoosing - 1;
           timeSetViaUpdate = true;
         } else if (newState && data.state === 'waiting for czar to decide') {
@@ -117,8 +115,10 @@ angular.module('mean.system')
         if (data.table.length === 0) {
           game.table = [];
         } else {
-        const added = _.difference(_.pluck(data.table, 'player'), _.pluck(game.table, 'player'));// eslint-disable-line
-        const removed = _.difference(_.pluck(game.table, 'player'), _.pluck(data.table, 'player'));// eslint-disable-line
+          const added = _.difference(_.pluck(data.table, 'player'),
+            _.pluck(game.table, 'player'));
+          const removed = _.difference(_.pluck(game.table, 'player'),
+            _.pluck(data.table, 'player'));
           for (i = 0; i < added.length; i += 1) {
             for (let j = 0; j < data.table.length; j += 1) {
               if (added[i] === data.table[j].player) {
@@ -133,6 +133,25 @@ angular.module('mean.system')
               }
             }
           }
+          if (data.state === 'game ended') {
+          // get players
+            const currentPlayers = [];
+            for (let m = 0; m < data.players.length; m += 1) {
+              currentPlayers.push(data.players[m].username);
+            }
+            // add to gameLog collections
+            const gameId = data.gameID;
+            // define the gameLog payload
+            const gamePayload = {
+              gameId,
+              // winner: data.players[game.playerIndex].username,
+              winner: game.players[game.gameWinner].username,
+              winnerId: game.players[game.gameWinner].userId,
+              players: currentPlayers,
+              rounds: game.round
+            };
+            $http.post(`/api/games/${gameId}/start`, gamePayload);
+          }
         }
 
         if (game.state !== 'waiting for players to pick' || game.players.length !== data.players.length) {
@@ -143,7 +162,17 @@ angular.module('mean.system')
           game.state = data.state;
         }
 
-        if (data.state === 'waiting for players to pick') {
+        if (data.state === 'czar pick card') {
+          game.czar = data.czar;
+          if (game.czar === game.playerIndex) {
+            addToNotificationQueue(
+              `You are now a Czar,
+          click black card to pop a new question`
+            );
+          } else {
+            addToNotificationQueue('Waiting for Czar to pick card');
+          }
+        } else if (data.state === 'waiting for players to pick') {
           game.czar = data.czar;
           game.curQuestion = data.curQuestion;
           // Extending the underscore within the question
@@ -165,8 +194,7 @@ angular.module('mean.system')
           } else {
             addToNotificationQueue('The czar is contemplating...');
           }
-        } else if (data.state === 'winner has been chosen' &&
-              game.curQuestion.text.indexOf('<u></u>') > -1) {
+        } else if (data.state === 'winner has been chosen' && game.curQuestion.text.indexOf('<u></u>') > -1) {
           game.curQuestion = data.curQuestion;
         } else if (data.state === 'awaiting players') {
           joinOverrideTimeout = $timeout(() => {
@@ -182,35 +210,22 @@ angular.module('mean.system')
         addToNotificationQueue(data.notification);
       });
 
+      game.startNextRound = () => {
+        socket.emit('czarCardSelected');
+      };
+
       game.joinGame = (mode, room, createPrivate) => {
         mode = mode || 'joinGame';
         room = room || '';
         createPrivate = createPrivate || false;
+        let userID;
         const user = LocalStorageService.getUser();
-        const userObject = JSON.parse(user);
-        const userID = userObject._id || 'unauthenticated'; //eslint-disable-line
-        socket.emit(mode, { userID, room, createPrivate });
-      };
-
-      game.startGame = () => {
-        socket.emit('startGame');
-      };
-
-      game.leaveGame = () => {
-        game.players = [];
-        game.time = 0;
-        socket.emit('leaveGame');
-      };
-
-      socket.on('notification', (data) => {
-        addToNotificationQueue(data.notification);
-      });
-
-      game.joinGame = (mode, room, createPrivate) => {
-        mode = mode || 'joinGame';
-        room = room || '';
-        createPrivate = createPrivate || false;
-      const userID = window.user ? user._id : 'unauthenticated'; // eslint-disable-line
+        if (user) {
+          const userObject = JSON.parse(user) || {};
+          userID = userObject._id; //eslint-disable-line
+        } else {
+          userID = 'unauthenticated';
+        }
         socket.emit(mode, { userID, room, createPrivate });
       };
 
@@ -239,6 +254,7 @@ angular.module('mean.system')
       };
 
       game.inviteToGame = (inviteLink, inviter, selectedEmail) => {
+        console.log('emits right here');
         socket.emit('inviteToGame', { inviteLink, inviter, selectedEmail });
       };
 

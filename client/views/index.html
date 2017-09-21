@@ -47,6 +47,7 @@
                 <li><a href="#about" onClick="scroll(0,2940);">About Us</a></li>
                 <li ng-show="showOptions()"><a href="#!/signup">Sign Up</a></li>
                 <li ng-show="showOptions()"><a href="#!/signin">Sign In</a></li>
+                <li ng-hide="showOptions()"><a href="#!/dashboard">Dashboard</a></li>
                 <li ng-hide="showOptions()"><a href="#" ng-click="signOut()">Sign Out</a></li>
                 <notification-box></notification-box>
               </ul>

@@ -20,6 +20,7 @@ const UserSchema = new Schema({
   donations: [],
   requests: { type: Array, default: [] },
   friends: { type: Array, default: [] },
+  gamesWon: { type: Number, default: 0 },
   hashed_password: String,
   facebook: {},
   twitter: {},
