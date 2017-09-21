@@ -38,14 +38,13 @@ angular.module('mean.components')
         };
 
         $scope.incrementGameRequests = ({ inviter, inviteLink }) => {
-          console.log('emit reaction gets here');
           $scope.friendNotifications += 1;
           $scope.gameRequests.push({ inviter, inviteLink });
         };
 
         $scope.getRequests = () => {
           const user = TokenService.getUser();
-          const userObject = JSON.parse(user);
+          const userObject = JSON.parse(user) || {};
           const { _id } = userObject;
           userSearch.getRequests(_id)
             .then((data) => {
@@ -60,7 +59,7 @@ angular.module('mean.components')
         }
         if (TokenService.getUser()) {
           const user = TokenService.getUser();
-          const userObject = JSON.parse(user);
+          const userObject = JSON.parse(user) || {};
           const { email } = userObject;
           game.getRequests(email, $scope.incrementNotifications);
           game.getGameRequests(email, $scope.incrementGameRequests);

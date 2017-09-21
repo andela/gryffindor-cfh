@@ -59,7 +59,7 @@ angular.module('mean.system')
 
       const user = TokenService.getUser();
       if (user) {
-        const userObject = JSON.parse(user);
+        const userObject = JSON.parse(user) || {};
         const { email, _id } = userObject;
         userSearch.getRequests(_id)
           .then((data) => {

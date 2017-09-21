@@ -42,7 +42,7 @@ angular.module('mean.system')
         $scope.checkDisable = selectedEmail => $scope.invitedUsers.indexOf(selectedEmail) !== -1;
 
         const user = LocalStorageService.getUser();
-        const userObject = JSON.parse(user);
+        const userObject = JSON.parse(user) || {};
 
         const { email, name, _id } = userObject;
 
