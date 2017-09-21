@@ -1,4 +1,3 @@
-/* global _ */
 angular.module('mean.system')
   .factory('game', ['socket', '$timeout', '$http', 'LocalStorageService',
     (socket, $timeout, $http, LocalStorageService) => {
@@ -26,24 +25,24 @@ angular.module('mean.system')
 
       const notificationQueue = [];
       let timeout = false;
-      let joinOverrideTimeout = 0; //eslint-disable-line
+    let joinOverrideTimeout = 0; //eslint-disable-line
 
       const addToNotificationQueue = (msg) => {
         notificationQueue.push(msg);
         if (!timeout) {
-          // Start a cycle if there isn't one
+        // Start a cycle if there isn't one
           setNotification();
         }
       };
 
       const setNotification = () => {
         if (notificationQueue.length === 0) {
-          // If notificationQueue is empty, stop
+        // If notificationQueue is empty, stop
           clearInterval(timeout);
           timeout = false;
           game.notification = '';
         } else {
-          // Show a notification and check again in a bit
+        // Show a notification and check again in a bit
           game.notification = notificationQueue.shift();
           timeout = $timeout(setNotification, 1300);
         }
@@ -71,8 +70,8 @@ angular.module('mean.system')
       });
 
       socket.on('gameUpdate', (data) => {
-        // Update gameID field only if it changed.
-        // That way, we don't trigger the $scope.$watch too often
+      // Update gameID field only if it changed.
+      // That way, we don't trigger the $scope.$watch too often
         if (game.gameID !== data.gameID) {
           game.gameID = data.gameID;
         }
@@ -92,7 +91,7 @@ angular.module('mean.system')
 
         // Handle updating game.time
         if (data.round !== game.round && data.state !== 'awaiting players'
-          && data.state !== 'game ended' && data.state !== 'game dissolved') {
+        && data.state !== 'game ended' && data.state !== 'game dissolved') {
           game.time = game.timeLimits.stateChoosing - 1;
           timeSetViaUpdate = true;
         } else if (newState && data.state === 'waiting for czar to decide') {
@@ -115,10 +114,10 @@ angular.module('mean.system')
         if (data.table.length === 0) {
           game.table = [];
         } else {
-          const added = _.difference(_.pluck(data.table, 'player'),
-            _.pluck(game.table, 'player'));
-          const removed = _.difference(_.pluck(game.table, 'player'),
-            _.pluck(data.table, 'player'));
+          const added = _.difference(_.pluck(data.table, 'player'), //eslint-disable-line
+            _.pluck(game.table, 'player')); //eslint-disable-line
+          const removed = _.difference(_.pluck(game.table, 'player'),//eslint-disable-line
+            _.pluck(data.table, 'player')); //eslint-disable-line
           for (i = 0; i < added.length; i += 1) {
             for (let j = 0; j < data.table.length; j += 1) {
               if (added[i] === data.table[j].player) {
@@ -134,7 +133,7 @@ angular.module('mean.system')
             }
           }
           if (data.state === 'game ended') {
-          // get players
+            // get players
             const currentPlayers = [];
             for (let m = 0; m < data.players.length; m += 1) {
               currentPlayers.push(data.players[m].username);
@@ -167,7 +166,7 @@ angular.module('mean.system')
           if (game.czar === game.playerIndex) {
             addToNotificationQueue(
               `You are now a Czar,
-          click black card to pop a new question`
+        click black card to pop a new question`
             );
           } else {
             addToNotificationQueue('Waiting for Czar to pick card');
@@ -222,7 +221,7 @@ angular.module('mean.system')
         const user = LocalStorageService.getUser();
         if (user) {
           const userObject = JSON.parse(user) || {};
-          userID = userObject._id; //eslint-disable-line
+        userID = userObject._id; //eslint-disable-line
         } else {
           userID = 'unauthenticated';
         }

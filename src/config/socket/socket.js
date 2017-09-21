@@ -4,6 +4,9 @@ import Game from './game';
 import Player from './player';
 import User from './../../app/models/user';
 require('console-stamp')(console, 'm/dd HH:MM:ss');
+const shortid = require('shortid');
+
+// console.log(shortid.generate());
 
 const avatars = require(`${__dirname}/../../app/controllers/avatars.js`).all();
 // Valid characters to use to generate random private game IDs
@@ -20,7 +23,7 @@ export default (io) => {
   const allGames = {};
   const allPlayers = {};
   const gamesNeedingPlayers = [];
-  let gameID = 0;
+  let gameID = '';
 
   io.sockets.on('connection', (socket) => {
     console.log(`${socket.id} Connected`);
@@ -191,7 +194,7 @@ export default (io) => {
   const fireGame = (player, socket) => {
     let game;
     if (gamesNeedingPlayers.length <= 0) {
-      gameID += 1;
+      gameID = shortid.generate();
       const gameIDStr = gameID.toString();
       game = new Game(gameIDStr, io);
       allPlayers[socket.id] = true;
