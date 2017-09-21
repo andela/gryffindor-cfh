@@ -13,7 +13,7 @@
         <tr ng-repeat="game in gameRequests">
           <td><span>{{game.inviter}} wants to play with you</span></td>
           <td><span></span></td>
-          <td><span><a ng-href="{{game.inviteLink}}" class="btn btn-primary" ng-disabled="checkRequestResolved(request.email)">Join</a></span></td>
+          <td><span><a ng-href="{{game.inviteLink}}" class="btn btn-primary">Join</a></span></td>
         </tr>
         <tr ng-repeat="request in friendRequests">
           <td><span>{{request.username}} wants to be your friend</span></td>
