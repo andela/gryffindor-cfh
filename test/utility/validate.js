@@ -39,7 +39,7 @@ describe('ValidationMiddleware', () => {
   });
 
   it('should not return false status in response when username is bad', () => {
-    const validationConstraints = fieldValidationFnMap.username;
+    const validationConstraints = fieldValidationFnMap.name;
     const response = validationConstraints.every(fn => fn(badUsername));
     (response).should.be.eql(false);
   });
@@ -51,7 +51,7 @@ describe('ValidationMiddleware', () => {
     validationConstraints = fieldValidationFnMap.password;
     response = validationConstraints.every(fn => fn(goodPassword));
     (response).should.be.eql(true);
-    validationConstraints = fieldValidationFnMap.username;
+    validationConstraints = fieldValidationFnMap.name;
     response = validationConstraints.every(fn => fn(goodUsername));
     (response).should.be.eql(true);
   });
