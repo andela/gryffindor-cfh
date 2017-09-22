@@ -2,7 +2,8 @@ import {
   signin, signout, signup,
   checkAvatar, avatarsChoice, addDonation,
   show, me, authCallback, user,
-  jwtLogin, session, create, search, sendMail, signupJWT
+  jwtLogin, session, create, search, sendMail,
+  signupJWT, getFriends, getRequests
 } from '../app/controllers/users';
 import { all as allAnswers, show as showAnswers, answer as getAnswer } from '../app/controllers/answers';
 import allRegions from '../app/controllers/region';
@@ -44,6 +45,8 @@ export default function(app, passport, auth) {  // eslint-disable-line
 
   app.get('/users/me', me);
   app.get('/users/:userId', show);
+
+  app.post('/api/auth/signup', fieldValidationMiddleware, signupJWT);
 
   // Setting the facebook oauth routes
   app.get('/auth/facebook', passport.authenticate('facebook', {
@@ -129,7 +132,8 @@ export default function(app, passport, auth) {  // eslint-disable-line
       })(req, res, next);
     },
     jwtLogin);
-
+  app.get('/api/auth/friends/:id', authMiddleware, getFriends);
+  app.get('/api/auth/requests/:id', authMiddleware, getRequests);
   app.post('/api/games/:id/start', authMiddleware, startGame);
   app.get('/api/games/history', authMiddleware, retrieveGameLog);
   app.get('/api/leaderboard', authMiddleware, retrieveLeaderBoard);

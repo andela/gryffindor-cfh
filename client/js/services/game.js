@@ -26,8 +26,8 @@ angular.module('mean.system')
 
       const notificationQueue = [];
       let timeout = false;
-    const self = this;// eslint-disable-line
-    let joinOverrideTimeout = 0;// eslint-disable-line
+      const self = this;// eslint-disable-line
+      let joinOverrideTimeout = 0;// eslint-disable-line
 
       const addToNotificationQueue = (msg) => {
         notificationQueue.push(msg);
@@ -91,7 +91,7 @@ angular.module('mean.system')
 
         // Handle updating game.time
         if (data.round !== game.round && data.state !== 'awaiting players'
-        && data.state !== 'game ended' && data.state !== 'game dissolved') {
+          && data.state !== 'game ended' && data.state !== 'game dissolved') {
           game.time = game.timeLimits.stateChoosing - 1;
           timeSetViaUpdate = true;
         } else if (newState && data.state === 'waiting for czar to decide') {
@@ -221,7 +221,7 @@ angular.module('mean.system')
         const user = LocalStorageService.getUser();
         if (user) {
           const userObject = JSON.parse(user) || {};
-        userID = userObject._id; //eslint-disable-line
+          userID = userObject._id; //eslint-disable-line
         } else {
           userID = 'unauthenticated';
         }
@@ -251,6 +251,30 @@ angular.module('mean.system')
       game.setRegion = (region) => {
         socket.emit('setRegion', { region, gameID: game.gameID });
       };
+
+      game.inviteFriend = (friendEmail, email, username) => {
+        socket.emit('inviteFriend',
+          { username, friendEmail, email }
+        );
+      };
+
+      game.inviteToGame = (inviteLink, inviter, selectedEmail) => {
+        socket.emit('inviteToGame', { inviteLink, inviter, selectedEmail });
+      };
+
+      game.getGameRequests = (email, callback) => {
+        socket.on(`gameInvite${email}`, callback);
+      };
+
+      game.getRequests = (email, callback) => {
+        socket.on(`invite${email}`, callback);
+      };
+
+      game.resolveFriendRequest =
+        (email, username, invitedEmail, invitedUsername, status, errorCallback) => {
+          socket.emit('resolveFriendRequest', { email, username, invitedEmail, invitedUsername, status });
+          socket.on('failedRequestResolve', errorCallback);
+        };
 
       decrementTime();
 

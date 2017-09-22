@@ -2024,6 +2024,9 @@ body,html{
   margin-top: -6px;
 }
 
+.notif-box {
+  padding-top: 20px;
+}
 @media (max-width: 425px) {
   #notifications {
     margin-bottom: 125px !important;
