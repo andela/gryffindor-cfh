@@ -56,12 +56,11 @@ export const all = (req, res) => {
  */
 export const allQuestionsForGame = (regionId, cb) => {
   Question.find({ official: true, numAnswers: { $lt: 3 } })
-    .populate({
-      path: 'regions',
-      match: { _id: regionId }
-    })
-    .select('-_id text')
+    .populate('regionId')
     .exec()
-    .then(questions => cb(questions))
-    .cathch(() => cb([]));
+    .then((questions) => {
+      const filteredQuestions = questions.filter(ques => ques.regionId === regionId);
+      cb(filteredQuestions);
+    })
+    .catch(() => cb([]));
 };

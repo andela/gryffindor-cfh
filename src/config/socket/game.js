@@ -134,6 +134,7 @@ Game.prototype.prepareGame = function () {
     if (err) {
       console.log(err);
     }
+    console.log(results[0].every(q => q.regionId === self.region));
     self.questions = results[0];
     self.answers = results[1];
 

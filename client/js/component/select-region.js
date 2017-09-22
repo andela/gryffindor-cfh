@@ -13,7 +13,6 @@ angular.module('mean.components', [])
         }
         $('#regionModal').modal('hide');
       };
-
       $scope.enabled = () => $scope.selectedRegion !== '';
       game.fetchRegions().then(({ data }) => {
         $scope.regions = data;
