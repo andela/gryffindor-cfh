@@ -1,0 +1,73 @@
+</script>
+<div id="app-container" ng-controller="GameController">
+  <!-- Header: Start -->
+  <nav class="navbar navbar-default navbar-fixed-top primary-color">
+    <div class="container">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+        <a class="navbar-brand" id="logo" href="#"><img src="/img/logo.png" alt="logo" ></a>
+      </div>
+
+      <!-- Collection of nav links and other content for toggling -->
+      <div id="navbarCollapse" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="nav-btn" id="donate-btn">
+            <div id="float-donate-btn" ng-show="display">
+              <a href="http://www.crowdrise.com/cfhio/fundraiser/cards4humanity"  type="button" class="btn btn-success btn-lg">DONATE NOW</a>
+            </div>
+          </li>
+          <li class="nav-btn">
+            <div id="invite-users" ng-show="showSelectUser()">
+              <button type="button" data-toggle="modal" data-target="#invite_player_modal"
+                class="btn btn-success">Invite Users</button>
+            </div>
+          </li>
+          <li id="retake-tour" class="nav-btn">
+            <div ng-click="retakeTour()">
+              <a type="button" class="btn btn-warning">Retake Tour</a>
+            </div>
+          </li>
+          <li class="nav-btn">
+            <div id="abandon-game-btn" ng-click="abandonGame()">
+              <a type="button" class="btn btn-danger">Abandon Game</a>
+            </div>
+          </li>
+          <li class="tweet-btn">
+            <span id="tweet-container" class="tweet-widget">
+              <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://cfh.io" data-text="Cards for Humanity: A Game for Horrible People Desperately Trying to do Good" data-related="CFH_App">Tweet</a>
+              <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } }(document, 'script', 'twitter-wjs');</script>
+            </span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+  <!-- Header: End -->
+
+  <!-- Game play container: Start -->
+  <div id="gameplay-container" class="container-fluid">
+    <div id="upper-gameplay-container" class="row">
+      <div id="menu-timeremaining-container" class="col-lg-4 col-xs-12">
+        <!-- <div id="menu-container">
+          <span id="menu-button">Menu</span>
+        </div> -->
+        <div id="timer-container" class="timer-container-circle">
+          <timer></timer>
+        </div>
+      </div>
+      <div id="question-container-outer" class="col-lg-8 col-xs-12">
+        <question></question>
+      </div>
+    </div>
+    <answers></answers>
+      <chat-box game="game.gameID"></chat-box>
+  </div>
+  <!-- Game play container: Start -->
+</div>

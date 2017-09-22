@@ -1,0 +1,29 @@
+<div class="notif-box">
+  <strong><p style="color:black; font-size: 15px; ">You have {{friendNotifications}} invites</p></strong>
+  <hr/>
+  <div>
+    <table class="table table-hover table-inverse" style="color:black; font-size: 12px; ">
+      <thead>
+        <tr>
+          <th><span>Invites</span></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="game in gameRequests">
+          <td><span>{{game.inviter}} wants to play with you</span></td>
+          <td><span></span></td>
+          <td><span><a ng-href="{{game.inviteLink}}" class="btn btn-primary">Join</a></span></td>
+        </tr>
+        <tr ng-repeat="request in friendRequests">
+          <td><span>{{request.username}} wants to be your friend</span></td>
+          <td><span></span></td>
+          <td><span><a class="btn btn-primary" ng-disabled="checkRequestResolved(request.email)" ng-click="resolveFriendRequest(request.email, request.username, true, $index)">Accept</a></span></td>
+          <td><span><a class="btn btn-primary" ng-disabled="checkRequestResolved(request.email)" ng-click="resolveFriendRequest(request.email, request.username, false, $index)">Reject</a></span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- <div>notifications</div> -->

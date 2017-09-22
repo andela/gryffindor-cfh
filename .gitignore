@@ -1,6 +1,15 @@
 node_modules
-public/lib
+public/
+coverage/*
 .sass-cache/
 .DS_store
 c4h_keys.txt
-
+.env
+npm-debug.log
+.package-lock.json
+dist/
+.vscode
+coverage
+gulp-cache
+build/
+.gulp-cache

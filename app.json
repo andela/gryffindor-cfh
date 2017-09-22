@@ -1,0 +1,23 @@
+{
+  "name": "gryffindor-cfh",
+  "scripts": {
+  },
+  "env": {
+    "MONGOHQ_URL": {
+      "required": true
+    },
+    "NODE_ENV": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+    "mongolab"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/timdp/heroku-buildpack-nodejs-gulp.git"
+    }
+  ]
+}
