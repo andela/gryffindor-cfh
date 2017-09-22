@@ -44,6 +44,7 @@ export default (io) => {
       thisGame.setRegion(data.region._id || '59b90186ad7d37a9fb7d3630'); // eslint-disable-line
       thisGame.sendUpdate();
     });
+
     socket.on('joinGame', (data) => {
       if (!allPlayers[socket.id]) {
         joinGame(socket, data);
@@ -103,12 +104,10 @@ export default (io) => {
           // If the user's ID isn't found (rare)
           player.username = 'Guest';
           player.avatar = avatars[Math.floor(Math.random() * 4) + 12];
-          player.region = data.region;
         } else {
           player.username = user.name;
           player.premium = user.premium || 0;
           player.avatar = user.avatar || avatars[Math.floor(Math.random() * 4) + 12];
-          player.region = data.region;
         }
         getGame(player, socket, data.room, data.createPrivate);
       });
@@ -162,8 +161,8 @@ export default (io) => {
     }
   };
 
-  const fireGame = (player, socket, createNewGame = false) => {
-    let game; // eslint-disable-line
+  const fireGame = (player, socket) => {
+    let game;
     if (gamesNeedingPlayers.length <= 0) {
       gameID = shortid.generate();
       const gameIDStr = gameID.toString();
@@ -175,19 +174,11 @@ export default (io) => {
       socket.join(game.gameID);
       socket.gameID = game.gameID;
       console.log(socket.id, 'has joined newly created game', game.gameID);
-      game.setRegion(player.region);
       game.assignPlayerColors();
       game.assignGuestNames();
       game.sendUpdate();
     } else {
       game = gamesNeedingPlayers[0];
-      if (game.region !== player.region) {
-        if (gamesNeedingPlayers.length > 1) {
-          game = gamesNeedingPlayers[1];
-        } else {
-          fireGame(player, socket, true);
-        }
-      }
       allPlayers[socket.id] = true;
       game.players.push(player);
       console.log(socket.id, 'has joined game', game.gameID);

@@ -446,9 +446,10 @@ Game.prototype.startNextRound = (self) => {
   } else if (self.state === 'czar left game') {
     self.changeCzar(self);
   }
-  Game.prototype.setRegion = function (region) {
-    this.region = region;
-  };
+};
+
+Game.prototype.setRegion = function (region) {
+  this.region = region;
 };
 
 module.exports = Game;

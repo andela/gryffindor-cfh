@@ -58,14 +58,10 @@ export const allQuestionsForGame = (regionId, cb) => {
   Question.find({ official: true, numAnswers: { $lt: 3 } })
     .populate({
       path: 'regions',
-      match: { _id: '58ed620175ebcefb68f1976c' }
+      match: { _id: regionId }
     })
-    .select('-_id').exec((err, questions) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(questions);
-        cb(questions);
-      }
-    });
+    .select('-_id text')
+    .exec()
+    .then(questions => cb(questions))
+    .cathch(() => cb([]));
 };
