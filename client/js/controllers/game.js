@@ -37,7 +37,7 @@ angular.module('mean.system')
           }
         };
 
-        $scope.hideSelectUser = () => (!AuthService.isAuthenticated());
+        $scope.showSelectUser = () => (!!AuthService.isAuthenticated());
 
         $scope.checkDisable = selectedEmail => $scope.invitedUsers.indexOf(selectedEmail) !== -1;
 
