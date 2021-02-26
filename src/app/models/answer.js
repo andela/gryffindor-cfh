@@ -1,7 +1,8 @@
 /**
  * Module dependencies.
  */
-import mongoose, { Schema } from 'mongoose';
+const mongoose = require('mongoose'),
+  Schema = mongoose.Schema;
 
 /**
  * Answer Schema
@@ -29,7 +30,7 @@ const AnswerSchema = new Schema({
  * Statics
  */
 AnswerSchema.statics = {
-  load (id, cb) {
+  load(id, cb) {
     this.findOne({
       id
     }).select('-_id').exec(cb);

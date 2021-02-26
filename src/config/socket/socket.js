@@ -7,8 +7,7 @@ require('console-stamp')(console, 'm/dd HH:MM:ss');
 const shortid = require('shortid');
 
 // console.log(shortid.generate());
-
-const avatars = require(`${__dirname}/../../app/controllers/avatars.js`).all();
+const avatars = require(`${__dirname}/../../app/controllers/avatars.js`).all();// eslint-disable-line
 // Valid characters to use to generate random private game IDs
 const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz';
 
@@ -19,7 +18,7 @@ const updateUser = (queryParam, payload, callback) => (
 );
 
 export default (io) => {
-  let game; // eslint-disable-line
+  let game;// eslint-disable-line
   const allGames = {};
   const allPlayers = {};
   const gamesNeedingPlayers = [];
@@ -44,6 +43,12 @@ export default (io) => {
       } else {
         console.log('Received pickWinning from', socket.id, 'but game does not appear to exist!');
       }
+    });
+
+    socket.on('setRegion', (data) => {
+      const thisGame = allGames[socket.gameID];
+      thisGame.setRegion(data.region._id || '59b90186ad7d37a9fb7d3630'); // eslint-disable-line
+      thisGame.sendUpdate();
     });
 
     socket.on('joinGame', (data) => {
@@ -92,6 +97,7 @@ export default (io) => {
     });
 
     socket.on('startGame', () => {
+      console.log('hi');
       if (allGames[socket.gameID]) {
         const thisGame = allGames[socket.gameID];
         console.log('comparing', thisGame.players[0].socket.id, 'with', socket.id);
@@ -155,7 +161,7 @@ export default (io) => {
     console.log(socket.id, 'is requesting room', requestedGameId);
     if (requestedGameId.length && allGames[requestedGameId]) {
       console.log('Room', requestedGameId, 'is valid');
-      const game = allGames[requestedGameId];
+      const game = allGames[requestedGameId]; // eslint-disable-line
       // Ensure that the same socket doesn't try to join the same game
       // This can happen because we rewrite the browser's URL to reflect
       // the new game ID, causing the view to reload.
@@ -239,7 +245,7 @@ export default (io) => {
       }
     }
     console.log(socket.id, 'has created unique game', uniqueRoom);
-    const game = new Game(uniqueRoom, io);
+    const game = new Game(uniqueRoom, io); // eslint-disable-line
     allPlayers[socket.id] = true;
     game.players.push(player);
     allGames[uniqueRoom] = game;
@@ -253,7 +259,7 @@ export default (io) => {
   const exitGame = (socket) => {
     console.log(socket.id, 'has disconnected');
     if (allGames[socket.gameID]) { // Make sure game exists
-      const game = allGames[socket.gameID];
+      const game = allGames[socket.gameID];// eslint-disable-line
       console.log(socket.id, 'has left game', game.gameID);
       delete allPlayers[socket.id];
       if (game.state === 'awaiting players' ||
@@ -271,3 +277,4 @@ export default (io) => {
     socket.leave(socket.gameID);
   };
 };
+

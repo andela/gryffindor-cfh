@@ -49,16 +49,18 @@ export const all = (req, res) => {
 };
 
 /**
- * List of Questions (for Game class)
- * @param {function} cb
+ * 
+ * @param {*} regionId 
+ * @param {*} cb 
  * @return {void}
  */
-export const allQuestionsForGame = (cb) => {
-  Question.find({ official: true, numAnswers: { $lt: 3 } }).select('-_id').exec((err, questions) => {
-    if (err) {
-      console.log(err);
-    } else {
-      cb(questions);
-    }
-  });
+export const allQuestionsForGame = (regionId, cb) => {
+  Question.find({ official: true, numAnswers: { $lt: 3 } })
+    .populate('regionId')
+    .exec()
+    .then((questions) => {
+      const filteredQuestions = questions.filter(ques => ques.regionId === regionId);
+      cb(filteredQuestions);
+    })
+    .catch(() => cb([]));
 };

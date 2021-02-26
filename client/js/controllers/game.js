@@ -26,8 +26,8 @@ angular.module('mean.system')
                 $scope.sendPickedCards();
                 $scope.hasPickedCards = true;
               } else if (game.curQuestion.numAnswers === 2 &&
-            $scope.pickedCards.length === 2) {
-                // delay and send
+              $scope.pickedCards.length === 2) {
+              // delay and send
                 $scope.hasPickedCards = true;
                 $timeout($scope.sendPickedCards, 300);
               }
@@ -261,20 +261,23 @@ angular.module('mean.system')
         });
 
         $scope.$watch('game.gameID', () => {
+          if (!game.region && game.playerIndex === 0 && game.gameID) {
+            $('#regionModal').modal('show');
+          }
           if (game.gameID && game.state === 'awaiting players') {
             if (!$scope.isCustomGame() && $location.search().game) {
-              // If the player didn't successfully enter the request room,
-              // reset the URL so they don't think they're in the requested room.
+            // If the player didn't successfully enter the request room,
+            // reset the URL so they don't think they're in the requested room.
               $location.search({});
             } else if ($scope.isCustomGame() && !$location.search().game) {
-              // Once the game ID is set, update the URL if this is a game with friends,
-              // where the link is meant to be shared.
+            // Once the game ID is set, update the URL if this is a game with friends,
+            // where the link is meant to be shared.
               $location.search({ game: game.gameID });
               if (!$scope.modalShown) {
                 setTimeout(() => {
                   const link = document.URL;
                   const txt = `Give the following link to
-                your friends so they can join your game: `;
+              your friends so they can join your game: `;
                   $('#lobby-how-to-play').text(txt);
                   $('#oh-el').css(
                     {

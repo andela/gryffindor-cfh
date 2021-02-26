@@ -6,6 +6,7 @@ import {
   signupJWT, getFriends, getRequests
 } from '../app/controllers/users';
 import { all as allAnswers, show as showAnswers, answer as getAnswer } from '../app/controllers/answers';
+import allRegions from '../app/controllers/region';
 import { all as allQuestions, show as showQuestion, question as getQuestion } from '../app/controllers/questions';
 import { allJSON } from '../app/controllers/avatars';
 import { play, render } from '../app/controllers/index';
@@ -109,6 +110,8 @@ export default function(app, passport, auth) {  // eslint-disable-line
   // Home route
   app.get('/play', play);
   app.get('/', render);
+
+  app.get('/api/regions', allRegions);
 
   // New routes to use jwt authentication
   app.post('/api/auth/login', fieldValidationMiddleware,

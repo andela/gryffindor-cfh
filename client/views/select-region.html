@@ -1,0 +1,30 @@
+<div class="modal fade" id ="regionModal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-body">                   
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <form class="custom-form" >
+                          <div class="form-group">
+                            <label for="region"></label>
+                            <p id="landing-region"><strong>Select Region</strong></p>
+                            <select ng-model="selectedRegion" class="form-control" id="sel1">
+                              <option value="">choose</option>
+                              <option ng-repeat="region in regions" value="{{$index}}">{{region.name}}</option>
+                            </select>
+                            <br>
+                          </div>   
+                      </form>
+                    </div> 
+                  </div> 
+                  </div>
+                  <button ng-disabled="!enabled()" ng-click="setRegion()" type="button" class="btn btn-info btn-lg"> Set Region</button> 
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" ng-click="setRegion('default')">Default</button>
+            </div>
+          </div>
+        </div>
+      </div>
